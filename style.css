@@ -12,6 +12,7 @@
   --radius: 10px;
   --container-width: 1440px;
   --bg-raised: #0a0e1c;
+  --surface: #101830;
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -196,7 +197,7 @@ button:focus-visible {
 }
 
 .aurora-blob--violet {
-  background: var(--grad-end);
+  background: var(--grad-mid);
   bottom: -160px;
   right: -80px;
   animation: aurora-drift-b 26s ease-in-out infinite alternate;
@@ -323,14 +324,13 @@ html.js .reveal.is-visible {
   transform: translateY(0);
 }
 
-/* stagger keys on position among ALL siblings, not among .reveal elements:
-   every direct child of a container using this stagger must itself be .reveal,
-   or delays silently land on the wrong cards; cap is 6 — a 7th item gets no delay */
-html.js .reveal:nth-child(2) { transition-delay: 0.08s; }
-html.js .reveal:nth-child(3) { transition-delay: 0.16s; }
-html.js .reveal:nth-child(4) { transition-delay: 0.24s; }
-html.js .reveal:nth-child(5) { transition-delay: 0.32s; }
-html.js .reveal:nth-child(6) { transition-delay: 0.4s; }
+/* Higher specificity than html.js .reveal above, so card hover transitions
+   (background, box-shadow) actually animate instead of snapping; entrance
+   opacity stays 0.6s, transform 0.35s is shared by entrance and hover lift. */
+html.js .card.reveal,
+html.js .project-card.reveal {
+  transition: opacity 0.6s ease, transform 0.35s ease, background 0.3s ease, box-shadow 0.3s ease;
+}
 
 /* Services grid */
 .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
@@ -340,15 +340,16 @@ html.js .reveal:nth-child(6) { transition-delay: 0.4s; }
   border-radius: var(--radius);
   padding: 26px;
   background:
-    linear-gradient(var(--bg-raised), var(--bg-raised)) padding-box,
+    linear-gradient(var(--surface), var(--surface)) padding-box,
     linear-gradient(135deg, var(--border-light), var(--border-light)) border-box;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
   transition: transform 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
 }
 
 .card:hover {
   transform: translateY(-4px);
   background:
-    linear-gradient(var(--bg-raised), var(--bg-raised)) padding-box,
+    linear-gradient(var(--surface), var(--surface)) padding-box,
     linear-gradient(135deg, var(--grad-start), var(--grad-mid), var(--grad-end)) border-box;
   box-shadow: 0 8px 30px rgba(94, 234, 212, 0.12);
 }
@@ -400,15 +401,16 @@ html.js .reveal:nth-child(6) { transition-delay: 0.4s; }
   flex-direction: column;
   align-items: stretch;
   background:
-    linear-gradient(var(--bg-raised), var(--bg-raised)) padding-box,
+    linear-gradient(var(--surface), var(--surface)) padding-box,
     linear-gradient(135deg, var(--border-light), var(--border-light)) border-box;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
   transition: transform 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
 }
 
 .project-card:hover {
   transform: translateY(-4px);
   background:
-    linear-gradient(var(--bg-raised), var(--bg-raised)) padding-box,
+    linear-gradient(var(--surface), var(--surface)) padding-box,
     linear-gradient(135deg, var(--grad-start), var(--grad-mid), var(--grad-end)) border-box;
   box-shadow: 0 8px 30px rgba(94, 234, 212, 0.12);
 }
@@ -424,7 +426,6 @@ html.js .reveal:nth-child(6) { transition-delay: 0.4s; }
 }
 
 .project-logo { height: 30px; width: auto; max-width: 160px; object-fit: contain; }
-.project-logo--invert { filter: invert(1); }
 
 .project-desc { font-size: 13px; line-height: 1.6; margin: 8px 0 0; }
 

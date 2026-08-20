@@ -12,9 +12,13 @@
   }
 
   var observer = new IntersectionObserver(function (entries) {
+    var i = 0;
     entries.forEach(function (entry) {
       if (entry.isIntersecting) {
-        entry.target.classList.add('is-visible');
+        var index = i++;
+        setTimeout(function () {
+          entry.target.classList.add('is-visible');
+        }, index * 80);
         observer.unobserve(entry.target);
       }
     });
