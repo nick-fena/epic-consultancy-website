@@ -108,6 +108,7 @@ restrained, never carnival — motion supports the Midnight aesthetic.
 
 ## Out of scope for V1 (future ideas)
 
+- `og:image` (needs a proper 1200×630 branded asset; flagged in code review 2026-08-20 — highest-leverage small addition before actively sharing links)
 - Custom domain
 - Per-project descriptions / case studies
 - Stats strip (needs real numbers)
