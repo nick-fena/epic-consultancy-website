@@ -99,3 +99,20 @@
     });
   }
 })();
+
+// Theme toggle — progressive enhancement; no-op if the button is absent.
+// The stored/system theme is applied by a tiny inline snippet in <head> so
+// there is no flash before first paint; this only handles the click.
+(function () {
+  var toggle = document.querySelector('.theme-toggle');
+  if (!toggle) return;
+
+  var root = document.documentElement;
+
+  toggle.addEventListener('click', function () {
+    var current = root.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
+    var next = current === 'light' ? 'dark' : 'light';
+    root.setAttribute('data-theme', next);
+    try { localStorage.setItem('theme', next); } catch (e) {}
+  });
+})();
