@@ -71,6 +71,27 @@ as the subject; never "we"/"our"/"the team", and nothing may imply additional
 staff. The wireframe drafts predate this rule — rewrite their "we" copy during
 implementation.
 
+## Motion & animation (added 2026-08-20)
+
+Nick wants the site to feel alive and contemporary. Principles: ambient and
+restrained, never carnival — motion supports the Midnight aesthetic.
+
+- **Hero ambience:** slow-moving teal/violet radial glows ("aurora") behind the
+  hero, pure CSS keyframes; subtle animated gradient shimmer on the gradient
+  headline words.
+- **Scroll reveals:** sections and cards fade-and-rise as they enter the
+  viewport. One small vanilla-JS `IntersectionObserver` adds a class; content
+  is fully visible without JS (progressive enhancement — no content hidden if
+  JS fails).
+- **Micro-interactions:** service/project cards lift slightly with a border
+  color shift toward teal on hover; nav links and buttons get smooth
+  transitions; the nav logo's nodes may pulse gently.
+- **Accessibility:** every animation is disabled under
+  `prefers-reduced-motion: reduce`. No autoplaying motion that loops
+  aggressively; nothing flashes.
+- This amends the earlier "minimal or no JS" note: one small dependency-free
+  script for scroll reveals is in scope. Still no framework, no build step.
+
 ## Implementation notes
 
 - Files: `index.html` (EN), `nl/index.html` (NL), shared `style.css`, minimal or
