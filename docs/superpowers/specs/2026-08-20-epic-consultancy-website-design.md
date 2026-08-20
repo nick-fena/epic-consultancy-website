@@ -177,6 +177,29 @@ official brand assets fetched from each project's site/press kit into
 verified, a styled text wordmark is the fallback rather than a guessed logo.
 Fena Digital's logo comes from the canonical `fena-landingpage` repo.
 
+## V2.1 copy and prominence round (added 2026-08-20, Nick's feedback in Dutch)
+
+1. **Naming rule:** the company is always "Epic Consultancy" in text, never bare
+   "Epic" (the uppercase nav wordmark EPIC CONSULTANCY already complies). Section
+   label WHY EPIC → WHY EPIC CONSULTANCY, title "Why teams choose Epic
+   Consultancy." (NL mirrors). Verified by counting: occurrences of Epic/EPIC
+   must equal occurrences of "Epic Consultancy"/"EPIC CONSULTANCY" per file.
+2. **No em dashes anywhere** (matches Nick's personal writing rule): every — in
+   both HTML files is rewritten using a comma, colon, period or parentheses.
+   Verified by grep for — and – (both must be absent from HTML).
+3. **Voice: professional with a personal touch,** per the write-like-me style:
+   contractions in English, friendly je/jullie in Dutch, direct sentences, no
+   corporate filler. Dutch translations reviewed for naturalness (StarLaunch
+   description called out as poor and rewritten).
+4. **Selected work becomes prominent** (Nick: a super important part of the
+   business): the section moves up to directly after Expertise; nav order
+   Expertise / Work / Approach / Contact; a short section intro paragraph is
+   added; cards grow (logo 36px, larger name and description text, more
+   padding) and carry a subtle gradient border at rest (full gradient stays on
+   hover). Each project gets a longer 2-sentence description in both languages,
+   still strictly factual from the verified research (incl. Hexagon→acquired by
+   Bravo Ready, UNKJD→LINEUP Games rebrand); engagement details wait for Nick.
+
 ## Out of scope for V1 (future ideas)
 
 - `og:image` (needs a proper 1200×630 branded asset; flagged in code review 2026-08-20 — highest-leverage small addition before actively sharing links)
