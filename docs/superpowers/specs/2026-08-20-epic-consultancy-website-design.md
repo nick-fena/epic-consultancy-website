@@ -59,8 +59,9 @@ copy before launch.
    Bravo Ready (GAMING), Fena Digital (SOFTWARE). One-line per-project notes
    can be added later when Nick supplies them.
 8. **Contact** — centered band: "Let's talk." + email as gradient button (mailto link)
-9. **Footer** — © 2026 Epic Consultancy B.V. · KvK 86603019 (KvK number added
-   2026-08-20 at Nick's request; supplied by Nick)
+9. **Footer** — two lines: "© 2026 Epic Consultancy B.V. · KvK 86603019 ·
+   BTW NL864019932B01" and "Lavendelstraat 19, 4814 HX Breda, the Netherlands"
+   (NL page: "Nederland"). KvK, BTW and address supplied by Nick 2026-08-20.
 
 Copy drafted during brainstorming is the working copy; Nick sanity-checks claims
 before/after launch. No invented numbers or stats — a stats strip may be added

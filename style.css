@@ -617,6 +617,7 @@ html.js .project-card.reveal {
 /* Footer */
 .footer { border-top: 1px solid var(--border); padding: 20px 40px; }
 .footer-copy { color: var(--text-label); font-size: 12px; text-align: center; margin: 0; }
+.footer-copy + .footer-copy { margin-top: 6px; }
 
 /* Responsive */
 @media (max-width: 900px) {
