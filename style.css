@@ -12,7 +12,7 @@
   --grad-start-dark: #0d9488;
   --grad-end-dark: #6366f1;
   --radius: 10px;
-  --container-width: 1100px;
+  --container-width: 1440px;
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -92,7 +92,8 @@ button:focus-visible {
   color: var(--white);
   font-weight: 700;
   letter-spacing: 2px;
-  font-size: 14px;
+  font-size: 13px;
+  white-space: nowrap;
 }
 
 .logo:hover { color: var(--white); }
@@ -130,7 +131,7 @@ button:focus-visible {
 .hero {
   position: relative;
   overflow: hidden;
-  padding: 70px 40px 60px;
+  padding: clamp(70px, 9vw, 120px) 40px clamp(60px, 8vw, 100px);
 }
 
 .hero .container { position: relative; z-index: 1; }
@@ -145,8 +146,8 @@ button:focus-visible {
 
 .aurora-blob {
   position: absolute;
-  width: 420px;
-  height: 420px;
+  width: 560px;
+  height: 560px;
   border-radius: 50%;
   filter: blur(90px);
   opacity: 0.35;
@@ -187,22 +188,22 @@ button:focus-visible {
 
 .hero-headline {
   color: var(--white);
-  font-size: 38px;
+  font-size: clamp(38px, 4.5vw, 60px);
   font-weight: 700;
   line-height: 1.15;
   margin: 0 0 18px;
-  max-width: 620px;
+  max-width: 900px;
 }
 
 .hero-intro {
-  font-size: 15px;
+  font-size: 16px;
   line-height: 1.7;
-  max-width: 520px;
+  max-width: 640px;
   margin: 0;
 }
 
 /* Section shared */
-.section { padding: 50px 40px; border-top: 1px solid var(--border); }
+.section { padding: clamp(50px, 7vw, 90px) 40px; border-top: 1px solid var(--border); }
 
 .section-label {
   color: var(--text-label);
@@ -216,7 +217,7 @@ h2.section-label { font-size: 10px; } /* keep label-as-heading sections visually
 
 .section-title {
   color: var(--white);
-  font-size: 24px;
+  font-size: clamp(24px, 2.4vw, 32px);
   font-weight: 700;
   margin: 0 0 28px;
 }
@@ -245,7 +246,7 @@ html.js .reveal:nth-child(5) { transition-delay: 0.32s; }
 html.js .reveal:nth-child(6) { transition-delay: 0.4s; }
 
 /* Services grid */
-.services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
 
 .card {
   border: 1px solid var(--border-light);
@@ -278,7 +279,7 @@ html.js .reveal:nth-child(6) { transition-delay: 0.4s; }
 .diff-desc { font-size: 12px; line-height: 1.6; margin: 0; }
 
 /* About */
-.about-grid { display: grid; grid-template-columns: 200px 1fr; gap: 36px; align-items: start; }
+.about-grid { display: grid; grid-template-columns: 220px 1fr; gap: 36px; align-items: start; }
 
 .about-photo {
   width: 100%;
@@ -312,7 +313,7 @@ html.js .reveal:nth-child(6) { transition-delay: 0.4s; }
 
 /* Contact */
 .contact { text-align: center; padding: 70px 40px; }
-.contact-title { color: var(--white); font-size: 26px; font-weight: 700; margin: 0 0 12px; }
+.contact-title { color: var(--white); font-size: clamp(26px, 2.8vw, 36px); font-weight: 700; margin: 0 0 12px; }
 .contact-sub { font-size: 13px; margin: 0 0 26px; }
 
 .contact-button {
