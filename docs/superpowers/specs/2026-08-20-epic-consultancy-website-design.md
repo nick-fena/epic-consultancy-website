@@ -36,17 +36,27 @@ for game studios.
    - Gaming: Mobile game design · Engagement & retention
    Each card: category tag, title, 1–2 sentence description
 4. **How we work** — four numbered steps: Understand → Diagnose → Build together → Make it stick; tagline "Embedded, not parachuted."
-5. **Why Epic** — three differentiators: Operators not observers · Native to Web3 and gaming · Built to last
-6. **Projects we've worked with** — 2-column card grid with category tags:
+5. **Why Epic** — three differentiators: An operator, not an observer · Native to Web3 and gaming · Built to last
+6. **About** — Nick Smans, founder and sole consultant. Photo
+   (`assets/nick-smans.jpg`), name, short bio paragraph. Framing: Epic is
+   deliberately a one-person consultancy — clients work directly with Nick, no
+   juniors, no handoffs. This section must make solo status explicit.
+7. **Projects we've worked with** — 2-column card grid with category tags:
    StarLaunch (WEB3), UNKJD Studios (GAMING), Hexagon Studios (GAMING),
    Bravo Ready (GAMING), Fena Digital (SOFTWARE). One-line per-project notes
    can be added later when Nick supplies them.
-7. **Contact** — centered band: "Let's talk." + email as gradient button (mailto link)
-8. **Footer** — © 2026 Epic Consultancy
+8. **Contact** — centered band: "Let's talk." + email as gradient button (mailto link)
+9. **Footer** — © 2026 Epic Consultancy
 
 Copy drafted during brainstorming is the working copy; Nick sanity-checks claims
 before/after launch. No invented numbers or stats — a stats strip may be added
 later only with real figures.
+
+**Copy voice rule (added 2026-08-20):** Epic Consultancy is one person — Nick
+Smans. All site copy uses first-person singular ("I", "my") or names the company
+as the subject; never "we"/"our"/"the team", and nothing may imply additional
+staff. The wireframe drafts predate this rule — rewrite their "we" copy during
+implementation.
 
 ## Implementation notes
 
