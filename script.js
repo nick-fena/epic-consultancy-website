@@ -29,7 +29,7 @@
 (function () {
   if (!('IntersectionObserver' in window)) return;
 
-  var navIds = ['what-i-do', 'how-i-work', 'projects', 'contact'];
+  var navIds = ['expertise', 'approach', 'work', 'contact'];
   var sections = navIds
     .map(function (id) { return document.getElementById(id); })
     .filter(Boolean);
