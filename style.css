@@ -395,10 +395,10 @@ html.js .reveal:nth-child(6) { transition-delay: 0.4s; }
 .project-card {
   border: 1px solid transparent;
   border-radius: 8px;
-  padding: 16px 20px;
+  padding: 20px 22px;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
+  align-items: stretch;
   background:
     linear-gradient(var(--bg-raised), var(--bg-raised)) padding-box,
     linear-gradient(135deg, var(--border-light), var(--border-light)) border-box;
@@ -415,6 +415,18 @@ html.js .reveal:nth-child(6) { transition-delay: 0.4s; }
 
 .project-name { color: var(--white); font-size: 15px; font-weight: 600; }
 .project-tag { color: var(--text-label); font-size: 10px; letter-spacing: 1px; }
+
+.project-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.project-logo { height: 30px; width: auto; max-width: 160px; object-fit: contain; }
+.project-logo--invert { filter: invert(1); }
+
+.project-desc { font-size: 13px; line-height: 1.6; margin: 8px 0 0; }
 
 /* Contact */
 .contact { position: relative; overflow: hidden; text-align: center; padding: 70px 40px; }
