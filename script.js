@@ -59,6 +59,18 @@
   }, { rootMargin: '-40% 0px -55% 0px' });
 
   sections.forEach(function (section) { sectionObserver.observe(section); });
+
+  // The percentage-band rootMargin above sits higher in the viewport than the
+  // short contact section can ever reach at maximum scroll, so it can never
+  // win the observer race. Special-case page bottom: force "contact" active
+  // there, but only there — everywhere else, the last observer-set value
+  // stands untouched.
+  if (navLinks.contact) {
+    window.addEventListener('scroll', function () {
+      var atBottom = window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 4;
+      if (atBottom) setActive('contact');
+    }, { passive: true });
+  }
 })();
 
 // Mobile nav disclosure — progressive enhancement; no-op if the toggle
@@ -66,10 +78,20 @@
 (function () {
   var toggle = document.querySelector('.nav-toggle');
   var header = document.querySelector('header.nav');
+  var navLinksEl = document.querySelector('.nav-links');
   if (!toggle || !header) return;
 
   toggle.addEventListener('click', function () {
     var isOpen = header.classList.toggle('nav-open');
     toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
   });
+
+  if (navLinksEl) {
+    navLinksEl.addEventListener('click', function (event) {
+      if (event.target.closest('a')) {
+        header.classList.remove('nav-open');
+        toggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
 })();

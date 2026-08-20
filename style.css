@@ -408,7 +408,14 @@ html.js .reveal:nth-child(6) { transition-delay: 0.4s; }
   html.js .nav-toggle { display: block; }
   html.js .nav-links { display: none; width: 100%; flex-direction: column; gap: 4px; }
   html.js .nav.nav-open .nav-links { display: flex; }
-  .nav-links a { padding: 12px 8px; }
+  .nav-links a { padding: 13px 8px; }
+}
+
+@media (max-width: 480px) {
+  /* Collapsed mobile bar (logo + cta + hamburger + lang toggle) overflows
+     at 375px and wraps to two rows. Contact stays reachable via the menu
+     and the hero CTA, so drop the nav CTA here. */
+  .nav-cta { display: none; }
 }
 
 @media (max-width: 640px) {
