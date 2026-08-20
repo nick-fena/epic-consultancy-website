@@ -391,18 +391,20 @@ html.js .project-card.reveal {
 .about-bio { font-size: 15px; line-height: 1.7; margin: 0; max-width: 560px; }
 
 /* Projects */
+.work-intro { font-size: 15px; line-height: 1.7; max-width: 640px; margin: -12px 0 32px; }
+
 .projects-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 20px; }
 
 .project-card {
   border: 1px solid transparent;
   border-radius: 8px;
-  padding: 20px 22px;
+  padding: 26px 28px;
   display: flex;
   flex-direction: column;
   align-items: stretch;
   background:
     linear-gradient(var(--surface), var(--surface)) padding-box,
-    linear-gradient(135deg, var(--border-light), var(--border-light)) border-box;
+    linear-gradient(135deg, rgba(94, 234, 212, 0.4), rgba(129, 140, 248, 0.4), rgba(232, 121, 249, 0.4)) border-box;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
   transition: transform 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
 }
@@ -415,7 +417,7 @@ html.js .project-card.reveal {
   box-shadow: 0 8px 30px rgba(94, 234, 212, 0.12);
 }
 
-.project-name { color: var(--white); font-size: 15px; font-weight: 600; }
+.project-name { color: var(--white); font-size: 17px; font-weight: 600; }
 .project-tag { color: var(--text-label); font-size: 10px; letter-spacing: 1px; }
 
 .project-head {
@@ -425,9 +427,9 @@ html.js .project-card.reveal {
   margin-bottom: 14px;
 }
 
-.project-logo { height: 30px; width: auto; max-width: 160px; object-fit: contain; }
+.project-logo { height: 36px; width: auto; max-width: 190px; object-fit: contain; }
 
-.project-desc { font-size: 13px; line-height: 1.6; margin: 8px 0 0; }
+.project-desc { font-size: 14px; line-height: 1.6; margin-top: 10px; }
 
 /* Contact */
 .contact { position: relative; overflow: hidden; text-align: center; padding: 70px 40px; }
