@@ -200,6 +200,37 @@ Fena Digital's logo comes from the canonical `fena-landingpage` repo.
    still strictly factual from the verified research (incl. Hexagon→acquired by
    Bravo Ready, UNKJD→LINEUP Games rebrand); engagement details wait for Nick.
 
+## V2.2 visible motion + theme toggle (added 2026-08-20)
+
+Nick's feedback: animations and gradient effects still not really visible; wants
+a day/night toggle (dark stays the current default).
+
+**Motion amplification (all disabled under prefers-reduced-motion):**
+- Hero entrance: badge, headline, intro and buttons cascade in on page load via
+  pure CSS keyframe animations with staggered delays (no JS dependency; safe
+  without JS since CSS-off means static-visible).
+- Conic orb rotates continuously (slow linear spin) on top of its drift; aurora
+  blobs brighten (opacity ~0.5) and drift faster (14/18s) and further.
+- A scanline: a soft teal horizontal beam sweeps down the hero grid on a loop.
+- Primary CTAs get a breathing glow (pulsing box-shadow) in addition to shimmer.
+
+**Theme system:**
+- `data-theme` attribute on `<html>`; dark is the default. Light palette: bg
+  `#f3f5fa`, raised `#e9edf6`, card surface `#ffffff`, borders `#d5dbe8` /
+  `#c3cbde`, headings `#0b1020` (via the `--white` token), body `#3b4459`,
+  labels `#5d6880`, gradient triad in deeper stops `#0d9488` → `#6366f1` →
+  `#c026d3`, nav `rgba(243, 245, 250, 0.88)`, grid/aurora tuned down for light.
+- **Project cards stay dark in BOTH themes** (dedicated `--work-surface` token):
+  deliberate design and it keeps the white client logos legible everywhere.
+- Nav logo's white SVG nodes switch via CSS variable fill so they stay visible
+  on light.
+- Toggle button in the nav (inline sun/moon SVG, localized aria-label; NL
+  "Schakel thema"), JS in script.js: click toggles + persists to localStorage;
+  a tiny inline head snippet applies stored theme (else system
+  `prefers-color-scheme`) before first paint to avoid theme flash. Without JS
+  the site is simply dark.
+- All light-theme text pairs must be verified computationally ≥ 4.5:1.
+
 ## Out of scope for V1 (future ideas)
 
 - `og:image` (needs a proper 1200×630 branded asset; flagged in code review 2026-08-20 — highest-leverage small addition before actively sharing links)
