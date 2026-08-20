@@ -1,0 +1,70 @@
+# Epic Consultancy Website — V1 Design
+
+**Date:** 2026-08-20
+**Status:** Approved by Nick (visual companion session, layout-v2)
+
+## Purpose
+
+Credibility anchor for Epic Consultancy — Nick's own business, separate from FENA
+Digital. The site's job is to look sharp and confirm the business is real when
+someone googles it. Clients come through network/referrals, so no lead-gen
+machinery: no forms, no booking, just an email link.
+
+**Positioning:** strategic consultancy for Web3/crypto projects (management,
+operations, product strategy, community growth) plus mobile game design expertise
+for game studios.
+
+## Decisions
+
+| Decision | Choice |
+|---|---|
+| Repo | New repo under personal `nick-fena` GitHub account (NOT `fenadigital`) |
+| Stack | Plain static HTML + CSS, no framework, no build step |
+| Hosting | GitHub Pages, free URL (`nick-fena.github.io/<repo>`); custom domain later |
+| Format | Single-page site (long-scroll one-pager) |
+| Visual direction | "Midnight" — dark navy-black (`#0a0e1a`), teal→violet gradient accent (`#5eead4` → `#818cf8`), muted gray-blue body text (`#8b93a7`), hairline borders (`#161d33` / `#2a3350`), modern grotesk type |
+| Contact | `epicconsultancy@hotmail.com`, styled as gradient button + nav link |
+
+## Page structure (approved wireframe: layout-v2)
+
+1. **Nav** — "EPIC" wordmark; anchor links: What we do · How we work · Projects · Contact
+2. **Hero** — eyebrow label "STRATEGIC CONSULTANCY · WEB3 & GAMING"; headline
+   "Strategy for teams building *what's next*." (gradient on last words); intro paragraph
+3. **What we do** — six service cards in a 3-column grid (responsive to 1-col):
+   - Web3: Management advisory · Operations & process · Product strategy
+   - Community: Community & ecosystem growth
+   - Gaming: Mobile game design · Engagement & retention
+   Each card: category tag, title, 1–2 sentence description
+4. **How we work** — four numbered steps: Understand → Diagnose → Build together → Make it stick; tagline "Embedded, not parachuted."
+5. **Why Epic** — three differentiators: Operators not observers · Native to Web3 and gaming · Built to last
+6. **Projects we've worked with** — 2-column card grid with category tags:
+   StarLaunch (WEB3), UNKJD Studios (GAMING), Hexagon Studios (GAMING),
+   Bravo Ready (GAMING), Fena Digital (SOFTWARE). One-line per-project notes
+   can be added later when Nick supplies them.
+7. **Contact** — centered band: "Let's talk." + email as gradient button (mailto link)
+8. **Footer** — © 2026 Epic Consultancy
+
+Copy drafted during brainstorming is the working copy; Nick sanity-checks claims
+before/after launch. No invented numbers or stats — a stats strip may be added
+later only with real figures.
+
+## Implementation notes
+
+- Files: `index.html`, `style.css`, minimal or no JS (smooth-scroll anchors work
+  in CSS via `scroll-behavior`). Self-contained; system font stack or one
+  self-hosted/Google font (grotesk, e.g. Inter or Space Grotesk).
+- Responsive: cards collapse 3→1 and 2→1 columns on mobile; test at 375px width.
+- Accessibility: semantic landmarks, sufficient contrast on muted text over dark
+  background (check `#8b93a7` on `#0a0e1a` — passes AA for body size), focus styles.
+- Deployment: GitHub Pages from `main` branch root via `gh` CLI
+  (`gh repo create nick-fena/<repo> --private→public` — Pages requires public repo
+  on free plan, confirm with Nick before making public).
+- `.superpowers/` is gitignored (brainstorm artifacts).
+
+## Out of scope for V1 (future ideas)
+
+- Custom domain
+- Per-project descriptions / case studies
+- Stats strip (needs real numbers)
+- Client logos (needs logo files + permission)
+- Analytics
