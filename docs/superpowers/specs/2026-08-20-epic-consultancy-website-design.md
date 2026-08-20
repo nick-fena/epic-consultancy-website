@@ -35,6 +35,8 @@ copy before launch.
 | Format | Single-page site (long-scroll one-pager) |
 | Visual direction | "Midnight" — dark navy-black (`#0a0e1a`), teal→violet gradient accent (`#5eead4` → `#818cf8`), muted gray-blue body text (`#8b93a7`), hairline borders (`#161d33` / `#2a3350`), modern grotesk type |
 | Contact | `epicconsultancy@hotmail.com`, styled as gradient button + nav link |
+| Logo | "Network hex" mark (Option B from the logo canvas, https://claude.ai/code/artifact/a0fb10e6-a59b-42a3-b011-3f2b61bf42ce): hexagon outline in teal→violet gradient stroke, connected nodes (teal, violet, white) with white center node, spokes in `#2a3350`. Inline SVG in the nav next to the EPIC wordmark; simplified variant (hex + center dot) as favicon; darker gradient stops (`#0d9488`→`#6366f1`) on light backgrounds |
+| Repo visibility | **Public** (approved by Nick 2026-08-20; required for free GitHub Pages) |
 
 ## Page structure (approved wireframe: layout-v2)
 
