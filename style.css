@@ -3,7 +3,7 @@
   --border: #161d33;
   --border-light: #2a3350;
   --text-muted: #8b93a7;
-  --text-label: #5c6478;
+  --text-label: #7f8aa0;
   --white: #ffffff;
   --grad-start: #5eead4;
   --grad-end: #818cf8;
@@ -38,6 +38,19 @@ button:focus-visible {
   outline: 2px solid var(--grad-start);
   outline-offset: 3px;
 }
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  background: var(--bg);
+  color: var(--grad-start);
+  padding: 10px 16px;
+  border: 1px solid var(--grad-start);
+  border-radius: 0 0 8px 0;
+  z-index: 10;
+}
+.skip-link:focus { left: 0; }
 
 .container {
   max-width: var(--container-width);
@@ -333,6 +346,10 @@ html.js .reveal:nth-child(6) { transition-delay: 0.4s; }
 }
 
 @media (max-width: 640px) {
+  /* The outer section elements (.hero, .section, .contact, .footer) carry
+     the 20px gutter at this width, so the container itself must not add
+     its own padding on top — that was stacking to 60px per side. */
+  .container { padding: 0; }
   .nav-inner { padding: 16px 20px; }
   .hero { padding: 50px 20px 40px; }
   .section { padding: 36px 20px; }

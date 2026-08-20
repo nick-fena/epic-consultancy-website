@@ -530,6 +530,8 @@
 
 ### Task 2: Build the English homepage (`index.html`)
 
+Revised 2026-08-20 after code review (contrast token, skip link, heading outline, og:url, shorter description, font weight 600, mobile container padding) — the code block below predates those fixes; index.html in the repo is authoritative.
+
 **Files:**
 - Create: `/Users/nick/Claude/projects/epic-consultancy-website/index.html`
 
@@ -836,10 +838,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Epic Consultancy — Strategische consultancy voor Web3 en gaming</title>
-  <meta name="description" content="Epic Consultancy helpt Web3- en cryptoprojecten hun management, operations en productstrategie te versterken, en brengt expertise in mobile game design naar gamestudio's.">
+  <meta name="description" content="Strategische consultancy voor Web3- en cryptoprojecten: management, operations en productstrategie, plus expertise in mobile game design.">
   <meta property="og:title" content="Epic Consultancy — Strategische consultancy voor Web3 en gaming">
-  <meta property="og:description" content="Epic Consultancy helpt Web3- en cryptoprojecten hun management, operations en productstrategie te versterken, en brengt expertise in mobile game design naar gamestudio's.">
+  <meta property="og:description" content="Strategische consultancy voor Web3- en cryptoprojecten: management, operations en productstrategie, plus expertise in mobile game design.">
   <meta property="og:type" content="website">
+  <meta property="og:url" content="https://nick-fena.github.io/epic-consultancy-website/nl/">
   <link rel="canonical" href="https://nick-fena.github.io/epic-consultancy-website/nl/">
   <link rel="alternate" hreflang="en" href="https://nick-fena.github.io/epic-consultancy-website/">
   <link rel="alternate" hreflang="nl" href="https://nick-fena.github.io/epic-consultancy-website/nl/">
@@ -847,11 +850,12 @@
   <link rel="icon" type="image/svg+xml" href="../favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../style.css">
   <script defer src="../script.js"></script>
   </head>
   <body>
+  <a class="skip-link" href="#main">Direct naar inhoud</a>
   <header class="nav" id="top">
     <div class="nav-inner container">
       <a href="#top" class="logo" aria-label="Epic Consultancy home">
@@ -887,7 +891,7 @@
     </div>
   </header>
 
-  <main>
+  <main id="main">
     <section class="hero">
       <div class="aurora" aria-hidden="true">
         <span class="aurora-blob aurora-blob--teal"></span>
@@ -970,7 +974,8 @@
 
     <section id="why-epic" class="section" aria-labelledby="why-epic-title">
       <div class="container">
-        <h2 id="why-epic-title" class="section-label">WAAROM EPIC</h2>
+        <p class="section-label">WAAROM EPIC</p>
+        <h2 id="why-epic-title" class="section-title">Waarom teams met mij werken.</h2>
         <div class="differentiators-grid">
           <div class="differentiator reveal">
             <h3 class="diff-title">Een operator, geen toeschouwer</h3>
@@ -1005,7 +1010,8 @@
 
     <section id="projects" class="section" aria-labelledby="projects-title">
       <div class="container">
-        <h2 id="projects-title" class="section-label">PROJECTEN WAARMEE IK HEB GEWERKT</h2>
+        <p class="section-label">PROJECTEN WAARMEE IK HEB GEWERKT</p>
+        <h2 id="projects-title" class="section-title">Een trackrecord in Web3 en gaming.</h2>
         <div class="projects-grid">
           <div class="project-card reveal"><span class="project-name">StarLaunch</span><span class="project-tag">WEB3</span></div>
           <div class="project-card reveal"><span class="project-name">UNKJD Studios</span><span class="project-tag">GAMING</span></div>
