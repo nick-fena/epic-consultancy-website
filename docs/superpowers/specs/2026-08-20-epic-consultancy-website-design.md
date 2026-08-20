@@ -106,6 +106,33 @@ restrained, never carnival — motion supports the Midnight aesthetic.
   with Nick before creating it public (the site content is public anyway).
 - `.superpowers/` is gitignored (brainstorm artifacts).
 
+## V1.1 UX round (added 2026-08-20, all four areas picked by Nick)
+
+Feedback on V1: too narrow, wordmark should read "EPIC CONSULTANCY", and the
+site needed to be friendlier. Changes:
+
+1. **Full-width layout** — container 1100→1440px fluid, clamp()-scaled type and
+   section padding, larger aurora. Phone values unchanged (clamps floor at V1
+   sizes). Wordmark: "EPIC CONSULTANCY" in the nav.
+2. **Sticky nav + orientation** — nav sticks on scroll (translucent ink +
+   backdrop blur), active section highlighted via a small IntersectionObserver
+   extension in script.js (progressive enhancement: no JS → no highlight,
+   nothing breaks). Sections get `scroll-margin-top` so anchor jumps clear the
+   sticky bar.
+3. **Readability & density** — body copy and card text up ~2px across the
+   board, card padding up, subtle alternating section tint (`--bg-raised`) on
+   how-i-work and projects for visual rhythm.
+4. **Clearer CTA** — small gradient "Get in touch" / "Neem contact op" button
+   in the nav plus a primary CTA button in the hero (with a ghost secondary
+   "See what I do" / "Bekijk wat ik doe"); both target #contact / #what-i-do.
+5. **Mobile** — below 768px the nav links collapse behind an accessible
+   disclosure button (aria-expanded, in script.js); WITHOUT JS the links stay
+   visible wrapped (the hiding is gated on `html.js`, same contract as the
+   reveals). Touch targets ≥44px for nav links on mobile.
+
+Voice rule, reveal gating, and reduced-motion coverage all still apply to every
+new element.
+
 ## Out of scope for V1 (future ideas)
 
 - `og:image` (needs a proper 1200×630 branded asset; flagged in code review 2026-08-20 — highest-leverage small addition before actively sharing links)
