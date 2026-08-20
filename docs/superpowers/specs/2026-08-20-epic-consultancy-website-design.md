@@ -18,7 +18,7 @@ for game studios.
 
 | Decision | Choice |
 |---|---|
-| Repo | New repo under personal `nick-fena` GitHub account (NOT `fenadigital`) |
+| Repo | `nick-fena/epic-consultancy-website` — personal account (NOT `fenadigital`) |
 | Stack | Plain static HTML + CSS, no framework, no build step |
 | Hosting | GitHub Pages, free URL (`nick-fena.github.io/<repo>`); custom domain later |
 | Format | Single-page site (long-scroll one-pager) |
@@ -56,9 +56,9 @@ later only with real figures.
 - Responsive: cards collapse 3→1 and 2→1 columns on mobile; test at 375px width.
 - Accessibility: semantic landmarks, sufficient contrast on muted text over dark
   background (check `#8b93a7` on `#0a0e1a` — passes AA for body size), focus styles.
-- Deployment: GitHub Pages from `main` branch root via `gh` CLI
-  (`gh repo create nick-fena/<repo> --private→public` — Pages requires public repo
-  on free plan, confirm with Nick before making public).
+- Deployment: GitHub Pages from `main` branch root, repo created via `gh` CLI.
+  Note: GitHub Pages on a free plan requires the repo to be **public** — confirm
+  with Nick before creating it public (the site content is public anyway).
 - `.superpowers/` is gitignored (brainstorm artifacts).
 
 ## Out of scope for V1 (future ideas)
