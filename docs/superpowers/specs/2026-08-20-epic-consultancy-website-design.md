@@ -14,6 +14,17 @@ machinery: no forms, no booking, just an email link.
 operations, product strategy, community growth) plus mobile game design expertise
 for game studios.
 
+**Legal name:** Epic Consultancy B.V. (used in footer and anywhere the formal
+company name appears; the nav wordmark stays "EPIC").
+
+**Languages:** English and Dutch. English is the default at the site root
+(clients in Web3/gaming are international); Dutch mirror lives at `/nl/`.
+Nav carries an EN | NL toggle linking between the two versions. Each page sets
+the correct `lang` attribute and `hreflang` alternate links. With no build
+step, the two pages are maintained as parallel HTML files — acceptable for a
+one-pager; shared `style.css`. Nick (native Dutch speaker) reviews the Dutch
+copy before launch.
+
 ## Decisions
 
 | Decision | Choice |
@@ -46,7 +57,7 @@ for game studios.
    Bravo Ready (GAMING), Fena Digital (SOFTWARE). One-line per-project notes
    can be added later when Nick supplies them.
 8. **Contact** — centered band: "Let's talk." + email as gradient button (mailto link)
-9. **Footer** — © 2026 Epic Consultancy
+9. **Footer** — © 2026 Epic Consultancy B.V.
 
 Copy drafted during brainstorming is the working copy; Nick sanity-checks claims
 before/after launch. No invented numbers or stats — a stats strip may be added
@@ -60,9 +71,10 @@ implementation.
 
 ## Implementation notes
 
-- Files: `index.html`, `style.css`, minimal or no JS (smooth-scroll anchors work
-  in CSS via `scroll-behavior`). Self-contained; system font stack or one
-  self-hosted/Google font (grotesk, e.g. Inter or Space Grotesk).
+- Files: `index.html` (EN), `nl/index.html` (NL), shared `style.css`, minimal or
+  no JS (smooth-scroll anchors work in CSS via `scroll-behavior`). Self-contained;
+  system font stack or one self-hosted/Google font (grotesk, e.g. Inter or Space
+  Grotesk). Asset paths in `nl/index.html` account for the subdirectory.
 - Responsive: cards collapse 3→1 and 2→1 columns on mobile; test at 375px width.
 - Accessibility: semantic landmarks, sufficient contrast on muted text over dark
   background (check `#8b93a7` on `#0a0e1a` — passes AA for body size), focus styles.
