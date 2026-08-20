@@ -425,6 +425,8 @@ html.js .project-card.reveal {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 14px;
+  gap: 12px;
+  flex-wrap: wrap;
 }
 
 .project-logo { height: 36px; width: auto; max-width: 190px; object-fit: contain; }
@@ -499,6 +501,7 @@ html.js .project-card.reveal {
   .projects-grid { grid-template-columns: 1fr; }
   .steps-grid { grid-template-columns: 1fr; }
   .hero-headline { font-size: 26px; }
+  .project-logo { max-width: 150px; }
 }
 
 /* Motion: ambient and restrained, never carnival — and fully off on request */
