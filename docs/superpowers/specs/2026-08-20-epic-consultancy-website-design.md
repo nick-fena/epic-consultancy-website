@@ -133,6 +133,50 @@ site needed to be friendlier. Changes:
 Voice rule, reveal gating, and reduced-motion coverage all still apply to every
 new element.
 
+## V2 "Maximal glow" redesign (added 2026-08-20, direction C picked by Nick)
+
+Nick's V1.1 feedback: typography felt generic, grey text hard to read, first-person
+"I" copy throughout felt amateurish, overall look outdated — wants more motion,
+more gradients, futuristic. Direction C ("Maximal glow") chosen from three
+animated mockups: type stays quiet, the motion IS the identity.
+
+**Tokens v2:**
+- Background `#05070f` (deeper), raised `#0a0e1c`, borders `#141b30` / `#232c4a`
+- Body text `#c2cadc` (fixes readability; ~10:1 on bg), labels `#8f9ab5` (≥4.5:1)
+- Gradient triad: teal `#5eead4` → violet `#818cf8` → magenta `#e879f9`
+- Glow: `rgba(129,140,248,0.45)` box-shadows on primary CTAs
+- Type: **Sora** 400/600/700 everywhere (replaces Space Grotesk), same scale
+
+**Signature atmosphere (the one bold element — everything else stays disciplined):**
+- Hero: drifting conic-gradient orb + violet blob (blurred), faint cyber-grid
+  overlay (44px lines, teal at 6% alpha); contact band gets a soft orb + grid too
+- Gradient text and primary buttons shimmer continuously (3-stop gradient,
+  animated background-position); primary CTAs carry a glow shadow
+- Hero eyebrow becomes a magenta-bordered pill badge: "WEB3 × GAMING STRATEGY"
+- Cards: gradient border + soft teal glow on hover (background-clip technique)
+- Logo node pulse and scroll reveals stay; ALL new motion disabled under
+  `prefers-reduced-motion`; progressive-enhancement gating unchanged
+
+**Copy voice v3 (supersedes first-person rule):** company-as-subject or neutral
+active voice. Still NEVER "we/our/us" (nothing implies staff) — and now also no
+standalone "I/me/my" anywhere EXCEPT the About section, which stays third-person
+about Nick anyway ("Epic Consultancy is Nick Smans — founder and sole
+consultant…"). Solo status stays explicit in About only. Dutch mirrors: no
+"we/wij/ons/onze" and no "ik/mij/mijn". Voice greps extended accordingly.
+
+**Renames (both languages):** nav links → Expertise / Approach / Work / Contact
+(NL: Expertise / Aanpak / Werk / Contact); section ids `what-i-do`→`expertise`,
+`how-i-work`→`approach`, `projects`→`work` (script.js navIds updated); section
+labels → EXPERTISE / APPROACH / WHY EPIC / ABOUT / SELECTED WORK.
+
+**Project cards v2 (requested 2026-08-20):** each of the five project cards gets
+the project's logo and a one-line description (EN + NL). Descriptions state what
+the project publicly IS — never invented claims about the engagement. Logos are
+official brand assets fetched from each project's site/press kit into
+`assets/logos/` (light-on-dark variants preferred); where no clean asset can be
+verified, a styled text wordmark is the fallback rather than a guessed logo.
+Fena Digital's logo comes from the canonical `fena-landingpage` repo.
+
 ## Out of scope for V1 (future ideas)
 
 - `og:image` (needs a proper 1200×630 branded asset; flagged in code review 2026-08-20 — highest-leverage small addition before actively sharing links)
