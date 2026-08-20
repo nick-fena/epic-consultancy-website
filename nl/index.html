@@ -43,12 +43,20 @@
       </svg>
       <span>EPIC CONSULTANCY</span>
     </a>
-    <nav class="nav-links" aria-label="Primair">
+    <button class="nav-toggle" aria-expanded="false" aria-controls="primary-nav" aria-label="Menu">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false">
+        <line x1="3" y1="6" x2="21" y2="6"/>
+        <line x1="3" y1="12" x2="21" y2="12"/>
+        <line x1="3" y1="18" x2="21" y2="18"/>
+      </svg>
+    </button>
+    <nav class="nav-links" id="primary-nav" aria-label="Primair">
       <a href="#what-i-do">Wat ik doe</a>
       <a href="#how-i-work">Hoe ik werk</a>
       <a href="#projects">Projecten</a>
       <a href="#contact">Contact</a>
     </nav>
+    <a class="nav-cta" href="#contact">Neem contact op</a>
     <nav class="lang-toggle" aria-label="Taalkeuze">
       <a href="../index.html">EN</a>
       <span class="lang-divider" aria-hidden="true">|</span>
@@ -67,6 +75,10 @@
       <div class="eyebrow">STRATEGISCHE CONSULTANCY · WEB3 &amp; GAMING</div>
       <h1 class="hero-headline">Strategie voor teams die bouwen aan <span class="gradient-text">wat komt.</span></h1>
       <p class="hero-intro">Ik help Web3- en cryptoprojecten hun management, operations en productstrategie te versterken — en breng diepgaande expertise in mobile game design naar studio's die games bouwen waar spelers van houden.</p>
+      <div class="hero-actions">
+        <a class="contact-button" href="#contact">Neem contact op</a>
+        <a class="ghost-button" href="#what-i-do">Bekijk wat ik doe</a>
+      </div>
     </div>
   </section>
 
@@ -109,7 +121,7 @@
     </div>
   </section>
 
-  <section id="how-i-work" class="section" aria-labelledby="how-i-work-title">
+  <section id="how-i-work" class="section section--alt" aria-labelledby="how-i-work-title">
     <div class="container">
       <p class="section-label">HOE IK WERK</p>
       <h2 id="how-i-work-title" class="section-title">Ingebed, niet even binnenvallen.</h2>
@@ -174,7 +186,7 @@
     </div>
   </section>
 
-  <section id="projects" class="section" aria-labelledby="projects-title">
+  <section id="projects" class="section section--alt" aria-labelledby="projects-title">
     <div class="container">
       <p class="section-label">PROJECTEN WAARMEE IK HEB GEWERKT</p>
       <h2 id="projects-title" class="section-title">Een trackrecord in Web3 en gaming.</h2>
