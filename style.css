@@ -411,10 +411,12 @@ html.js .reveal:nth-child(6) { transition-delay: 0.4s; }
   .nav-links a { padding: 13px 8px; }
 }
 
-@media (max-width: 480px) {
-  /* Collapsed mobile bar (logo + cta + hamburger + lang toggle) overflows
-     at 375px and wraps to two rows. Contact stays reachable via the menu
-     and the hero CTA, so drop the nav CTA here. */
+@media (max-width: 560px) {
+  /* Collapsed mobile bar (logo ~192px + cta ~126px + hamburger ~42px + lang
+     toggle ~50px + gaps) needs ~458px and wraps to two rows anywhere below
+     ~540px viewport, breaking the sticky-nav scroll offset. Contact stays
+     reachable via the menu and the hero CTA, so drop the nav CTA here;
+     560 leaves margin for wider fallback-font metrics. */
   .nav-cta { display: none; }
 }
 
