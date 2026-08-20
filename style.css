@@ -197,8 +197,12 @@ button:focus-visible {
   cursor: pointer;
 }
 
+/* Hidden by default and revealed only once script.js has set html.js — same
+   contract as .nav-toggle and .reveal. Without JS the click handler never
+   binds, so an always-visible button would be dead furniture; the site is
+   simply dark instead. */
 .theme-toggle {
-  display: inline-flex;
+  display: none;
   align-items: center;
   justify-content: center;
   background: none;
@@ -209,6 +213,8 @@ button:focus-visible {
   cursor: pointer;
   transition: border-color 0.2s ease;
 }
+
+html.js .theme-toggle { display: inline-flex; }
 
 .theme-toggle:hover { border-color: var(--grad-start); }
 
@@ -282,6 +288,9 @@ button:focus-visible {
   will-change: transform;
 }
 
+/* Both light-theme aurora opacities are set deliberately, not left to the
+   cascade: the conic orb carries its own base opacity, so it needs its own
+   override rather than inheriting the general blob's. */
 [data-theme="light"] .aurora-blob { opacity: 0.25; }
 
 .aurora-blob--teal {
@@ -320,11 +329,16 @@ button:focus-visible {
   animation: aurora-drift-c 18s ease-in-out infinite alternate;
 }
 
+[data-theme="light"] .aurora-blob--conic { opacity: 0.25; }
+
 .aurora-blob--conic::before {
   content: '';
   position: absolute;
   inset: 0;
-  border-radius: inherit;
+  /* 50%, not inherit: the parent's 40% radius is not rotationally symmetric,
+     so a spinning silhouette would visibly wobble. A circle lets the gradient
+     sweep while the shape stays put. */
+  border-radius: 50%;
   background: conic-gradient(from 0deg, #14b8a6, #6d5cff, #c026d3, #14b8a6);
   animation: spin 40s linear infinite;
 }
@@ -474,6 +488,13 @@ html.js .project-card.reveal {
   transition: transform 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
 }
 
+/* The resting shadow above is tuned for a dark page; at 35% black it turns
+   muddy under a light one. Must stay ABOVE both :hover rules: this selector
+   scores the same specificity as .card:hover, so source order is the only
+   thing keeping the hover shadow from being overridden on light. */
+[data-theme="light"] .card,
+[data-theme="light"] .project-card { box-shadow: 0 4px 20px rgba(15, 23, 42, 0.08); }
+
 .card:hover {
   transform: translateY(-4px);
   background:
@@ -537,11 +558,15 @@ html.js .project-card.reveal {
   transition: transform 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
 }
 
+/* The hover ring is hardcoded to the vivid trio rather than var(--grad-*):
+   the card surface stays dark in both themes, so the light theme's deeper
+   stops would read as a muted accent against it. This is the resting ring's
+   own colors at full strength, identical in both themes. */
 .project-card:hover {
   transform: translateY(-4px);
   background:
     linear-gradient(var(--work-surface), var(--work-surface)) padding-box,
-    linear-gradient(135deg, var(--grad-start), var(--grad-mid), var(--grad-end)) border-box;
+    linear-gradient(135deg, #5eead4, #818cf8, #e879f9) border-box;
   box-shadow: 0 8px 30px rgba(94, 234, 212, 0.12);
 }
 
