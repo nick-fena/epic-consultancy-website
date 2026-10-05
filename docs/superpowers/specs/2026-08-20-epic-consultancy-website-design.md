@@ -274,6 +274,16 @@ layout, type, motion and copy all come from that artboard.
   card, step and the About and Contact copy tightened to concrete verbs and
   outcomes; Dutch rewritten where it read as translated English ("Ingebed,
   niet ingevlogen.", "Borgen", "Even sparren?"). Facts unchanged.
+- **Plain-language pass (same day, replaces the copy pass above):** Nick
+  found constructed phrases ("ingebed", "teams die leveren") unnatural and
+  wants the site easy to read for anyone. Copy now starts from his own words:
+  "Ik help projecten binnen crypto of met een eigen crypto token, en
+  gamestudio's hun team en product op orde krijgen." Hero "Je team en
+  product op orde." / "Get your team and product on track."; headings say
+  what the section is ("Hoe het werkt.", "Met wie Epic Consultancy heeft
+  gewerkt."); sector jargon (airdrop, on-chain, launchpad, AI-native,
+  incubator) replaced with plain descriptions. "Web3" stays where it is the
+  common term.
 - **Wide screens:** hero copy and nav cap to the same column as `.wrap`
   (1320px, 1560px from a 1920px viewport); the expertise grid caps at three
   columns. Reported on Nick's 4K monitor.
