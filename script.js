@@ -1,118 +1,137 @@
+/* Epic Consultancy, V3 "Prism Night".
+   Progressive enhancement only: the page is complete and readable without
+   this file. Everything here either adds pointer-driven motion, wires up a
+   button that is hidden until html.js is set, or delays an animation that
+   would otherwise play out of sight. */
 (function () {
-  document.documentElement.classList.add('js');
-
-  var revealEls = document.querySelectorAll('.reveal');
-  if (!revealEls.length) return;
-
-  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  if (reduceMotion || !('IntersectionObserver' in window)) {
-    revealEls.forEach(function (el) { el.classList.add('is-visible'); });
-    return;
-  }
-
-  var observer = new IntersectionObserver(function (entries) {
-    var i = 0;
-    entries.forEach(function (entry) {
-      if (entry.isIntersecting) {
-        var index = i++;
-        setTimeout(function () {
-          entry.target.classList.add('is-visible');
-        }, index * 80);
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
-
-  revealEls.forEach(function (el) { observer.observe(el); });
-})();
-
-// Active-section nav highlight — progressive enhancement, independent of the
-// reveal observer above: no IntersectionObserver support means no highlight,
-// nothing else breaks.
-(function () {
-  if (!('IntersectionObserver' in window)) return;
-
-  var navIds = ['expertise', 'approach', 'work', 'contact'];
-  var sections = navIds
-    .map(function (id) { return document.getElementById(id); })
-    .filter(Boolean);
-  if (!sections.length) return;
-
-  var navLinks = {};
-  navIds.forEach(function (id) {
-    var link = document.querySelector('.nav-links a[href="#' + id + '"]');
-    if (link) navLinks[id] = link;
-  });
-
-  var setActive = function (id) {
-    Object.keys(navLinks).forEach(function (key) {
-      navLinks[key].classList.toggle('active', key === id);
-    });
-  };
-
-  var lastIntersecting = null;
-
-  var sectionObserver = new IntersectionObserver(function (entries) {
-    entries.forEach(function (entry) {
-      if (entry.isIntersecting) {
-        lastIntersecting = entry.target.id;
-      }
-    });
-    if (lastIntersecting) setActive(lastIntersecting);
-  }, { rootMargin: '-40% 0px -55% 0px' });
-
-  sections.forEach(function (section) { sectionObserver.observe(section); });
-
-  // The percentage-band rootMargin above sits higher in the viewport than the
-  // short contact section can ever reach at maximum scroll, so it can never
-  // win the observer race. Special-case page bottom: force "contact" active
-  // there, but only there — everywhere else, the last observer-set value
-  // stands untouched.
-  if (navLinks.contact) {
-    window.addEventListener('scroll', function () {
-      var atBottom = window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 4;
-      if (atBottom) setActive('contact');
-    }, { passive: true });
-  }
-})();
-
-// Mobile nav disclosure — progressive enhancement; no-op if the toggle
-// button is absent.
-(function () {
-  var toggle = document.querySelector('.nav-toggle');
-  var header = document.querySelector('header.nav');
-  var navLinksEl = document.querySelector('.nav-links');
-  if (!toggle || !header) return;
-
-  toggle.addEventListener('click', function () {
-    var isOpen = header.classList.toggle('nav-open');
-    toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-  });
-
-  if (navLinksEl) {
-    navLinksEl.addEventListener('click', function (event) {
-      if (event.target.closest('a')) {
-        header.classList.remove('nav-open');
-        toggle.setAttribute('aria-expanded', 'false');
-      }
-    });
-  }
-})();
-
-// Theme toggle — progressive enhancement; no-op if the button is absent.
-// The stored/system theme is applied by a tiny inline snippet in <head> so
-// there is no flash before first paint; this only handles the click.
-(function () {
-  var toggle = document.querySelector('.theme-toggle');
-  if (!toggle) return;
+  'use strict';
 
   var root = document.documentElement;
+  root.classList.add('js');
 
-  toggle.addEventListener('click', function () {
-    var current = root.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
-    var next = current === 'light' ? 'dark' : 'light';
-    root.setAttribute('data-theme', next);
-    try { localStorage.setItem('theme', next); } catch (e) {}
+  var reduceQuery = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : null;
+  function motionAllowed() { return !(reduceQuery && reduceQuery.matches); }
+
+  // Theme toggle. The stored theme is applied by an inline snippet in <head>
+  // before first paint; dark is the default, so only "light" is ever set.
+  var themeToggle = document.querySelector('.theme-toggle');
+  if (themeToggle) {
+    themeToggle.addEventListener('click', function () {
+      var toLight = root.getAttribute('data-theme') !== 'light';
+      if (toLight) {
+        root.setAttribute('data-theme', 'light');
+      } else {
+        root.removeAttribute('data-theme');
+      }
+      try { localStorage.setItem('theme', toLight ? 'light' : 'dark'); } catch (e) {}
+    });
+  }
+
+  // Mobile menu disclosure. CSS only hides the links behind the button when
+  // html.js is set, so without this script the links simply stay visible.
+  var nav = document.querySelector('.nav');
+  var menuToggle = document.querySelector('.menu-toggle');
+  var navLinks = document.getElementById('nav-links');
+  if (nav && menuToggle) {
+    var setMenu = function (open) {
+      nav.classList.toggle('nav-open', open);
+      menuToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    };
+    menuToggle.addEventListener('click', function () {
+      setMenu(!nav.classList.contains('nav-open'));
+    });
+    if (navLinks) {
+      navLinks.addEventListener('click', function (event) {
+        if (event.target.closest('a')) setMenu(false);
+      });
+    }
+    nav.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape' && nav.classList.contains('nav-open')) {
+        setMenu(false);
+        menuToggle.focus();
+      }
+    });
+  }
+
+  // Pointer-following light in the hero and contact mesh panels. Tracked on
+  // the window rather than the panel itself, because the nav floats over the
+  // hero and would otherwise read as the pointer leaving it.
+  var panels = Array.prototype.slice.call(document.querySelectorAll('.mesh-panel'));
+  var pointer = null;
+  var meshFrame = 0;
+
+  function updatePanels() {
+    meshFrame = 0;
+    var live = pointer && motionAllowed();
+    panels.forEach(function (panel) {
+      var r = panel.getBoundingClientRect();
+      var inside = live &&
+        pointer.x >= r.left && pointer.x <= r.right &&
+        pointer.y >= r.top && pointer.y <= r.bottom;
+      if (inside) {
+        panel.style.setProperty('--px', (pointer.x - r.left).toFixed(1) + 'px');
+        panel.style.setProperty('--py', (pointer.y - r.top).toFixed(1) + 'px');
+        panel.tracking = true;
+      } else if (panel.tracking) {
+        panel.style.removeProperty('--px');
+        panel.style.removeProperty('--py');
+        panel.tracking = false;
+      }
+    });
+  }
+
+  function scheduleMesh() {
+    if (!meshFrame) meshFrame = window.requestAnimationFrame(updatePanels);
+  }
+
+  if (panels.length) {
+    window.addEventListener('pointermove', function (event) {
+      if (event.pointerType === 'touch') return;
+      pointer = { x: event.clientX, y: event.clientY };
+      scheduleMesh();
+    }, { passive: true });
+    // Scrolling moves the panels under a still pointer.
+    window.addEventListener('scroll', function () {
+      if (pointer) scheduleMesh();
+    }, { passive: true });
+    // relatedTarget is null when the pointer leaves the window altogether.
+    window.addEventListener('pointerout', function (event) {
+      if (event.relatedTarget) return;
+      pointer = null;
+      scheduleMesh();
+    });
+    window.addEventListener('blur', function () {
+      pointer = null;
+      scheduleMesh();
+    });
+  }
+
+  // Card and tile glow: the hover gradient is centred on the pointer.
+  Array.prototype.forEach.call(document.querySelectorAll('.tile, .card'), function (el) {
+    el.addEventListener('pointermove', function (event) {
+      var r = el.getBoundingClientRect();
+      if (!r.width || !r.height) return;
+      el.style.setProperty('--gx', ((event.clientX - r.left) / r.width * 100).toFixed(2) + '%');
+      el.style.setProperty('--gy', ((event.clientY - r.top) / r.height * 100).toFixed(2) + '%');
+    }, { passive: true });
   });
+
+  // Approach timeline: CSS holds its draw-in animation paused under html.js
+  // until it scrolls into view, so the moment is not spent off screen.
+  var timeline = document.querySelector('.timeline');
+  if (timeline) {
+    if (!('IntersectionObserver' in window)) {
+      timeline.classList.add('is-in');
+    } else {
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            timeline.classList.add('is-in');
+            observer.disconnect();
+          }
+        });
+      }, { threshold: 0.25 });
+      observer.observe(timeline);
+    }
+  }
 })();
