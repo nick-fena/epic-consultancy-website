@@ -233,10 +233,49 @@ a day/night toggle (dark stays the current default).
   the site is simply dark.
 - All light-theme text pairs must be verified computationally ≥ 4.5:1.
 
+## V3 "Prism Night" redesign (added 2026-10-05, picked by Nick)
+
+Two rounds of five-plus concepts on the design canvas
+https://claude.ai/artifact/8r1YJGoAhMBdnV24pysrMT. Round-1 verdict: the Prism
+layout was liked, its colours were not; space themes (resemble client
+StarLaunch), heavy gamer styling and anything casino-like are out. Nick picked
+**A2 Prism Night** (canvas file `A2-Night.dc.html`). It replaces V2.2 entirely:
+layout, type, motion and copy all come from that artboard.
+
+- **Look:** dark ground `#070A14`, panels `#0E1324`, text `#F3F5FB`,
+  secondary `#AAB3C8`. Hero and contact are large rounded panels filled with an
+  animated grainy mesh gradient (brand triad teal `#5EEAD4`, violet `#818CF8`,
+  magenta `#E879F9`, plus indigo `#312E81` and blue `#1D4ED8`) with a light
+  that follows the pointer. Type: Bricolage Grotesque (headings) and
+  Instrument Sans (body).
+- **Structure:** hero, client logo marquee ("Worked with"), Expertise,
+  Work, Approach, About (absorbs the old "Why Epic Consultancy" section),
+  Contact, footer. Nav gains an About link.
+- **Work:** Fena Digital takes the large feature tile (swapped with
+  StarLaunch, Nick 2026-10-05). UNKJD is shown as "LINEUP Games (formerly
+  UNKJD Studios)" with a white knocked-out mono logo; the original 3D badge
+  turns into a solid blob under a brightness filter.
+- **Contact:** `info@epicconsultancy.nl` replaces the hotmail address.
+- **Theme:** dark is the default for every visitor (Night is the chosen
+  design, so no `prefers-color-scheme` fallback any more). A sun/moon toggle
+  switches to a light twin with the same triad on ground `#F6F7FB`, ink
+  `#0E1020`, secondary `#4A5068`, with deeper triad stops for text. Stored in
+  `localStorage`; a head snippet applies it before first paint. Every text
+  pair is checked computationally at 4.5:1 (3:1 for 24px+) in both themes.
+- **Language:** EN at the root, NL at `/nl/`, EN | NL switch in the nav on
+  both pages; `lang`, `hreflang` and canonical per page.
+- **Domain:** canonical, `og:url` and `hreflang` point to
+  `https://epicconsultancy.nl/`. GitHub Pages on the personal `nick-fena`
+  account; mail stays at ZXCS (only apex A/AAAA and `www` move; MX,
+  `mail.`, `webmail.`, SPF and DMARC stay untouched).
+- **og:image:** a 1200×630 render of the hero, `assets/og.png`.
+- **Unchanged rules:** voice rule v4 (no we/our/us, no I/me/my; NL no
+  ik/wij/ons/onze/mijn), always "Epic Consultancy", zero em and en dashes,
+  progressive enhancement (site readable without JS), full
+  `prefers-reduced-motion` support.
+
 ## Out of scope for V1 (future ideas)
 
-- `og:image` (needs a proper 1200×630 branded asset; flagged in code review 2026-08-20 — highest-leverage small addition before actively sharing links)
-- Custom domain
 - Per-project descriptions / case studies
 - Stats strip (needs real numbers)
 - Client logos (needs logo files + permission)
