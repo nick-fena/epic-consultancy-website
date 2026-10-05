@@ -284,6 +284,14 @@ layout, type, motion and copy all come from that artboard.
   gewerkt."); sector jargon (airdrop, on-chain, launchpad, AI-native,
   incubator) replaced with plain descriptions. "Web3" stays where it is the
   common term.
+- **Logo (2026-10-05, Nick picked "logo 5, Punt" from five on the canvas):**
+  the network-hex mark is retired (Nick found it ugly and unclear, and a
+  hexagon echoes client Hexagon Studios). The logo is now the wordmark
+  "epic" with a square gradient full stop, and "consultancy" beside it in
+  the muted tone. Outlined from Bricolage Grotesque 800/700 so it never
+  waits on the webfont; one `<symbol>` reused in nav and footer. Favicon and
+  touch icon: "e." on a dark tile. Standalone files: `assets/logo-dark.svg`,
+  `assets/logo-light.svg`.
 - **Wide screens:** hero copy and nav cap to the same column as `.wrap`
   (1320px, 1560px from a 1920px viewport); the expertise grid caps at three
   columns. Reported on Nick's 4K monitor.
