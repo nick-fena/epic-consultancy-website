@@ -269,6 +269,14 @@ layout, type, motion and copy all come from that artboard.
   account; mail stays at ZXCS (only apex A/AAAA and `www` move; MX,
   `mail.`, `webmail.`, SPF and DMARC stay untouched).
 - **og:image:** a 1200×630 render of the hero, `assets/og.png`.
+- **Copy pass (same day, Nick found the copy weak and parts of the Dutch
+  off):** hero "From chaos to cadence." / "Van chaos naar koers."; every
+  card, step and the About and Contact copy tightened to concrete verbs and
+  outcomes; Dutch rewritten where it read as translated English ("Ingebed,
+  niet ingevlogen.", "Borgen", "Even sparren?"). Facts unchanged.
+- **Wide screens:** hero copy and nav cap to the same column as `.wrap`
+  (1320px, 1560px from a 1920px viewport); the expertise grid caps at three
+  columns. Reported on Nick's 4K monitor.
 - **Unchanged rules:** voice rule v4 (no we/our/us, no I/me/my; NL no
   ik/wij/ons/onze/mijn), always "Epic Consultancy", zero em and en dashes,
   progressive enhancement (site readable without JS), full
