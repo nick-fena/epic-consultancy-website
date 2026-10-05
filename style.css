@@ -264,8 +264,16 @@ h1, h2, h3, p, ul, ol { margin: 0; }
 /* -------------------------------------------------------------------------
    Layout and type scale
    ------------------------------------------------------------------------- */
+/* One content column for every band. Sections use .wrap directly; the hero
+   copy and the nav pill cap themselves to the same column (see Hero and Nav),
+   so on wide screens the headline lines up with everything below it instead
+   of hugging the left edge (reported on a 4K monitor, 2026-10-05). The column
+   widens on very large screens so the page does not shrink to a strip. */
+:root { --wrap-max: 1320px; }
+@media (min-width: 1920px) { :root { --wrap-max: 1560px; } }
+
 .wrap {
-  max-width: 1320px;
+  max-width: var(--wrap-max);
   margin: 0 auto;
   padding-left: clamp(20px, 4vw, 40px);
   padding-right: clamp(20px, 4vw, 40px);
@@ -355,6 +363,9 @@ h1, h2, h3, p, ul, ol { margin: 0; }
   border: 1px solid var(--glass-edge);
   box-shadow: 0 12px 32px -20px rgba(var(--shade), 0.4);
   animation: down 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.15s both;
+  /* Same width as the .wrap content box (its 40px side padding removed). */
+  max-width: calc(var(--wrap-max) - 80px);
+  margin-inline: auto;
 }
 
 .brand { order: 0; }
@@ -611,6 +622,10 @@ html.js .theme-toggle { display: inline-grid; }
   flex-direction: column;
   min-height: 760px;
   padding: calc(20px + var(--nav-space)) clamp(14px, 5.5vw, 80px) clamp(32px, 5vw, 72px);
+  /* The panel stays full-bleed; the copy inside it keeps to the page column.
+     80px side padding here versus 40px on .wrap, hence the extra 80px. */
+  max-width: calc(var(--wrap-max) + 80px);
+  margin-inline: auto;
 }
 
 .hero-copy { margin-top: auto; padding-top: 72px; }
@@ -720,7 +735,9 @@ html.js .theme-toggle { display: inline-grid; }
 
 .tiles {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(340px, 100%), 1fr));
+  /* At most three columns (two 20px gaps), so the six tiles always split
+     evenly: 3 + 3, 2 + 2 + 2 or one column, never 4 + 2 on a wide screen. */
+  grid-template-columns: repeat(auto-fit, minmax(min(max(340px, calc((100% - 40px) / 3)), 100%), 1fr));
   gap: 20px;
 }
 
