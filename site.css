@@ -87,6 +87,15 @@ body { margin: 0; background: #06080F; }
 .sp-lang span, .sp-lang a { display: grid; place-items: center; min-width: 40px; height: 36px; border-radius: 999px; color: var(--dim); }
 .sp-lang span { background: rgba(255, 255, 255, 0.1); color: var(--ink); }
 .sp-lang a:hover { color: var(--ink); }
+.sp-theme {
+  display: grid; place-items: center; flex-shrink: 0; width: 44px; height: 44px; padding: 0;
+  border: 0; border-radius: 999px; background: rgba(255, 255, 255, 0.05); color: var(--muted); cursor: pointer;
+  transition: color 0.25s ease, background-color 0.25s ease;
+}
+.sp-theme:hover { color: var(--ink); background: rgba(255, 255, 255, 0.1); }
+.sp-theme svg { display: block; transition: transform 0.6s var(--ease); }
+.sp-theme:hover svg { transform: rotate(-24deg); }
+.sp-theme .sp-sun { display: none; }
 
 /* ---------- Buttons (magnetic) ---------- */
 .sp-btn {
@@ -450,6 +459,65 @@ body { margin: 0; background: #06080F; }
   .sp-contact { padding: 24px 10px 40px; }
   .sp-btn-xl { font-size: 16px; padding: 0 22px; }
 }
+
+/* ---------- Light theme ----------
+   Dark is the default for every visitor. The nav toggle sets [data-theme="light"] on
+   <html> and remembers it; a snippet in <head> applies a saved choice before first
+   paint. Everything below only adds light overrides, so the dark page is untouched.
+   The work panels and the contact block stay dark islands: both are built for white
+   logos, glows and additive light on dark. */
+[data-theme="light"] { color-scheme: light; }
+[data-theme="light"] body { background: #F3F5FA; }
+[data-theme="light"] .sp {
+  --bg: #F3F5FA; --panel: #FFFFFF; --ink: #0E1020; --muted: #4A5168; --dim: #5E667C;
+  --line: rgba(14, 16, 32, 0.09); --teal: #0F766E; --violet: #4F46E5; --magenta: #A21CAF;
+}
+[data-theme="light"] .sp .wb-panels, [data-theme="light"] .sp .sp-cpanel {
+  --bg: #06080F; --panel: #0C1120; --ink: #F3F5FB; --muted: #AAB3C8; --dim: #8A93AE;
+  --line: rgba(255, 255, 255, 0.08); --teal: #5EEAD4; --violet: #818CF8; --magenta: #E879F9;
+  color: var(--muted); color-scheme: dark;
+}
+[data-theme="light"] .sp-skip { color: var(--bg); }
+[data-theme="light"] .sp-aura { mix-blend-mode: multiply; background: radial-gradient(circle, rgba(79, 70, 229, 0.08), rgba(15, 118, 110, 0.05) 42%, transparent 70%); }
+[data-theme="light"] .sp-nav { background: rgba(255, 255, 255, 0.66); border-color: rgba(14, 16, 32, 0.08); box-shadow: 0 18px 40px -26px rgba(14, 16, 32, 0.32); }
+[data-theme="light"] .sp-links a:hover { background: rgba(14, 16, 32, 0.05); }
+[data-theme="light"] .sp-lang, [data-theme="light"] .sp-theme { background: rgba(14, 16, 32, 0.05); }
+[data-theme="light"] .sp-lang span, [data-theme="light"] .sp-theme:hover { background: rgba(14, 16, 32, 0.09); }
+[data-theme="light"] .sp-theme .sp-sun { display: block; }
+[data-theme="light"] .sp-theme .sp-moon { display: none; }
+/* Text on an ink-filled button takes the background colour of wherever the button sits. */
+[data-theme="light"] .sp-btn-primary { color: var(--bg); }
+[data-theme="light"] .sp-btn-ghost { background: rgba(14, 16, 32, 0.04); border-color: rgba(14, 16, 32, 0.14); }
+[data-theme="light"] .sp-btn-ghost:hover { background: rgba(14, 16, 32, 0.08); }
+/* On paper the deep glow colours mix to grey where they overlap; the bright triad
+   gives clean pastel washes instead. Narrow screens stack all three, so they get less. */
+[data-theme="light"] .sp-g1 { background: #5EEAD4; opacity: 0.3; }
+[data-theme="light"] .sp-g2 { background: #818CF8; opacity: 0.24; }
+[data-theme="light"] .sp-g3 { background: #E879F9; opacity: 0.18; }
+@media (max-width: 900px) {
+  [data-theme="light"] .sp-g1 { opacity: 0.2; }
+  [data-theme="light"] .sp-g2 { opacity: 0.14; }
+  [data-theme="light"] .sp-g3 { opacity: 0.1; }
+}
+[data-theme="light"] .sp-hero-fade { background: linear-gradient(rgba(243, 245, 250, 0), var(--bg)); }
+/* Deeper stops, because the gradient is text here: each passes AA on paper. */
+[data-theme="light"] .sp-gradtext { background-image: linear-gradient(100deg, #0F766E, #4F46E5 35%, #A21CAF 65%, #0F766E); }
+[data-theme="light"] .sp-lead, [data-theme="light"] .sp-bio { color: #353C52; }
+[data-theme="light"] .sp-shake { background: rgba(255, 255, 255, 0.6); border-color: rgba(14, 16, 32, 0.14); }
+[data-theme="light"] .sp-shake:hover { background: rgba(79, 70, 229, 0.1); border-color: rgba(79, 70, 229, 0.45); }
+[data-theme="light"] .sp-set img { filter: brightness(0); opacity: 0.62; }
+[data-theme="light"] .sp-set img:hover { opacity: 1; }
+[data-theme="light"] .sp-card { background: #FFFFFF; box-shadow: 0 1px 2px rgba(14, 16, 32, 0.04), 0 18px 40px -26px rgba(14, 16, 32, 0.22); }
+[data-theme="light"] .sp-card:hover::after { opacity: 0.6; }
+[data-theme="light"] .sp-card .sp-tag { background: rgba(14, 16, 32, 0.04); border-color: rgba(14, 16, 32, 0.08); }
+[data-theme="light"] .sp-ico { background: rgba(14, 16, 32, 0.04); border-color: rgba(14, 16, 32, 0.07); }
+[data-theme="light"] .sp-before { color: #6B7389; }
+[data-theme="light"] .sp-trackline { background: linear-gradient(90deg, transparent, rgba(14, 16, 32, 0.14) 8%, rgba(14, 16, 32, 0.14) 92%, transparent); }
+[data-theme="light"] .sp-wm path[fill="#AAB3C8"] { fill: var(--muted); }
+[data-theme="light"] .wb-panel:focus-visible { box-shadow: 0 0 0 3px #F3F5FA, 0 0 0 5px #0F766E, 0 0 36px -2px rgba(15, 118, 110, 0.3); }
+
+/* The switch itself: the new theme opens as a circle from the toggle (see site.js). */
+::view-transition-old(root), ::view-transition-new(root) { animation: none; mix-blend-mode: normal; }
 
 /* Motion off: the tweak, and the visitor's own setting. Everything rests in its final state. */
 .sp-still *, .sp-still *::before, .sp-still *::after { animation: none !important; transition: none !important; }

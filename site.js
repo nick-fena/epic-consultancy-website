@@ -23,6 +23,10 @@ class Component extends DCLogic {
 
   PAL = ['#5EEAD4', '#6FD3E6', '#7FB6F3', '#818CF8', '#A58AF9', '#C985F9', '#E879F9', '#F3F5FB', '#C7CCF5'];
   ALPHA = [0.95, 0.92, 0.9, 0.92, 0.9, 0.9, 0.92, 0.85, 0.45];
+  // Light theme: additive light vanishes on paper, so the swarm switches to deeper
+  // inks of the same teal, indigo and magenta, painted normally.
+  PAL_LIGHT = ['#0F766E', '#0E7490', '#2563EB', '#4F46E5', '#6D28D9', '#9333EA', '#A21CAF', '#0E1020', '#4F46E5'];
+  ALPHA_LIGHT = [0.9, 0.9, 0.88, 0.9, 0.88, 0.88, 0.9, 0.85, 0.4];
 
   setCanvas = (el) => { this.canvasEl = el; };
 
@@ -283,14 +287,17 @@ class Component extends DCLogic {
     const ctx = this.ctx;
     const ps = this.parts;
     ctx.clearRect(0, 0, this.w, this.h);
-    ctx.globalCompositeOperation = 'lighter';
+    const light = document.documentElement.getAttribute('data-theme') === 'light';
+    const pal = light ? this.PAL_LIGHT : this.PAL;
+    const alpha = light ? this.ALPHA_LIGHT : this.ALPHA;
+    ctx.globalCompositeOperation = light ? 'source-over' : 'lighter';
     let cur = -1;
     for (let i = 0; i < ps.length; i++) {
       const p = ps[i];
       if (p.ci !== cur) {
         cur = p.ci;
-        ctx.fillStyle = this.PAL[cur];
-        ctx.globalAlpha = this.ALPHA[cur];
+        ctx.fillStyle = pal[cur];
+        ctx.globalAlpha = alpha[cur];
       }
       const s = p.s * p.pr;
       const ax = p.vx < 0 ? -p.vx : p.vx;
@@ -1146,4 +1153,42 @@ __apply(); comp.componentDidMount();
     ]).then(fontsDone, fontsDone);
   } catch (err) { fontsDone(); }
   kick();
+})();
+
+/* Theme toggle. Dark is the default for every visitor; the button switches to light
+   and remembers the choice (the <head> snippet applies it before first paint). The new
+   theme opens as a circle from the button where View Transitions exist, and switches
+   at once with reduced motion. */
+(() => {
+  const root = document.documentElement;
+  const btn = document.querySelector('.sp-theme');
+  if (!btn) return;
+  const isLight = () => root.getAttribute('data-theme') === 'light';
+  const sync = () => btn.setAttribute('aria-pressed', String(isLight()));
+  const set = (light) => {
+    if (light) root.setAttribute('data-theme', 'light');
+    else root.removeAttribute('data-theme');
+    try { localStorage.setItem('theme', light ? 'light' : 'dark'); } catch (err) { /* storage blocked */ }
+    sync();
+    // With motion off the swarm is drawn once; let it repaint in the new palette.
+    if (typeof comp !== 'undefined') comp.drawnStill = false;
+  };
+  sync();
+  btn.addEventListener('click', () => {
+    const light = !isLight();
+    let calm = false;
+    try { calm = window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (err) { calm = false; }
+    if (calm || typeof document.startViewTransition !== 'function') { set(light); return; }
+    const r = btn.getBoundingClientRect();
+    const x = r.left + r.width / 2;
+    const y = r.top + r.height / 2;
+    const end = Math.hypot(Math.max(x, window.innerWidth - x), Math.max(y, window.innerHeight - y));
+    const vt = document.startViewTransition(() => set(light));
+    vt.ready.then(() => {
+      root.animate(
+        { clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${end}px at ${x}px ${y}px)`] },
+        { duration: 750, easing: 'cubic-bezier(0.16, 1, 0.3, 1)', pseudoElement: '::view-transition-new(root)' }
+      );
+    }).catch(() => { /* skipped transition: the theme is already set */ });
+  });
 })();

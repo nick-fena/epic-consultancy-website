@@ -307,8 +307,7 @@ with full creative freedom on design canvas
 https://claude.ai/artifact/8r1YJGoAhMBdnV24pysrMT (page "Showpiece"), as the
 live site, replacing V3 Prism Night.
 
-- **Design:** dark only. The light theme and its toggle are retired with V3.
-  The hero is a swarm of square blocks that forms the "epic." wordmark, with
+- **Design:** dark by default. The hero is a swarm of square blocks that forms the "epic." wordmark, with
   "Shake things up" to scatter it. Other parts: the cursor aura and ring, the
   before/after service cards, expanding work panels, "How it works" blocks
   that settle, and the "Let's talk." letters that respond to the cursor.
@@ -337,6 +336,20 @@ live site, replacing V3 Prism Night.
   and a fade. The CSS sits between the `WORK: concept b` markers in
   `site.css`, and the JS is a self-contained IIFE at the end of `site.js`.
   Untested on real Safari and iPhone.
+- **Light theme (back 2026-10-05, at Nick's request):** a sun/moon toggle sits
+  in the nav after EN/NL (`aria-pressed`, "Light theme" / "Licht thema"). Dark
+  stays the default for every visitor. The choice is stored under
+  `localStorage.theme`, the same key V3 used, and a `<head>` snippet applies it
+  before first paint. The new theme opens as a circle from the button (View
+  Transitions); with reduced motion, or without support, it switches at once.
+  The palette is paper `#F3F5FA`, ink `#0E1020`, and the deep triad
+  `#0F766E` / `#4F46E5` / `#A21CAF` for gradient text; every text colour passes
+  AA. The hero swarm switches to deep inks drawn normally, because additive
+  light vanishes on paper. The hero glows use the bright triad as pastel
+  washes. The work panels and the contact block stay dark islands in light
+  mode. The light rules are overrides only, so the dark page is unchanged: a
+  pixel diff against the pre-toggle build differs only in the nav and the
+  footer clock.
 
 ## Out of scope for V1 (future ideas)
 
