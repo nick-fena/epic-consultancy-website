@@ -24,374 +24,341 @@
 <link rel="apple-touch-icon" href="../apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700..800&amp;family=Instrument+Sans:wght@400..600&amp;display=swap" rel="stylesheet">
-<script>try { if (localStorage.getItem('theme') === 'light') document.documentElement.setAttribute('data-theme', 'light'); } catch (e) {}</script>
-<link rel="stylesheet" href="../style.css">
-<script defer src="../script.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,200..800&amp;family=Geist:wght@300..700&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../site.css?v=b2896778">
+<style>body { margin: 0; background: #06080F; }</style>
 </head>
 <body>
-<a class="skip-link" href="#main">Direct naar inhoud</a>
+<div class="sp" data-on-mousemove="rootMove">
+  <a class="sp-skip" href="#sp-main">Direct naar inhoud</a>
+  <svg class="sp-grain" aria-hidden="true" focusable="false"><filter id="sp-noise"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="3" stitchTiles="stitch"></feTurbulence><feColorMatrix type="saturate" values="0"></feColorMatrix></filter><rect width="100%" height="100%" filter="url(#sp-noise)"></rect></svg>
+  <div class="sp-aura" aria-hidden="true"></div>
+  <div class="sp-ring" aria-hidden="true"></div>
+  <div class="sp-progress" aria-hidden="true"></div>
 
-<svg class="svg-defs" aria-hidden="true" focusable="false" width="0" height="0">
-  <defs>
-    <linearGradient id="mark-gradient" x1="0" y1="0" x2="1" y2="1">
-      <stop class="mark-stop-1" offset="0"></stop>
-      <stop class="mark-stop-2" offset=".55"></stop>
-      <stop class="mark-stop-3" offset="1"></stop>
-    </linearGradient>
-    <symbol id="wordmark" viewBox="0 -730 5270 890">
-      <path class="wm-word" d="M287 14Q212 14 161.5 -7.5Q111 -29 80.0 -66.5Q49 -104 35.5 -152.0Q22 -200 22 -253Q22 -310 36.5 -362.0Q51 -414 81.5 -454.5Q112 -495 160.5 -518.5Q209 -542 277 -542Q345 -542 393.5 -518.5Q442 -495 471.0 -453.0Q500 -411 508.5 -356.0Q517 -301 506 -237L123 -231V-319L382 -324L361 -273Q367 -319 359.5 -350.5Q352 -382 332.0 -398.5Q312 -415 277 -415Q240 -415 218.0 -396.0Q196 -377 187.0 -342.5Q178 -308 178 -261Q178 -180 205.0 -143.0Q232 -106 288 -106Q312 -106 328.0 -112.0Q344 -118 354.0 -129.5Q364 -141 368.0 -157.5Q372 -174 371 -195L519 -187Q522 -154 512.5 -119.0Q503 -84 477.0 -54.0Q451 -24 404.5 -5.0Q358 14 287 14ZM518 148V-340V-528H660V-365H667Q678 -424 700.0 -463.5Q722 -503 756.5 -522.5Q791 -542 840 -542Q902 -542 945.5 -510.5Q989 -479 1011.5 -417.5Q1034 -356 1034 -266Q1034 -169 1008.5 -107.0Q983 -45 939.0 -15.5Q895 14 839 14Q794 14 759.5 -5.0Q725 -24 702.5 -63.5Q680 -103 671 -163H662Q667 -134 671.0 -102.5Q675 -71 677.5 -40.5Q680 -10 680 18V148ZM778 -119Q810 -119 830.5 -139.0Q851 -159 860.5 -191.5Q870 -224 870 -260Q870 -300 859.5 -332.5Q849 -365 828.5 -384.5Q808 -404 778 -404Q759 -404 741.0 -395.5Q723 -387 709.0 -369.5Q695 -352 686.5 -325.0Q678 -298 678 -260V-254Q678 -224 684.0 -202.0Q690 -180 700.0 -164.0Q710 -148 723.0 -138.0Q736 -128 750.0 -123.5Q764 -119 778 -119ZM1037 0V-528H1199V0ZM1117 -566Q1071 -566 1046.5 -585.5Q1022 -605 1022 -642Q1022 -680 1046.5 -699.5Q1071 -719 1117 -719Q1164 -719 1188.5 -699.0Q1213 -679 1213 -642Q1213 -606 1188.5 -586.0Q1164 -566 1117 -566ZM1469 14Q1398 14 1347.0 -7.5Q1296 -29 1264.0 -67.0Q1232 -105 1217.0 -154.0Q1202 -203 1202 -258Q1202 -314 1217.0 -364.5Q1232 -415 1263.5 -455.5Q1295 -496 1345.5 -519.0Q1396 -542 1467 -542Q1551 -542 1602.5 -510.5Q1654 -479 1674.5 -429.0Q1695 -379 1686 -321L1546 -310Q1548 -346 1538.5 -369.5Q1529 -393 1510.0 -404.5Q1491 -416 1464 -416Q1440 -416 1421.5 -407.0Q1403 -398 1390.5 -379.5Q1378 -361 1371.5 -333.0Q1365 -305 1365 -266Q1365 -216 1376.5 -180.0Q1388 -144 1411.5 -125.0Q1435 -106 1471 -106Q1508 -106 1527.0 -124.0Q1546 -142 1552.0 -169.5Q1558 -197 1554 -224L1703 -217Q1709 -173 1699.0 -131.5Q1689 -90 1660.5 -57.0Q1632 -24 1584.5 -5.0Q1537 14 1469 14Z"></path>
-      <rect class="wm-dot" x="1734" y="-200" width="200" height="200" rx="35"></rect>
-      <path class="wm-sub" transform="translate(2054 0) scale(0.6)" d="M286 14Q218 14 168.5 -7.0Q119 -28 87.0 -65.5Q55 -103 40.0 -152.0Q25 -201 25 -257Q25 -314 40.0 -364.5Q55 -415 86.0 -454.5Q117 -494 166.5 -516.5Q216 -539 284 -539Q364 -539 414.5 -508.5Q465 -478 486.0 -429.5Q507 -381 500 -325L374 -314Q375 -351 364.0 -375.5Q353 -400 332.0 -412.5Q311 -425 281 -425Q257 -425 236.5 -416.0Q216 -407 201.0 -387.5Q186 -368 178.0 -337.5Q170 -307 170 -264Q170 -209 184.0 -171.5Q198 -134 224.5 -114.5Q251 -95 288 -95Q328 -95 349.5 -113.5Q371 -132 379.0 -160.5Q387 -189 383 -219L516 -212Q521 -167 510.0 -126.5Q499 -86 471.0 -54.0Q443 -22 397.0 -4.0Q351 14 286 14ZM806 14Q731 14 672.5 -16.5Q614 -47 581.5 -108.0Q549 -169 549 -262Q549 -357 583.0 -418.0Q617 -479 675.5 -509.0Q734 -539 807 -539Q883 -539 941.0 -508.5Q999 -478 1031.5 -416.5Q1064 -355 1064 -262Q1064 -166 1030.0 -105.0Q996 -44 937.5 -15.0Q879 14 806 14ZM809 -94Q844 -94 868.0 -113.0Q892 -132 905.0 -168.0Q918 -204 918 -254Q918 -309 904.0 -346.5Q890 -384 864.5 -404.5Q839 -425 803 -425Q769 -425 744.5 -406.0Q720 -387 707.5 -350.5Q695 -314 695 -263Q695 -184 725.0 -139.0Q755 -94 809 -94ZM1117 0V-285L1116 -525H1240L1236 -303H1245Q1251 -383 1271.5 -435.0Q1292 -487 1329.5 -513.0Q1367 -539 1425 -539Q1511 -539 1554.0 -480.5Q1597 -422 1597 -304V0H1453V-288Q1453 -351 1434.5 -382.0Q1416 -413 1375 -413Q1340 -413 1314.5 -389.0Q1289 -365 1275.0 -313.0Q1261 -261 1261 -176V0ZM1884 14Q1832 14 1787.5 3.5Q1743 -7 1710.5 -30.0Q1678 -53 1661.0 -91.5Q1644 -130 1647 -184L1773 -196Q1774 -159 1788.0 -135.5Q1802 -112 1827.5 -101.5Q1853 -91 1889 -91Q1927 -91 1952.0 -103.5Q1977 -116 1977 -144Q1977 -161 1966.5 -171.0Q1956 -181 1932.0 -189.0Q1908 -197 1867 -207Q1819 -218 1779.0 -230.5Q1739 -243 1710.0 -260.5Q1681 -278 1665.5 -304.5Q1650 -331 1650 -370Q1650 -423 1678.5 -460.5Q1707 -498 1757.5 -518.5Q1808 -539 1874 -539Q1934 -539 1985.5 -520.0Q2037 -501 2067.0 -458.5Q2097 -416 2090 -346L1966 -334Q1969 -366 1957.0 -388.0Q1945 -410 1921.5 -421.5Q1898 -433 1866 -433Q1828 -433 1806.5 -418.5Q1785 -404 1785 -381Q1785 -362 1798.5 -350.0Q1812 -338 1838.0 -330.5Q1864 -323 1904 -314Q1938 -307 1974.5 -296.5Q2011 -286 2042.5 -268.5Q2074 -251 2093.5 -221.5Q2113 -192 2113 -146Q2113 -98 2086.5 -61.5Q2060 -25 2009.0 -5.5Q1958 14 1884 14ZM2325 14Q2238 14 2196.0 -47.5Q2154 -109 2154 -237V-525H2299V-239Q2299 -170 2317.5 -141.5Q2336 -113 2373 -113Q2399 -113 2419.5 -126.0Q2440 -139 2455.5 -165.0Q2471 -191 2479.0 -232.0Q2487 -273 2487 -330V-525H2631V-245V0H2507L2510 -210H2503Q2496 -132 2474.5 -82.5Q2453 -33 2416.0 -9.5Q2379 14 2325 14ZM2698 0V-695H2842V0ZM3111 11Q3024 11 2980.5 -34.0Q2937 -79 2937 -173V-411H2878V-505H2886Q2941 -511 2964.5 -540.5Q2988 -570 2993 -630L2994 -643H3080V-525H3205V-408H3080V-186Q3080 -148 3098.5 -131.0Q3117 -114 3145 -114Q3160 -114 3175.5 -118.5Q3191 -123 3205 -131V-3Q3176 5 3153.0 8.0Q3130 11 3111 11ZM3395 14Q3354 14 3318.5 -0.5Q3283 -15 3260.5 -46.0Q3238 -77 3238 -129Q3238 -177 3256.5 -207.5Q3275 -238 3307.0 -256.0Q3339 -274 3377.0 -284.0Q3415 -294 3454 -301Q3507 -311 3533.5 -316.5Q3560 -322 3569.0 -330.5Q3578 -339 3578 -354Q3578 -388 3554.0 -405.5Q3530 -423 3491 -423Q3468 -423 3444.0 -414.5Q3420 -406 3404.5 -384.0Q3389 -362 3389 -323L3260 -334Q3260 -394 3280.5 -433.5Q3301 -473 3336.0 -496.0Q3371 -519 3413.0 -529.0Q3455 -539 3496 -539Q3570 -539 3619.5 -511.5Q3669 -484 3694.0 -431.0Q3719 -378 3719 -301V-206Q3719 -172 3719.0 -137.5Q3719 -103 3719.5 -68.5Q3720 -34 3720 0H3593Q3594 -38 3595.0 -77.0Q3596 -116 3596 -158H3590Q3585 -111 3559.0 -72.0Q3533 -33 3491.0 -9.5Q3449 14 3395 14ZM3451 -93Q3471 -93 3493.5 -101.5Q3516 -110 3535.0 -127.5Q3554 -145 3566.0 -173.5Q3578 -202 3578 -243L3579 -266L3605 -271Q3597 -257 3576.5 -249.0Q3556 -241 3531.0 -236.5Q3506 -232 3480.0 -227.0Q3454 -222 3432.0 -214.0Q3410 -206 3396.5 -191.5Q3383 -177 3383 -152Q3383 -124 3402.0 -108.5Q3421 -93 3451 -93ZM3781 0V-285L3780 -525H3904L3900 -303H3909Q3915 -383 3935.5 -435.0Q3956 -487 3993.5 -513.0Q4031 -539 4089 -539Q4175 -539 4218.0 -480.5Q4261 -422 4261 -304V0H4117V-288Q4117 -351 4098.5 -382.0Q4080 -413 4039 -413Q4004 -413 3978.5 -389.0Q3953 -365 3939.0 -313.0Q3925 -261 3925 -176V0ZM4571 14Q4503 14 4453.5 -7.0Q4404 -28 4372.0 -65.5Q4340 -103 4325.0 -152.0Q4310 -201 4310 -257Q4310 -314 4325.0 -364.5Q4340 -415 4371.0 -454.5Q4402 -494 4451.5 -516.5Q4501 -539 4569 -539Q4649 -539 4699.5 -508.5Q4750 -478 4771.0 -429.5Q4792 -381 4785 -325L4659 -314Q4660 -351 4649.0 -375.5Q4638 -400 4617.0 -412.5Q4596 -425 4566 -425Q4542 -425 4521.5 -416.0Q4501 -407 4486.0 -387.5Q4471 -368 4463.0 -337.5Q4455 -307 4455 -264Q4455 -209 4469.0 -171.5Q4483 -134 4509.5 -114.5Q4536 -95 4573 -95Q4613 -95 4634.5 -113.5Q4656 -132 4664.0 -160.5Q4672 -189 4668 -219L4801 -212Q4806 -167 4795.0 -126.5Q4784 -86 4756.0 -54.0Q4728 -22 4682.0 -4.0Q4636 14 4571 14ZM5033 154Q5001 154 4965.0 148.5Q4929 143 4894.0 130.0Q4859 117 4830 98L4869 -43Q4903 -8 4946.5 6.5Q4990 21 5027 21Q5080 21 5114.5 -1.0Q5149 -23 5165.5 -63.0Q5182 -103 5182 -159L5184 -258H5176Q5172 -186 5150.5 -140.5Q5129 -95 5093.0 -73.5Q5057 -52 5011 -52Q4953 -52 4915.5 -81.5Q4878 -111 4859.5 -168.5Q4841 -226 4841 -310V-525H4984V-346Q4984 -259 5004.0 -218.5Q5024 -178 5067 -178Q5090 -178 5108.5 -189.5Q5127 -201 5139.0 -225.0Q5151 -249 5157.5 -284.5Q5164 -320 5164 -367V-525H5307V-154Q5307 -105 5297.5 -59.5Q5288 -14 5268.0 24.5Q5248 63 5216.0 92.5Q5184 122 5138.5 138.0Q5093 154 5033 154Z"></path>
-    </symbol>
-  </defs>
-</svg>
-
-<header class="site-header">
-  <nav class="nav frost" aria-label="Hoofdmenu">
-    <a class="brand" href="#top" aria-label="Epic Consultancy">
-      <svg class="wordmark" viewBox="0 0 5270 890" height="28" aria-hidden="true" focusable="false"><use href="#wordmark"></use></svg>
-    </a>
-    <button class="icon-btn menu-toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="Menu">
-      <svg class="icon-open" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M4 7h16M4 12h16M4 17h16"></path></svg>
-      <svg class="icon-close" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18"></path></svg>
-    </button>
-    <div class="nav-links" id="nav-links">
-      <a class="nav-link" href="#expertise">Expertise</a>
-      <a class="nav-link" href="#work">Werk</a>
-      <a class="nav-link" href="#approach">Aanpak</a>
-      <a class="nav-link" href="#about">Over</a>
-      <a class="nav-link" href="#contact">Contact</a>
+  <header class="sp-nav-wrap">
+    <div class="sp-w">
+      <nav class="sp-nav" aria-label="Hoofdmenu">
+        <a class="sp-brand" href="#top" aria-label="Epic Consultancy, terug naar boven">
+          <svg class="sp-wm" height="26" viewBox="0 -730 5270 890" aria-hidden="true" focusable="false"><defs><linearGradient id="sp-wg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#5EEAD4"></stop><stop offset="0.55" stop-color="#818CF8"></stop><stop offset="1" stop-color="#E879F9"></stop></linearGradient></defs><path fill="currentColor" d="M287 14Q212 14 161.5 -7.5Q111 -29 80.0 -66.5Q49 -104 35.5 -152.0Q22 -200 22 -253Q22 -310 36.5 -362.0Q51 -414 81.5 -454.5Q112 -495 160.5 -518.5Q209 -542 277 -542Q345 -542 393.5 -518.5Q442 -495 471.0 -453.0Q500 -411 508.5 -356.0Q517 -301 506 -237L123 -231V-319L382 -324L361 -273Q367 -319 359.5 -350.5Q352 -382 332.0 -398.5Q312 -415 277 -415Q240 -415 218.0 -396.0Q196 -377 187.0 -342.5Q178 -308 178 -261Q178 -180 205.0 -143.0Q232 -106 288 -106Q312 -106 328.0 -112.0Q344 -118 354.0 -129.5Q364 -141 368.0 -157.5Q372 -174 371 -195L519 -187Q522 -154 512.5 -119.0Q503 -84 477.0 -54.0Q451 -24 404.5 -5.0Q358 14 287 14ZM518 148V-340V-528H660V-365H667Q678 -424 700.0 -463.5Q722 -503 756.5 -522.5Q791 -542 840 -542Q902 -542 945.5 -510.5Q989 -479 1011.5 -417.5Q1034 -356 1034 -266Q1034 -169 1008.5 -107.0Q983 -45 939.0 -15.5Q895 14 839 14Q794 14 759.5 -5.0Q725 -24 702.5 -63.5Q680 -103 671 -163H662Q667 -134 671.0 -102.5Q675 -71 677.5 -40.5Q680 -10 680 18V148ZM778 -119Q810 -119 830.5 -139.0Q851 -159 860.5 -191.5Q870 -224 870 -260Q870 -300 859.5 -332.5Q849 -365 828.5 -384.5Q808 -404 778 -404Q759 -404 741.0 -395.5Q723 -387 709.0 -369.5Q695 -352 686.5 -325.0Q678 -298 678 -260V-254Q678 -224 684.0 -202.0Q690 -180 700.0 -164.0Q710 -148 723.0 -138.0Q736 -128 750.0 -123.5Q764 -119 778 -119ZM1037 0V-528H1199V0ZM1117 -566Q1071 -566 1046.5 -585.5Q1022 -605 1022 -642Q1022 -680 1046.5 -699.5Q1071 -719 1117 -719Q1164 -719 1188.5 -699.0Q1213 -679 1213 -642Q1213 -606 1188.5 -586.0Q1164 -566 1117 -566ZM1469 14Q1398 14 1347.0 -7.5Q1296 -29 1264.0 -67.0Q1232 -105 1217.0 -154.0Q1202 -203 1202 -258Q1202 -314 1217.0 -364.5Q1232 -415 1263.5 -455.5Q1295 -496 1345.5 -519.0Q1396 -542 1467 -542Q1551 -542 1602.5 -510.5Q1654 -479 1674.5 -429.0Q1695 -379 1686 -321L1546 -310Q1548 -346 1538.5 -369.5Q1529 -393 1510.0 -404.5Q1491 -416 1464 -416Q1440 -416 1421.5 -407.0Q1403 -398 1390.5 -379.5Q1378 -361 1371.5 -333.0Q1365 -305 1365 -266Q1365 -216 1376.5 -180.0Q1388 -144 1411.5 -125.0Q1435 -106 1471 -106Q1508 -106 1527.0 -124.0Q1546 -142 1552.0 -169.5Q1558 -197 1554 -224L1703 -217Q1709 -173 1699.0 -131.5Q1689 -90 1660.5 -57.0Q1632 -24 1584.5 -5.0Q1537 14 1469 14Z"></path><rect x="1734" y="-200" width="200" height="200" rx="35" fill="url(#sp-wg)"></rect><path fill="#AAB3C8" transform="translate(2054 0) scale(0.6)" d="M286 14Q218 14 168.5 -7.0Q119 -28 87.0 -65.5Q55 -103 40.0 -152.0Q25 -201 25 -257Q25 -314 40.0 -364.5Q55 -415 86.0 -454.5Q117 -494 166.5 -516.5Q216 -539 284 -539Q364 -539 414.5 -508.5Q465 -478 486.0 -429.5Q507 -381 500 -325L374 -314Q375 -351 364.0 -375.5Q353 -400 332.0 -412.5Q311 -425 281 -425Q257 -425 236.5 -416.0Q216 -407 201.0 -387.5Q186 -368 178.0 -337.5Q170 -307 170 -264Q170 -209 184.0 -171.5Q198 -134 224.5 -114.5Q251 -95 288 -95Q328 -95 349.5 -113.5Q371 -132 379.0 -160.5Q387 -189 383 -219L516 -212Q521 -167 510.0 -126.5Q499 -86 471.0 -54.0Q443 -22 397.0 -4.0Q351 14 286 14ZM806 14Q731 14 672.5 -16.5Q614 -47 581.5 -108.0Q549 -169 549 -262Q549 -357 583.0 -418.0Q617 -479 675.5 -509.0Q734 -539 807 -539Q883 -539 941.0 -508.5Q999 -478 1031.5 -416.5Q1064 -355 1064 -262Q1064 -166 1030.0 -105.0Q996 -44 937.5 -15.0Q879 14 806 14ZM809 -94Q844 -94 868.0 -113.0Q892 -132 905.0 -168.0Q918 -204 918 -254Q918 -309 904.0 -346.5Q890 -384 864.5 -404.5Q839 -425 803 -425Q769 -425 744.5 -406.0Q720 -387 707.5 -350.5Q695 -314 695 -263Q695 -184 725.0 -139.0Q755 -94 809 -94ZM1117 0V-285L1116 -525H1240L1236 -303H1245Q1251 -383 1271.5 -435.0Q1292 -487 1329.5 -513.0Q1367 -539 1425 -539Q1511 -539 1554.0 -480.5Q1597 -422 1597 -304V0H1453V-288Q1453 -351 1434.5 -382.0Q1416 -413 1375 -413Q1340 -413 1314.5 -389.0Q1289 -365 1275.0 -313.0Q1261 -261 1261 -176V0ZM1884 14Q1832 14 1787.5 3.5Q1743 -7 1710.5 -30.0Q1678 -53 1661.0 -91.5Q1644 -130 1647 -184L1773 -196Q1774 -159 1788.0 -135.5Q1802 -112 1827.5 -101.5Q1853 -91 1889 -91Q1927 -91 1952.0 -103.5Q1977 -116 1977 -144Q1977 -161 1966.5 -171.0Q1956 -181 1932.0 -189.0Q1908 -197 1867 -207Q1819 -218 1779.0 -230.5Q1739 -243 1710.0 -260.5Q1681 -278 1665.5 -304.5Q1650 -331 1650 -370Q1650 -423 1678.5 -460.5Q1707 -498 1757.5 -518.5Q1808 -539 1874 -539Q1934 -539 1985.5 -520.0Q2037 -501 2067.0 -458.5Q2097 -416 2090 -346L1966 -334Q1969 -366 1957.0 -388.0Q1945 -410 1921.5 -421.5Q1898 -433 1866 -433Q1828 -433 1806.5 -418.5Q1785 -404 1785 -381Q1785 -362 1798.5 -350.0Q1812 -338 1838.0 -330.5Q1864 -323 1904 -314Q1938 -307 1974.5 -296.5Q2011 -286 2042.5 -268.5Q2074 -251 2093.5 -221.5Q2113 -192 2113 -146Q2113 -98 2086.5 -61.5Q2060 -25 2009.0 -5.5Q1958 14 1884 14ZM2325 14Q2238 14 2196.0 -47.5Q2154 -109 2154 -237V-525H2299V-239Q2299 -170 2317.5 -141.5Q2336 -113 2373 -113Q2399 -113 2419.5 -126.0Q2440 -139 2455.5 -165.0Q2471 -191 2479.0 -232.0Q2487 -273 2487 -330V-525H2631V-245V0H2507L2510 -210H2503Q2496 -132 2474.5 -82.5Q2453 -33 2416.0 -9.5Q2379 14 2325 14ZM2698 0V-695H2842V0ZM3111 11Q3024 11 2980.5 -34.0Q2937 -79 2937 -173V-411H2878V-505H2886Q2941 -511 2964.5 -540.5Q2988 -570 2993 -630L2994 -643H3080V-525H3205V-408H3080V-186Q3080 -148 3098.5 -131.0Q3117 -114 3145 -114Q3160 -114 3175.5 -118.5Q3191 -123 3205 -131V-3Q3176 5 3153.0 8.0Q3130 11 3111 11ZM3395 14Q3354 14 3318.5 -0.5Q3283 -15 3260.5 -46.0Q3238 -77 3238 -129Q3238 -177 3256.5 -207.5Q3275 -238 3307.0 -256.0Q3339 -274 3377.0 -284.0Q3415 -294 3454 -301Q3507 -311 3533.5 -316.5Q3560 -322 3569.0 -330.5Q3578 -339 3578 -354Q3578 -388 3554.0 -405.5Q3530 -423 3491 -423Q3468 -423 3444.0 -414.5Q3420 -406 3404.5 -384.0Q3389 -362 3389 -323L3260 -334Q3260 -394 3280.5 -433.5Q3301 -473 3336.0 -496.0Q3371 -519 3413.0 -529.0Q3455 -539 3496 -539Q3570 -539 3619.5 -511.5Q3669 -484 3694.0 -431.0Q3719 -378 3719 -301V-206Q3719 -172 3719.0 -137.5Q3719 -103 3719.5 -68.5Q3720 -34 3720 0H3593Q3594 -38 3595.0 -77.0Q3596 -116 3596 -158H3590Q3585 -111 3559.0 -72.0Q3533 -33 3491.0 -9.5Q3449 14 3395 14ZM3451 -93Q3471 -93 3493.5 -101.5Q3516 -110 3535.0 -127.5Q3554 -145 3566.0 -173.5Q3578 -202 3578 -243L3579 -266L3605 -271Q3597 -257 3576.5 -249.0Q3556 -241 3531.0 -236.5Q3506 -232 3480.0 -227.0Q3454 -222 3432.0 -214.0Q3410 -206 3396.5 -191.5Q3383 -177 3383 -152Q3383 -124 3402.0 -108.5Q3421 -93 3451 -93ZM3781 0V-285L3780 -525H3904L3900 -303H3909Q3915 -383 3935.5 -435.0Q3956 -487 3993.5 -513.0Q4031 -539 4089 -539Q4175 -539 4218.0 -480.5Q4261 -422 4261 -304V0H4117V-288Q4117 -351 4098.5 -382.0Q4080 -413 4039 -413Q4004 -413 3978.5 -389.0Q3953 -365 3939.0 -313.0Q3925 -261 3925 -176V0ZM4571 14Q4503 14 4453.5 -7.0Q4404 -28 4372.0 -65.5Q4340 -103 4325.0 -152.0Q4310 -201 4310 -257Q4310 -314 4325.0 -364.5Q4340 -415 4371.0 -454.5Q4402 -494 4451.5 -516.5Q4501 -539 4569 -539Q4649 -539 4699.5 -508.5Q4750 -478 4771.0 -429.5Q4792 -381 4785 -325L4659 -314Q4660 -351 4649.0 -375.5Q4638 -400 4617.0 -412.5Q4596 -425 4566 -425Q4542 -425 4521.5 -416.0Q4501 -407 4486.0 -387.5Q4471 -368 4463.0 -337.5Q4455 -307 4455 -264Q4455 -209 4469.0 -171.5Q4483 -134 4509.5 -114.5Q4536 -95 4573 -95Q4613 -95 4634.5 -113.5Q4656 -132 4664.0 -160.5Q4672 -189 4668 -219L4801 -212Q4806 -167 4795.0 -126.5Q4784 -86 4756.0 -54.0Q4728 -22 4682.0 -4.0Q4636 14 4571 14ZM5033 154Q5001 154 4965.0 148.5Q4929 143 4894.0 130.0Q4859 117 4830 98L4869 -43Q4903 -8 4946.5 6.5Q4990 21 5027 21Q5080 21 5114.5 -1.0Q5149 -23 5165.5 -63.0Q5182 -103 5182 -159L5184 -258H5176Q5172 -186 5150.5 -140.5Q5129 -95 5093.0 -73.5Q5057 -52 5011 -52Q4953 -52 4915.5 -81.5Q4878 -111 4859.5 -168.5Q4841 -226 4841 -310V-525H4984V-346Q4984 -259 5004.0 -218.5Q5024 -178 5067 -178Q5090 -178 5108.5 -189.5Q5127 -201 5139.0 -225.0Q5151 -249 5157.5 -284.5Q5164 -320 5164 -367V-525H5307V-154Q5307 -105 5297.5 -59.5Q5288 -14 5268.0 24.5Q5248 63 5216.0 92.5Q5184 122 5138.5 138.0Q5093 154 5033 154Z"></path></svg>
+        </a>
+        <div class="sp-links">
+          <a href="#services">Diensten</a>
+          <a href="#work">Werk</a>
+          <a href="#how">Aanpak</a>
+          <a href="#about">Over</a>
+        </div>
+        <div class="sp-right">
+          <div class="sp-lang" role="group" aria-label="Taal">
+            <a href="../" lang="en" hreflang="en" aria-label="English">EN</a>
+            <span aria-current="page">NL</span>
+          </div>
+          <a class="sp-btn sp-btn-primary sp-btn-sm sp-nav-cta" href="#contact" data-on-mousemove="mag" data-on-mouseleave="magLeave">Neem contact op</a>
+        </div>
+      </nav>
     </div>
-    <div class="nav-tools">
-      <button class="icon-btn theme-toggle" type="button" aria-label="Schakel thema">
-        <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg>
-        <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg>
+  </header>
+
+  <main id="sp-main">
+    <section class="sp-hero" id="top" aria-labelledby="sp-hero-title" data-on-mousemove="heroMove" data-on-mouseleave="heroLeave">
+      <div class="sp-glow" aria-hidden="true"><span class="sp-g sp-g1"></span><span class="sp-g sp-g2"></span><span class="sp-g sp-g3"></span></div>
+      <svg class="sp-fallback" viewBox="0 -730 5270 890" aria-hidden="true" focusable="false"><path fill="currentColor" d="M287 14Q212 14 161.5 -7.5Q111 -29 80.0 -66.5Q49 -104 35.5 -152.0Q22 -200 22 -253Q22 -310 36.5 -362.0Q51 -414 81.5 -454.5Q112 -495 160.5 -518.5Q209 -542 277 -542Q345 -542 393.5 -518.5Q442 -495 471.0 -453.0Q500 -411 508.5 -356.0Q517 -301 506 -237L123 -231V-319L382 -324L361 -273Q367 -319 359.5 -350.5Q352 -382 332.0 -398.5Q312 -415 277 -415Q240 -415 218.0 -396.0Q196 -377 187.0 -342.5Q178 -308 178 -261Q178 -180 205.0 -143.0Q232 -106 288 -106Q312 -106 328.0 -112.0Q344 -118 354.0 -129.5Q364 -141 368.0 -157.5Q372 -174 371 -195L519 -187Q522 -154 512.5 -119.0Q503 -84 477.0 -54.0Q451 -24 404.5 -5.0Q358 14 287 14ZM518 148V-340V-528H660V-365H667Q678 -424 700.0 -463.5Q722 -503 756.5 -522.5Q791 -542 840 -542Q902 -542 945.5 -510.5Q989 -479 1011.5 -417.5Q1034 -356 1034 -266Q1034 -169 1008.5 -107.0Q983 -45 939.0 -15.5Q895 14 839 14Q794 14 759.5 -5.0Q725 -24 702.5 -63.5Q680 -103 671 -163H662Q667 -134 671.0 -102.5Q675 -71 677.5 -40.5Q680 -10 680 18V148ZM778 -119Q810 -119 830.5 -139.0Q851 -159 860.5 -191.5Q870 -224 870 -260Q870 -300 859.5 -332.5Q849 -365 828.5 -384.5Q808 -404 778 -404Q759 -404 741.0 -395.5Q723 -387 709.0 -369.5Q695 -352 686.5 -325.0Q678 -298 678 -260V-254Q678 -224 684.0 -202.0Q690 -180 700.0 -164.0Q710 -148 723.0 -138.0Q736 -128 750.0 -123.5Q764 -119 778 -119ZM1037 0V-528H1199V0ZM1117 -566Q1071 -566 1046.5 -585.5Q1022 -605 1022 -642Q1022 -680 1046.5 -699.5Q1071 -719 1117 -719Q1164 -719 1188.5 -699.0Q1213 -679 1213 -642Q1213 -606 1188.5 -586.0Q1164 -566 1117 -566ZM1469 14Q1398 14 1347.0 -7.5Q1296 -29 1264.0 -67.0Q1232 -105 1217.0 -154.0Q1202 -203 1202 -258Q1202 -314 1217.0 -364.5Q1232 -415 1263.5 -455.5Q1295 -496 1345.5 -519.0Q1396 -542 1467 -542Q1551 -542 1602.5 -510.5Q1654 -479 1674.5 -429.0Q1695 -379 1686 -321L1546 -310Q1548 -346 1538.5 -369.5Q1529 -393 1510.0 -404.5Q1491 -416 1464 -416Q1440 -416 1421.5 -407.0Q1403 -398 1390.5 -379.5Q1378 -361 1371.5 -333.0Q1365 -305 1365 -266Q1365 -216 1376.5 -180.0Q1388 -144 1411.5 -125.0Q1435 -106 1471 -106Q1508 -106 1527.0 -124.0Q1546 -142 1552.0 -169.5Q1558 -197 1554 -224L1703 -217Q1709 -173 1699.0 -131.5Q1689 -90 1660.5 -57.0Q1632 -24 1584.5 -5.0Q1537 14 1469 14Z"></path><rect x="1734" y="-200" width="200" height="200" rx="35" fill="url(#sp-wg)"></rect><path fill="#AAB3C8" transform="translate(2054 0) scale(0.6)" d="M286 14Q218 14 168.5 -7.0Q119 -28 87.0 -65.5Q55 -103 40.0 -152.0Q25 -201 25 -257Q25 -314 40.0 -364.5Q55 -415 86.0 -454.5Q117 -494 166.5 -516.5Q216 -539 284 -539Q364 -539 414.5 -508.5Q465 -478 486.0 -429.5Q507 -381 500 -325L374 -314Q375 -351 364.0 -375.5Q353 -400 332.0 -412.5Q311 -425 281 -425Q257 -425 236.5 -416.0Q216 -407 201.0 -387.5Q186 -368 178.0 -337.5Q170 -307 170 -264Q170 -209 184.0 -171.5Q198 -134 224.5 -114.5Q251 -95 288 -95Q328 -95 349.5 -113.5Q371 -132 379.0 -160.5Q387 -189 383 -219L516 -212Q521 -167 510.0 -126.5Q499 -86 471.0 -54.0Q443 -22 397.0 -4.0Q351 14 286 14ZM806 14Q731 14 672.5 -16.5Q614 -47 581.5 -108.0Q549 -169 549 -262Q549 -357 583.0 -418.0Q617 -479 675.5 -509.0Q734 -539 807 -539Q883 -539 941.0 -508.5Q999 -478 1031.5 -416.5Q1064 -355 1064 -262Q1064 -166 1030.0 -105.0Q996 -44 937.5 -15.0Q879 14 806 14ZM809 -94Q844 -94 868.0 -113.0Q892 -132 905.0 -168.0Q918 -204 918 -254Q918 -309 904.0 -346.5Q890 -384 864.5 -404.5Q839 -425 803 -425Q769 -425 744.5 -406.0Q720 -387 707.5 -350.5Q695 -314 695 -263Q695 -184 725.0 -139.0Q755 -94 809 -94ZM1117 0V-285L1116 -525H1240L1236 -303H1245Q1251 -383 1271.5 -435.0Q1292 -487 1329.5 -513.0Q1367 -539 1425 -539Q1511 -539 1554.0 -480.5Q1597 -422 1597 -304V0H1453V-288Q1453 -351 1434.5 -382.0Q1416 -413 1375 -413Q1340 -413 1314.5 -389.0Q1289 -365 1275.0 -313.0Q1261 -261 1261 -176V0ZM1884 14Q1832 14 1787.5 3.5Q1743 -7 1710.5 -30.0Q1678 -53 1661.0 -91.5Q1644 -130 1647 -184L1773 -196Q1774 -159 1788.0 -135.5Q1802 -112 1827.5 -101.5Q1853 -91 1889 -91Q1927 -91 1952.0 -103.5Q1977 -116 1977 -144Q1977 -161 1966.5 -171.0Q1956 -181 1932.0 -189.0Q1908 -197 1867 -207Q1819 -218 1779.0 -230.5Q1739 -243 1710.0 -260.5Q1681 -278 1665.5 -304.5Q1650 -331 1650 -370Q1650 -423 1678.5 -460.5Q1707 -498 1757.5 -518.5Q1808 -539 1874 -539Q1934 -539 1985.5 -520.0Q2037 -501 2067.0 -458.5Q2097 -416 2090 -346L1966 -334Q1969 -366 1957.0 -388.0Q1945 -410 1921.5 -421.5Q1898 -433 1866 -433Q1828 -433 1806.5 -418.5Q1785 -404 1785 -381Q1785 -362 1798.5 -350.0Q1812 -338 1838.0 -330.5Q1864 -323 1904 -314Q1938 -307 1974.5 -296.5Q2011 -286 2042.5 -268.5Q2074 -251 2093.5 -221.5Q2113 -192 2113 -146Q2113 -98 2086.5 -61.5Q2060 -25 2009.0 -5.5Q1958 14 1884 14ZM2325 14Q2238 14 2196.0 -47.5Q2154 -109 2154 -237V-525H2299V-239Q2299 -170 2317.5 -141.5Q2336 -113 2373 -113Q2399 -113 2419.5 -126.0Q2440 -139 2455.5 -165.0Q2471 -191 2479.0 -232.0Q2487 -273 2487 -330V-525H2631V-245V0H2507L2510 -210H2503Q2496 -132 2474.5 -82.5Q2453 -33 2416.0 -9.5Q2379 14 2325 14ZM2698 0V-695H2842V0ZM3111 11Q3024 11 2980.5 -34.0Q2937 -79 2937 -173V-411H2878V-505H2886Q2941 -511 2964.5 -540.5Q2988 -570 2993 -630L2994 -643H3080V-525H3205V-408H3080V-186Q3080 -148 3098.5 -131.0Q3117 -114 3145 -114Q3160 -114 3175.5 -118.5Q3191 -123 3205 -131V-3Q3176 5 3153.0 8.0Q3130 11 3111 11ZM3395 14Q3354 14 3318.5 -0.5Q3283 -15 3260.5 -46.0Q3238 -77 3238 -129Q3238 -177 3256.5 -207.5Q3275 -238 3307.0 -256.0Q3339 -274 3377.0 -284.0Q3415 -294 3454 -301Q3507 -311 3533.5 -316.5Q3560 -322 3569.0 -330.5Q3578 -339 3578 -354Q3578 -388 3554.0 -405.5Q3530 -423 3491 -423Q3468 -423 3444.0 -414.5Q3420 -406 3404.5 -384.0Q3389 -362 3389 -323L3260 -334Q3260 -394 3280.5 -433.5Q3301 -473 3336.0 -496.0Q3371 -519 3413.0 -529.0Q3455 -539 3496 -539Q3570 -539 3619.5 -511.5Q3669 -484 3694.0 -431.0Q3719 -378 3719 -301V-206Q3719 -172 3719.0 -137.5Q3719 -103 3719.5 -68.5Q3720 -34 3720 0H3593Q3594 -38 3595.0 -77.0Q3596 -116 3596 -158H3590Q3585 -111 3559.0 -72.0Q3533 -33 3491.0 -9.5Q3449 14 3395 14ZM3451 -93Q3471 -93 3493.5 -101.5Q3516 -110 3535.0 -127.5Q3554 -145 3566.0 -173.5Q3578 -202 3578 -243L3579 -266L3605 -271Q3597 -257 3576.5 -249.0Q3556 -241 3531.0 -236.5Q3506 -232 3480.0 -227.0Q3454 -222 3432.0 -214.0Q3410 -206 3396.5 -191.5Q3383 -177 3383 -152Q3383 -124 3402.0 -108.5Q3421 -93 3451 -93ZM3781 0V-285L3780 -525H3904L3900 -303H3909Q3915 -383 3935.5 -435.0Q3956 -487 3993.5 -513.0Q4031 -539 4089 -539Q4175 -539 4218.0 -480.5Q4261 -422 4261 -304V0H4117V-288Q4117 -351 4098.5 -382.0Q4080 -413 4039 -413Q4004 -413 3978.5 -389.0Q3953 -365 3939.0 -313.0Q3925 -261 3925 -176V0ZM4571 14Q4503 14 4453.5 -7.0Q4404 -28 4372.0 -65.5Q4340 -103 4325.0 -152.0Q4310 -201 4310 -257Q4310 -314 4325.0 -364.5Q4340 -415 4371.0 -454.5Q4402 -494 4451.5 -516.5Q4501 -539 4569 -539Q4649 -539 4699.5 -508.5Q4750 -478 4771.0 -429.5Q4792 -381 4785 -325L4659 -314Q4660 -351 4649.0 -375.5Q4638 -400 4617.0 -412.5Q4596 -425 4566 -425Q4542 -425 4521.5 -416.0Q4501 -407 4486.0 -387.5Q4471 -368 4463.0 -337.5Q4455 -307 4455 -264Q4455 -209 4469.0 -171.5Q4483 -134 4509.5 -114.5Q4536 -95 4573 -95Q4613 -95 4634.5 -113.5Q4656 -132 4664.0 -160.5Q4672 -189 4668 -219L4801 -212Q4806 -167 4795.0 -126.5Q4784 -86 4756.0 -54.0Q4728 -22 4682.0 -4.0Q4636 14 4571 14ZM5033 154Q5001 154 4965.0 148.5Q4929 143 4894.0 130.0Q4859 117 4830 98L4869 -43Q4903 -8 4946.5 6.5Q4990 21 5027 21Q5080 21 5114.5 -1.0Q5149 -23 5165.5 -63.0Q5182 -103 5182 -159L5184 -258H5176Q5172 -186 5150.5 -140.5Q5129 -95 5093.0 -73.5Q5057 -52 5011 -52Q4953 -52 4915.5 -81.5Q4878 -111 4859.5 -168.5Q4841 -226 4841 -310V-525H4984V-346Q4984 -259 5004.0 -218.5Q5024 -178 5067 -178Q5090 -178 5108.5 -189.5Q5127 -201 5139.0 -225.0Q5151 -249 5157.5 -284.5Q5164 -320 5164 -367V-525H5307V-154Q5307 -105 5297.5 -59.5Q5288 -14 5268.0 24.5Q5248 63 5216.0 92.5Q5184 122 5138.5 138.0Q5093 154 5033 154Z"></path></svg>
+      <canvas class="sp-swarm" data-ref="setCanvas" aria-hidden="true"></canvas>
+      <div class="sp-hero-fade" aria-hidden="true"></div>
+
+      <div class="sp-w sp-hero-inner">
+        <h1 class="sp-h1" id="sp-hero-title" aria-label="Minder chaos. Sterkere teams. Betere producten.">
+          <span class="sp-l1" aria-hidden="true"><span class="sp-word"><span class="sp-ch" style="--dx:-70px;--dy:-90px;--r:-28deg;--d:0.0s">M</span><span class="sp-ch" style="--dx:34px;--dy:-120px;--r:18deg;--d:0.04s">i</span><span class="sp-ch" style="--dx:-26px;--dy:96px;--r:-40deg;--d:0.08s">n</span><span class="sp-ch" style="--dx:76px;--dy:64px;--r:30deg;--d:0.12s">d</span><span class="sp-ch" style="--dx:-96px;--dy:44px;--r:22deg;--d:0.16s">e</span><span class="sp-ch" style="--dx:44px;--dy:-78px;--r:-16deg;--d:0.2s">r</span></span> <span class="sp-word"><span class="sp-ch" style="--dx:-34px;--dy:126px;--r:36deg;--d:0.24s">c</span><span class="sp-ch" style="--dx:98px;--dy:-46px;--r:-26deg;--d:0.28s">h</span><span class="sp-ch" style="--dx:-56px;--dy:-66px;--r:14deg;--d:0.32s">a</span><span class="sp-ch" style="--dx:66px;--dy:98px;--r:42deg;--d:0.36s">o</span><span class="sp-ch" style="--dx:-84px;--dy:-34px;--r:-20deg;--d:0.4s">s</span><span class="sp-ch" style="--dx:52px;--dy:112px;--r:26deg;--d:0.44s">.</span></span></span>
+          <span class="sp-line sp-l2" aria-hidden="true"><span>Sterkere teams.</span></span>
+          <span class="sp-line sp-l3" aria-hidden="true"><span class="sp-gradtext">Betere producten.</span></span>
+        </h1>
+        <p class="sp-lead">Epic Consultancy helpt cryptoprojecten en gamestudio&#8217;s om hun team en product op orde te krijgen. Eén ervaren consultant, van het eerste gesprek tot een resultaat dat blijft.</p>
+        <div class="sp-actions">
+          <a class="sp-btn sp-btn-primary" href="#contact" data-on-mousemove="mag" data-on-mouseleave="magLeave">Start een gesprek</a>
+          <a class="sp-btn sp-btn-ghost" href="#work" data-on-mousemove="mag" data-on-mouseleave="magLeave">Bekijk het werk</a>
+        </div>
+      </div>
+
+      <button class="sp-shake" type="button" data-on-click="burst" data-on-mousemove="mag" data-on-mouseleave="magLeave">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M16 3h5v5"></path><path d="M4 20L21 3"></path><path d="M21 16v5h-5"></path><path d="M15 15l6 6"></path><path d="M4 4l5 5"></path></svg>
+        Gooi het door elkaar
       </button>
-      <div class="lang" role="group" aria-label="Taal">
-        <a href="../" hreflang="en" lang="en">EN</a>
-        <span aria-current="page">NL</span>
-      </div>
-      <a class="btn btn-sm nav-cta" href="#contact">Neem contact op</a>
-    </div>
-  </nav>
-</header>
+    </section>
 
-<main id="main">
-  <div class="hero-wrap" id="top">
-    <div class="hero mesh-panel">
-      <div class="mesh" aria-hidden="true">
-        <div class="mesh-hue">
-          <div class="mesh-layer">
-            <div class="blob blob-1"></div>
-            <div class="blob blob-2"></div>
-            <div class="blob blob-soft blob-3"></div>
-            <div class="blob blob-4"></div>
-            <div class="blob blob-soft blob-5"></div>
-            <div class="follow"></div>
-          </div>
-        </div>
-      </div>
-      <svg class="grain" aria-hidden="true" focusable="false">
-        <filter id="grain-hero" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency="0.82" numOctaves="3" stitchTiles="stitch"></feTurbulence><feColorMatrix type="saturate" values="0"></feColorMatrix></filter>
-        <rect width="100%" height="100%" filter="url(#grain-hero)"></rect>
-      </svg>
-      <div class="veil" aria-hidden="true"></div>
-
-      <div class="hero-inner">
-        <div class="hero-copy">
-          <h1 class="h1">
-            <span class="line line-1"><span>Je team en product</span></span>
-            <span class="line line-2"><span>op orde.</span></span>
-          </h1>
-          <p class="hero-intro up">Epic Consultancy helpt cryptoprojecten, projecten met een eigen token en gamestudio's om hun team en product op orde te krijgen: duidelijke rollen, processen die werken en een product waar mensen echt op zitten te wachten.</p>
-          <div class="hero-actions up">
-            <a class="btn" href="#contact">Neem contact op</a>
-            <a class="ghost frost" href="#work">Bekijk het werk</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <section class="proof wrap up" aria-labelledby="proof-label">
-    <p class="proof-label" id="proof-label">Werkte samen met</p>
-    <div class="marquee">
-      <div class="marquee-track">
-        <div class="logo-set">
-          <img src="../assets/logos/starlaunch.png" alt="StarLaunch" width="154" height="26">
-          <img src="../assets/logos/lineup.png" alt="LINEUP Games" width="106" height="51">
-          <img src="../assets/logos/hexagon.png" alt="Hexagon Studios" width="83" height="34">
-          <img src="../assets/logos/bravoready.png" alt="Bravo Ready" width="89" height="46">
-          <img src="../assets/logos/fena.svg" alt="Fena Digital" width="80" height="30">
-        </div>
-        <div class="logo-set" aria-hidden="true">
-          <img src="../assets/logos/starlaunch.png" alt="" width="154" height="26">
-          <img src="../assets/logos/lineup.png" alt="" width="106" height="51">
-          <img src="../assets/logos/hexagon.png" alt="" width="83" height="34">
-          <img src="../assets/logos/bravoready.png" alt="" width="89" height="46">
-          <img src="../assets/logos/fena.svg" alt="" width="80" height="30">
-        </div>
-        <div class="logo-set" aria-hidden="true">
-          <img src="../assets/logos/starlaunch.png" alt="" width="154" height="26">
-          <img src="../assets/logos/lineup.png" alt="" width="106" height="51">
-          <img src="../assets/logos/hexagon.png" alt="" width="83" height="34">
-          <img src="../assets/logos/bravoready.png" alt="" width="89" height="46">
-          <img src="../assets/logos/fena.svg" alt="" width="80" height="30">
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="expertise" class="section" aria-labelledby="expertise-title">
-    <div class="wrap">
-      <h2 class="h2 section-title" id="expertise-title">Waar Epic Consultancy mee helpt.</h2>
-      <div class="tiles">
-        <article class="tile d-web3">
-          <p class="tile-domain"><span class="swatch" aria-hidden="true"></span>Web3</p>
-          <div class="tile-body">
-            <h3 class="h3">Management</h3>
-            <p class="tile-text">Wie beslist wat, wie is waarvoor verantwoordelijk, en hoe het team bijblijft als het snel groeit.</p>
-          </div>
-        </article>
-        <article class="tile d-web3">
-          <p class="tile-domain"><span class="swatch" aria-hidden="true"></span>Web3</p>
-          <div class="tile-body">
-            <h3 class="h3">Processen</h3>
-            <p class="tile-text">Werkafspraken en processen die blijven werken als het team groeit. Minder brandjes blussen, meer gedaan krijgen.</p>
-          </div>
-        </article>
-        <article class="tile d-web3">
-          <p class="tile-domain"><span class="swatch" aria-hidden="true"></span>Web3</p>
-          <div class="tile-body">
-            <h3 class="h3">Productstrategie</h3>
-            <p class="tile-text">Een plan voor je product op basis van wat gebruikers nodig hebben, niet van de laatste hype.</p>
-          </div>
-        </article>
-        <article class="tile d-comm">
-          <p class="tile-domain"><span class="swatch" aria-hidden="true"></span>Community</p>
-          <div class="tile-body">
-            <h3 class="h3">Community opbouwen</h3>
-            <p class="tile-text">Een community die blijft voor het product, niet alleen voor gratis tokens.</p>
-          </div>
-        </article>
-        <article class="tile d-game">
-          <p class="tile-domain"><span class="swatch" aria-hidden="true"></span>Gaming</p>
-          <div class="tile-body">
-            <h3 class="h3">Game design</h3>
-            <p class="tile-text">Hoe een mobiele game speelt, hoe spelers vooruitgaan en hoe de in-game economie werkt.</p>
-          </div>
-        </article>
-        <article class="tile d-game">
-          <p class="tile-domain"><span class="swatch" aria-hidden="true"></span>Gaming</p>
-          <div class="tile-body">
-            <h3 class="h3">Spelers vasthouden</h3>
-            <p class="tile-text">Zorgen dat spelers terugkomen, zonder trucjes waar ze zich aan ergeren.</p>
-          </div>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <section id="work" class="section" aria-labelledby="work-title">
-    <div class="wrap">
-      <div class="work-head">
-        <h2 class="h2" id="work-title">Met wie Epic Consultancy heeft gewerkt.</h2>
-        <p class="work-intro">Van cryptoplatform tot gamestudio: andere teams, andere fases, hetzelfde doel. Een sterker team en een beter product.</p>
-      </div>
-      <div class="bento">
-        <article class="card card-feature d-soft">
-          <div class="bloom" aria-hidden="true"></div>
-          <div class="flood" aria-hidden="true"></div>
-          <div class="card-head">
-            <img class="card-logo" src="../assets/logos/fena.svg" alt="" width="170" height="64">
-            <span class="tag">Software</span>
-          </div>
-          <div>
-            <h3 class="h3 card-name">Fena Digital</h3>
-            <p class="card-desc">Softwarestudio uit Göteborg, Zweden, die met AI software op maat bouwt voor het mkb.</p>
-          </div>
-        </article>
-        <article class="card d-game">
-          <div class="flood" aria-hidden="true"></div>
-          <div class="card-head">
-            <img class="card-logo" src="../assets/logos/lineup.png" alt="" width="114" height="55">
-            <span class="tag">Gaming</span>
-          </div>
-          <div>
-            <h3 class="h3 card-name">LINEUP Games</h3>
-            <p class="card-sub">Voorheen UNKJD Studios</p>
-            <p class="card-desc">Web3-studio die mobiele voetbalgames maakt, opgericht door mensen met jarenlange ervaring in mobile gaming en crypto.</p>
-          </div>
-        </article>
-        <article class="card d-game">
-          <div class="flood" aria-hidden="true"></div>
-          <div class="card-head">
-            <img class="card-logo" src="../assets/logos/hexagon.png" alt="" width="83" height="34">
-            <span class="tag">Gaming</span>
-          </div>
-          <div>
-            <h3 class="h3 card-name">Hexagon Studios</h3>
-            <p class="card-desc">De studio achter Honeyland, een mobiele game op de Solana-blockchain waarin spelers kunnen verdienen. Later overgenomen door Bravo Ready.</p>
-          </div>
-        </article>
-        <article class="card d-game">
-          <div class="flood" aria-hidden="true"></div>
-          <div class="card-head">
-            <img class="card-logo" src="../assets/logos/bravoready.png" alt="" width="100" height="52">
-            <span class="tag">Gaming</span>
-          </div>
-          <div>
-            <h3 class="h3 card-name">Bravo Ready</h3>
-            <p class="card-desc">Studio uit Montreal die multiplayergames op de blockchain bouwt waarin je om echt geld speelt, vooral bekend van de shooter BR1: Infinite.</p>
-          </div>
-        </article>
-        <article class="card d-web3">
-          <div class="flood" aria-hidden="true"></div>
-          <div class="card-head">
-            <img class="card-logo" src="../assets/logos/starlaunch.png" alt="" width="166" height="28">
-            <span class="tag">Web3</span>
-          </div>
-          <div>
-            <h3 class="h3 card-name">StarLaunch</h3>
-            <p class="card-desc">Platform op Solana dat nieuwe cryptoprojecten selecteert, financiert en lanceert. Bekend om de verzekering voor deelnemers en een aanpak die van geld ophalen bijna een spel maakt.</p>
-          </div>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <section id="approach" class="section approach" aria-labelledby="approach-title">
-    <div class="wrap">
-      <h2 class="h2" id="approach-title">Hoe het werkt.</h2>
-      <div class="timeline">
-        <div class="track" aria-hidden="true">
-          <div class="track-base"></div>
-          <div class="track-fill"></div>
-          <div class="comet-lane">
-            <div class="comet-glow"></div>
-            <div class="comet"></div>
-          </div>
-        </div>
-        <ol class="steps">
-          <li class="step">
-            <span class="node" aria-hidden="true">1</span>
-            <div>
-              <h3 class="h3">Kennismaken</h3>
-              <p class="step-text">Praten met de mensen die het werk doen, om te zien hoe het echt loopt.</p>
+    <section class="sp-proof" aria-label="Werkte samen met">
+      <div class="sp-w sp-proof-row">
+        <p class="sp-proof-label">Werkte samen met</p>
+        <div class="sp-marquee">
+          <div class="sp-track">
+            <div class="sp-set">
+              <img src="../assets/logos/fena.svg" alt="Fena Digital" style="height:32px;width:85px">
+              <img src="../assets/logos/starlaunch.png" alt="StarLaunch" style="height:26px;width:154px">
+              <img src="../assets/logos/lineup.png" alt="LINEUP Games" style="height:40px;width:83px">
+              <img src="../assets/logos/hexagon.png" alt="Hexagon Studios" style="height:34px;width:83px">
+              <img src="../assets/logos/bravoready.png" alt="Bravo Ready" style="height:38px;width:73px">
             </div>
+            <div class="sp-set" aria-hidden="true">
+              <img src="../assets/logos/fena.svg" alt="" style="height:32px;width:85px">
+              <img src="../assets/logos/starlaunch.png" alt="" style="height:26px;width:154px">
+              <img src="../assets/logos/lineup.png" alt="" style="height:40px;width:83px">
+              <img src="../assets/logos/hexagon.png" alt="" style="height:34px;width:83px">
+              <img src="../assets/logos/bravoready.png" alt="" style="height:38px;width:73px">
+            </div>
+            <div class="sp-set" aria-hidden="true">
+              <img src="../assets/logos/fena.svg" alt="" style="height:32px;width:85px">
+              <img src="../assets/logos/starlaunch.png" alt="" style="height:26px;width:154px">
+              <img src="../assets/logos/lineup.png" alt="" style="height:40px;width:83px">
+              <img src="../assets/logos/hexagon.png" alt="" style="height:34px;width:83px">
+              <img src="../assets/logos/bravoready.png" alt="" style="height:38px;width:73px">
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="sp-sec" id="services" aria-labelledby="sp-services-title">
+      <div class="sp-w">
+        <div class="sp-head sp-rv">
+          <h2 class="sp-h2" id="sp-services-title">Wat er beter wordt.</h2>
+          <p class="sp-intro">Zes plekken waar teams vaak vastlopen, en wat er verandert als het op orde is.</p>
+        </div>
+        <div class="sp-cards sp-rv">
+          <article class="sp-card" style="--i:0" data-on-mousemove="spot">
+            <div class="sp-card-top">
+              <span class="sp-tag" style="--tc:#5EEAD4">Web3</span>
+              <span class="sp-ico" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 19v-1.5a3.5 3.5 0 0 0-3.5-3.5h-5A3.5 3.5 0 0 0 4 17.5V19"></path><circle cx="10" cy="7.5" r="3.5"></circle><path d="M20 19v-1.5a3.5 3.5 0 0 0-2.5-3.35"></path><path d="M15.5 4.2a3.5 3.5 0 0 1 0 6.6"></path></svg></span>
+            </div>
+            <h3 class="sp-h3">Management</h3>
+            <div class="sp-ba">
+              <p class="sp-before"><span class="sp-bl">Voor</span><span class="sp-strike">Niemand weet wie wat beslist.</span></p>
+              <p class="sp-after"><span class="sp-bl">Na</span>Duidelijke rollen, snelle beslissingen en echt eigenaarschap.</p>
+            </div>
+          </article>
+          <article class="sp-card" style="--i:1" data-on-mousemove="spot">
+            <div class="sp-card-top">
+              <span class="sp-tag" style="--tc:#5EEAD4">Web3</span>
+              <span class="sp-ico" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12a8 8 0 0 1-13.7 5.6"></path><path d="M4 12a8 8 0 0 1 13.7-5.6"></path><path d="M17.5 3v3.6h-3.6"></path><path d="M6.5 21v-3.6h3.6"></path></svg></span>
+            </div>
+            <h3 class="sp-h3">Processen</h3>
+            <div class="sp-ba">
+              <p class="sp-before"><span class="sp-bl">Voor</span><span class="sp-strike">Elke week voelt als brandjes blussen.</span></p>
+              <p class="sp-after"><span class="sp-bl">Na</span>Processen die blijven werken als het team groeit.</p>
+            </div>
+          </article>
+          <article class="sp-card" style="--i:2" data-on-mousemove="spot">
+            <div class="sp-card-top">
+              <span class="sp-tag" style="--tc:#5EEAD4">Web3</span>
+              <span class="sp-ico" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M15.5 8.5l-2 5-5 2 2-5z"></path></svg></span>
+            </div>
+            <h3 class="sp-h3">Product</h3>
+            <div class="sp-ba">
+              <p class="sp-before"><span class="sp-bl">Voor</span><span class="sp-strike">De roadmap volgt de laatste hype.</span></p>
+              <p class="sp-after"><span class="sp-bl">Na</span>Een productplan op basis van wat gebruikers nodig hebben.</p>
+            </div>
+          </article>
+          <article class="sp-card" style="--i:3" data-on-mousemove="spot">
+            <div class="sp-card-top">
+              <span class="sp-tag" style="--tc:#E879F9">Community</span>
+              <span class="sp-ico" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20.5l1.4-5A8 8 0 1 1 21 12z"></path></svg></span>
+            </div>
+            <h3 class="sp-h3">Community</h3>
+            <div class="sp-ba">
+              <p class="sp-before"><span class="sp-bl">Voor</span><span class="sp-strike">Mensen komen alleen voor gratis tokens.</span></p>
+              <p class="sp-after"><span class="sp-bl">Na</span>Een community die blijft voor het product.</p>
+            </div>
+          </article>
+          <article class="sp-card" style="--i:4" data-on-mousemove="spot">
+            <div class="sp-card-top">
+              <span class="sp-tag" style="--tc:#818CF8">Gaming</span>
+              <span class="sp-ico" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="7" width="19" height="11" rx="5.5"></rect><path d="M7.5 10.5v4M5.5 12.5h4"></path><circle cx="15.5" cy="11.5" r="1"></circle><circle cx="17.8" cy="13.8" r="1"></circle></svg></span>
+            </div>
+            <h3 class="sp-h3">Game design</h3>
+            <div class="sp-ba">
+              <p class="sp-before"><span class="sp-bl">Voor</span><span class="sp-strike">Spelers zien geen reden om door te spelen.</span></p>
+              <p class="sp-after"><span class="sp-bl">Na</span>Een gameloop, progressie en economie die kloppen.</p>
+            </div>
+          </article>
+          <article class="sp-card" style="--i:5" data-on-mousemove="spot">
+            <div class="sp-card-top">
+              <span class="sp-tag" style="--tc:#818CF8">Gaming</span>
+              <span class="sp-ico" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11a8 8 0 0 1 14-5.3L20 8"></path><path d="M20 3v5h-5"></path><path d="M21 13a8 8 0 0 1-14 5.3L4 16"></path><path d="M4 21v-5h5"></path></svg></span>
+            </div>
+            <h3 class="sp-h3">Spelers vasthouden</h3>
+            <div class="sp-ba">
+              <p class="sp-before"><span class="sp-bl">Voor</span><span class="sp-strike">De meeste spelers zijn na dag één weg.</span></p>
+              <p class="sp-after"><span class="sp-bl">Na</span>Redenen om terug te komen, zonder trucjes waar ze zich aan ergeren.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="sp-sec" id="work" aria-labelledby="sp-work-title">
+      <div class="sp-w">
+        <div class="sp-head sp-rv">
+          <h2 class="sp-h2" id="sp-work-title">Teams waarmee Epic Consultancy heeft gewerkt.</h2>
+          <p class="sp-intro">Van cryptoplatforms tot gamestudio&#8217;s. Andere teams, andere fases, hetzelfde doel: een sterker team en een beter product.</p>
+        </div>
+        <div class="sp-panels sp-rv">
+          <article class="sp-panel sp-open" tabindex="0" style="--p1:#14B8A6;--p2:#3B82F6">
+            <div class="sp-pbg" aria-hidden="true"></div>
+            <span class="sp-dot" aria-hidden="true"></span>
+            <span class="sp-vert" aria-hidden="true">Fena Digital</span>
+            <div class="sp-body">
+              <img src="../assets/logos/fena.svg" alt="" style="height:40px;width:106px">
+              <span class="sp-tag" style="--tc:#5EEAD4">Software</span>
+              <h3 class="sp-h3">Fena Digital</h3>
+              <p class="sp-desc">Een softwarestudio uit Göteborg, Zweden, die met AI software op maat bouwt voor het mkb.</p>
+            </div>
+          </article>
+          <article class="sp-panel" tabindex="0" style="--p1:#3B82F6;--p2:#818CF8">
+            <div class="sp-pbg" aria-hidden="true"></div>
+            <span class="sp-dot" aria-hidden="true"></span>
+            <span class="sp-vert" aria-hidden="true">LINEUP Games</span>
+            <div class="sp-body">
+              <img src="../assets/logos/lineup.png" alt="" style="height:48px;width:100px">
+              <span class="sp-tag" style="--tc:#818CF8">Gaming</span>
+              <h3 class="sp-h3">LINEUP Games</h3>
+              <p class="sp-sub">Voorheen UNKJD Studios</p>
+              <p class="sp-desc">Een Web3-studio die mobiele voetbalgames maakt, opgericht door mensen met jarenlange ervaring in mobile gaming en crypto.</p>
+            </div>
+          </article>
+          <article class="sp-panel" tabindex="0" style="--p1:#818CF8;--p2:#C026D3">
+            <div class="sp-pbg" aria-hidden="true"></div>
+            <span class="sp-dot" aria-hidden="true"></span>
+            <span class="sp-vert" aria-hidden="true">Hexagon Studios</span>
+            <div class="sp-body">
+              <img src="../assets/logos/hexagon.png" alt="" style="height:36px;width:88px">
+              <span class="sp-tag" style="--tc:#818CF8">Gaming</span>
+              <h3 class="sp-h3">Hexagon Studios</h3>
+              <p class="sp-desc">De studio achter Honeyland, een mobiele game op de Solana-blockchain waarin spelers kunnen verdienen. Later overgenomen door Bravo Ready.</p>
+            </div>
+          </article>
+          <article class="sp-panel" tabindex="0" style="--p1:#C026D3;--p2:#14B8A6">
+            <div class="sp-pbg" aria-hidden="true"></div>
+            <span class="sp-dot" aria-hidden="true"></span>
+            <span class="sp-vert" aria-hidden="true">Bravo Ready</span>
+            <div class="sp-body">
+              <img src="../assets/logos/bravoready.png" alt="" style="height:44px;width:85px">
+              <span class="sp-tag" style="--tc:#818CF8">Gaming</span>
+              <h3 class="sp-h3">Bravo Ready</h3>
+              <p class="sp-desc">Een studio uit Montreal die multiplayergames op de blockchain bouwt waarin je om echt geld speelt, vooral bekend van de shooter BR1: Infinite.</p>
+            </div>
+          </article>
+          <article class="sp-panel" tabindex="0" style="--p1:#2563EB;--p2:#14B8A6">
+            <div class="sp-pbg" aria-hidden="true"></div>
+            <span class="sp-dot" aria-hidden="true"></span>
+            <span class="sp-vert" aria-hidden="true">StarLaunch</span>
+            <div class="sp-body">
+              <img src="../assets/logos/starlaunch.png" alt="" style="height:28px;width:166px">
+              <span class="sp-tag" style="--tc:#5EEAD4">Web3</span>
+              <h3 class="sp-h3">StarLaunch</h3>
+              <p class="sp-desc">Een platform op Solana dat nieuwe cryptoprojecten selecteert, financiert en lanceert. Bekend om de verzekering voor deelnemers en een aanpak die van geld ophalen bijna een spel maakt.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="sp-sec" id="how" aria-labelledby="sp-how-title">
+      <div class="sp-w">
+        <div class="sp-head sp-rv">
+          <h2 class="sp-h2" id="sp-how-title">Hoe het werkt.</h2>
+          <p class="sp-intro">Vier stappen, van het eerste gesprek tot verandering die blijft. Beweeg over een stap en de blokjes vallen op hun plek.</p>
+        </div>
+        <ol class="sp-steps sp-rv" style="list-style:none;margin:0;padding:0">
+          <li class="sp-trackline" aria-hidden="true"></li>
+          <li class="sp-step sp-s1">
+            <div class="sp-blocks" aria-hidden="true"><span class="sp-b" style="--x:-14;--y:-10;--r:-35;--bc:#5EEAD4"></span><span class="sp-b" style="--x:12;--y:-18;--r:25;--bc:#6FD3E6"></span><span class="sp-b" style="--x:20;--y:6;--r:-50;--bc:#7FB6F3"></span><span class="sp-b" style="--x:-18;--y:14;--r:40;--bc:#6FD3E6"></span><span class="sp-b" style="--x:6;--y:-4;--r:15;--bc:#818CF8"></span><span class="sp-b" style="--x:16;--y:18;--r:-20;--bc:#A58AF9"></span><span class="sp-b" style="--x:-10;--y:20;--r:55;--bc:#7FB6F3"></span><span class="sp-b" style="--x:-20;--y:-4;--r:-15;--bc:#A58AF9"></span><span class="sp-b" style="--x:10;--y:-14;--r:30;--bc:#E879F9"></span></div>
+            <span class="sp-num">01</span>
+            <h3 class="sp-h3">Kennismaken met het team</h3>
+            <p>Praten met de mensen die het werk doen, om te zien hoe het echt loopt.</p>
           </li>
-          <li class="step">
-            <span class="node" aria-hidden="true">2</span>
-            <div>
-              <h3 class="h3">Knelpunten vinden</h3>
-              <p class="step-text">Een eerlijk beeld van wat het team tegenhoudt: het proces, het product of de mensen.</p>
-            </div>
+          <li class="sp-step sp-s2">
+            <div class="sp-blocks" aria-hidden="true"><span class="sp-b" style="--x:-14;--y:-10;--r:-35;--bc:#5EEAD4"></span><span class="sp-b" style="--x:12;--y:-18;--r:25;--bc:#6FD3E6"></span><span class="sp-b" style="--x:20;--y:6;--r:-50;--bc:#7FB6F3"></span><span class="sp-b" style="--x:-18;--y:14;--r:40;--bc:#6FD3E6"></span><span class="sp-b" style="--x:6;--y:-4;--r:15;--bc:#818CF8"></span><span class="sp-b" style="--x:16;--y:18;--r:-20;--bc:#A58AF9"></span><span class="sp-b" style="--x:-10;--y:20;--r:55;--bc:#7FB6F3"></span><span class="sp-b" style="--x:-20;--y:-4;--r:-15;--bc:#A58AF9"></span><span class="sp-b" style="--x:10;--y:-14;--r:30;--bc:#E879F9"></span></div>
+            <span class="sp-num">02</span>
+            <h3 class="sp-h3">Vinden wat je tegenhoudt</h3>
+            <p>Een eerlijke blik op het proces, het product en de mensen.</p>
           </li>
-          <li class="step">
-            <span class="node" aria-hidden="true">3</span>
-            <div>
-              <h3 class="h3">Samen oplossen</h3>
-              <p class="step-text">Oplossingen die samen met het team worden uitgewerkt, niet van bovenaf opgelegd.</p>
-            </div>
+          <li class="sp-step sp-s3">
+            <div class="sp-blocks" aria-hidden="true"><span class="sp-b" style="--x:-14;--y:-10;--r:-35;--bc:#5EEAD4"></span><span class="sp-b" style="--x:12;--y:-18;--r:25;--bc:#6FD3E6"></span><span class="sp-b" style="--x:20;--y:6;--r:-50;--bc:#7FB6F3"></span><span class="sp-b" style="--x:-18;--y:14;--r:40;--bc:#6FD3E6"></span><span class="sp-b" style="--x:6;--y:-4;--r:15;--bc:#818CF8"></span><span class="sp-b" style="--x:16;--y:18;--r:-20;--bc:#A58AF9"></span><span class="sp-b" style="--x:-10;--y:20;--r:55;--bc:#7FB6F3"></span><span class="sp-b" style="--x:-20;--y:-4;--r:-15;--bc:#A58AF9"></span><span class="sp-b" style="--x:10;--y:-14;--r:30;--bc:#E879F9"></span></div>
+            <span class="sp-num">03</span>
+            <h3 class="sp-h3">Samen oplossen</h3>
+            <p>Oplossingen die samen met je team worden uitgewerkt, niet van bovenaf opgelegd.</p>
           </li>
-          <li class="step">
-            <span class="node" aria-hidden="true">4</span>
-            <div>
-              <h3 class="h3">Zorgen dat het blijft</h3>
-              <p class="step-text">Betrokken blijven tot het team zelfstandig verder kan.</p>
-            </div>
+          <li class="sp-step sp-s4">
+            <div class="sp-blocks" aria-hidden="true"><span class="sp-b" style="--x:-14;--y:-10;--r:-35;--bc:#5EEAD4"></span><span class="sp-b" style="--x:12;--y:-18;--r:25;--bc:#6FD3E6"></span><span class="sp-b" style="--x:20;--y:6;--r:-50;--bc:#7FB6F3"></span><span class="sp-b" style="--x:-18;--y:14;--r:40;--bc:#6FD3E6"></span><span class="sp-b" style="--x:6;--y:-4;--r:15;--bc:#818CF8"></span><span class="sp-b" style="--x:16;--y:18;--r:-20;--bc:#A58AF9"></span><span class="sp-b" style="--x:-10;--y:20;--r:55;--bc:#7FB6F3"></span><span class="sp-b" style="--x:-20;--y:-4;--r:-15;--bc:#A58AF9"></span><span class="sp-b" style="--x:10;--y:-14;--r:30;--bc:#E879F9"></span></div>
+            <span class="sp-num">04</span>
+            <h3 class="sp-h3">Zorgen dat het blijft</h3>
+            <p>Betrokken blijven tot het team zelfstandig verder kan.</p>
           </li>
         </ol>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section id="about" class="section" aria-labelledby="about-title">
-    <div class="wrap">
-      <div class="about-panel">
-        <div class="about-top">
-          <div class="about-person">
-            <div class="ring">
-              <img class="portrait" src="../assets/nick-smans.jpg" alt="Nick Smans" width="200" height="200">
+    <section class="sp-sec" id="about" aria-labelledby="sp-about-title">
+      <div class="sp-w sp-about sp-rv">
+        <div>
+          <h2 class="sp-h2" id="sp-about-title">Eén persoon. Van begin tot eind.</h2>
+          <p class="sp-bio">Epic Consultancy is Nick Smans. Nick doet elke opdracht zelf: geen juniors, geen accountmanagers, geen doorverwijzen naar iemand anders. Wie het probleem vindt, lost het ook op.</p>
+          <div class="sp-reasons">
+            <div class="sp-reason">
+              <span class="sp-ico" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.4 6.8 19.1l1-5.8L3.5 9.2l5.9-.9z"></path></svg></span>
+              <h3 class="sp-h3">Ervaring uit de praktijk</h3>
+              <p>Heeft zelf teams geleid en producten gelanceerd in crypto en gaming, niet alleen advies gegeven.</p>
             </div>
-            <div>
-              <p class="person-name">Nick Smans</p>
-              <p class="person-role">Oprichter en enige consultant</p>
+            <div class="sp-reason">
+              <span class="sp-ico" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"></path><path d="M12 12l8-4.5M12 12v9M12 12L4 7.5"></path></svg></span>
+              <h3 class="sp-h3">Thuis in crypto en gaming</h3>
+              <p>Tokencommunity&#8217;s en spelersgedrag zijn bekend terrein, dus je hoeft niet bij nul te beginnen.</p>
             </div>
-          </div>
-          <div class="about-copy">
-            <h2 class="h2" id="about-title">Eén aanspreekpunt, van begin tot eind.</h2>
-            <p class="about-bio">Epic Consultancy is Nick Smans. Nick doet elke opdracht zelf: geen juniors, geen accountmanagers, geen doorverwijzen naar iemand anders. Wie het probleem vindt, lost het ook op.</p>
+            <div class="sp-reason">
+              <span class="sp-ico" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8"></path><path d="M15 7h6v6"></path></svg></span>
+              <h3 class="sp-h3">Denkt aan de lange termijn</h3>
+              <p>Liever groei die blijft dan snel succes, met het oog op waar het team over twee jaar staat.</p>
+            </div>
           </div>
         </div>
-        <ul class="reasons">
-          <li class="d-web3">
-            <span class="chip" aria-hidden="true">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"></path><circle cx="16" cy="7" r="2"></circle><circle cx="10" cy="17" r="2"></circle></svg>
-            </span>
-            <h3 class="reason-title">Ervaring uit de praktijk</h3>
-            <p class="reason-text">Heeft zelf teams geleid en producten gelanceerd in crypto en gaming, niet alleen advies gegeven.</p>
-          </li>
-          <li class="d-comm">
-            <span class="chip" aria-hidden="true">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M12 3l7.8 4.5v9L12 21l-7.8-4.5v-9z"></path><circle cx="12" cy="12" r="2.5"></circle></svg>
-            </span>
-            <h3 class="reason-title">Thuis in crypto en gaming</h3>
-            <p class="reason-text">Tokencommunity's en spelersgedrag zijn bekend terrein, dus je hoeft niet bij nul te beginnen.</p>
-          </li>
-          <li class="d-game">
-            <span class="chip" aria-hidden="true">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M12 4l8 4-8 4-8-4z"></path><path d="M4 12l8 4 8-4"></path><path d="M4 16l8 4 8-4"></path></svg>
-            </span>
-            <h3 class="reason-title">Denkt aan de lange termijn</h3>
-            <p class="reason-text">Liever groei die blijft dan snel succes, met het oog op waar het team over twee jaar staat.</p>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <section id="contact" class="contact-wrap" aria-labelledby="contact-title">
-    <div class="contact mesh-panel">
-      <div class="mesh" aria-hidden="true">
-        <div class="mesh-hue">
-          <div class="mesh-layer">
-            <div class="blob blob-soft blob-1"></div>
-            <div class="blob blob-2"></div>
-            <div class="blob blob-3"></div>
-            <div class="blob blob-4"></div>
-            <div class="blob blob-soft blob-5"></div>
-            <div class="follow follow-b"></div>
-          </div>
+        <div class="sp-portrait">
+          <div class="sp-halo"><img class="sp-photo" src="../assets/nick-smans.jpg" alt="Nick Smans"></div>
+          <p class="sp-name">Nick Smans</p>
+          <p class="sp-role">Oprichter en enige consultant</p>
         </div>
       </div>
-      <svg class="grain" aria-hidden="true" focusable="false">
-        <filter id="grain-contact" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency="0.82" numOctaves="3" seed="7" stitchTiles="stitch"></feTurbulence><feColorMatrix type="saturate" values="0"></feColorMatrix></filter>
-        <rect width="100%" height="100%" filter="url(#grain-contact)"></rect>
-      </svg>
-      <div class="veil" aria-hidden="true"></div>
+    </section>
 
-      <div class="contact-inner">
-        <h2 class="talk" id="contact-title">Even sparren?</h2>
-        <p class="contact-sub">Vertel waar je mee bezig bent en waar het vastloopt. Elke serieuze <span style="white-space:nowrap">e-mail</span> krijgt een persoonlijk antwoord.</p>
-        <a class="btn btn-lg" href="mailto:info@epicconsultancy.nl">info@epicconsultancy.nl</a>
+    <section class="sp-contact" id="contact" aria-labelledby="sp-contact-title">
+      <div class="sp-cpanel sp-rv">
+        <div class="sp-glow" aria-hidden="true"><span class="sp-g sp-c1"></span><span class="sp-g sp-c2"></span><span class="sp-g sp-c3"></span></div>
+        <h2 class="sp-talk" id="sp-contact-title" aria-label="Even sparren?" data-on-mousemove="talkMove" data-on-mouseleave="talkLeave"><span class="sp-tw"><span class="sp-pl" aria-hidden="true">E</span><span class="sp-pl" aria-hidden="true">v</span><span class="sp-pl" aria-hidden="true">e</span><span class="sp-pl" aria-hidden="true">n</span><span class="sp-pl" aria-hidden="true">&#160;</span></span><span class="sp-tw"><span class="sp-pl" aria-hidden="true">s</span><span class="sp-pl" aria-hidden="true">p</span><span class="sp-pl" aria-hidden="true">a</span><span class="sp-pl" aria-hidden="true">r</span><span class="sp-pl" aria-hidden="true">r</span><span class="sp-pl" aria-hidden="true">e</span><span class="sp-pl" aria-hidden="true">n</span><span class="sp-pl" aria-hidden="true">?</span></span></h2>
+        <p class="sp-csub">Vertel Epic Consultancy waar je mee bezig bent en waar het vastloopt. Elke serieuze e-mail krijgt een persoonlijk antwoord.</p>
+        <div class="sp-cact">
+          <a class="sp-btn sp-btn-primary sp-btn-xl" href="mailto:info@epicconsultancy.nl" data-on-mousemove="mag" data-on-mouseleave="magLeave">info@epicconsultancy.nl</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="sp-foot">
+    <div class="sp-w sp-foot-row">
+      <div>
+        <a class="sp-brand" href="#top" aria-label="Epic Consultancy, terug naar boven">
+          <svg class="sp-wm" height="24" viewBox="0 -730 5270 890" aria-hidden="true" focusable="false"><path fill="currentColor" d="M287 14Q212 14 161.5 -7.5Q111 -29 80.0 -66.5Q49 -104 35.5 -152.0Q22 -200 22 -253Q22 -310 36.5 -362.0Q51 -414 81.5 -454.5Q112 -495 160.5 -518.5Q209 -542 277 -542Q345 -542 393.5 -518.5Q442 -495 471.0 -453.0Q500 -411 508.5 -356.0Q517 -301 506 -237L123 -231V-319L382 -324L361 -273Q367 -319 359.5 -350.5Q352 -382 332.0 -398.5Q312 -415 277 -415Q240 -415 218.0 -396.0Q196 -377 187.0 -342.5Q178 -308 178 -261Q178 -180 205.0 -143.0Q232 -106 288 -106Q312 -106 328.0 -112.0Q344 -118 354.0 -129.5Q364 -141 368.0 -157.5Q372 -174 371 -195L519 -187Q522 -154 512.5 -119.0Q503 -84 477.0 -54.0Q451 -24 404.5 -5.0Q358 14 287 14ZM518 148V-340V-528H660V-365H667Q678 -424 700.0 -463.5Q722 -503 756.5 -522.5Q791 -542 840 -542Q902 -542 945.5 -510.5Q989 -479 1011.5 -417.5Q1034 -356 1034 -266Q1034 -169 1008.5 -107.0Q983 -45 939.0 -15.5Q895 14 839 14Q794 14 759.5 -5.0Q725 -24 702.5 -63.5Q680 -103 671 -163H662Q667 -134 671.0 -102.5Q675 -71 677.5 -40.5Q680 -10 680 18V148ZM778 -119Q810 -119 830.5 -139.0Q851 -159 860.5 -191.5Q870 -224 870 -260Q870 -300 859.5 -332.5Q849 -365 828.5 -384.5Q808 -404 778 -404Q759 -404 741.0 -395.5Q723 -387 709.0 -369.5Q695 -352 686.5 -325.0Q678 -298 678 -260V-254Q678 -224 684.0 -202.0Q690 -180 700.0 -164.0Q710 -148 723.0 -138.0Q736 -128 750.0 -123.5Q764 -119 778 -119ZM1037 0V-528H1199V0ZM1117 -566Q1071 -566 1046.5 -585.5Q1022 -605 1022 -642Q1022 -680 1046.5 -699.5Q1071 -719 1117 -719Q1164 -719 1188.5 -699.0Q1213 -679 1213 -642Q1213 -606 1188.5 -586.0Q1164 -566 1117 -566ZM1469 14Q1398 14 1347.0 -7.5Q1296 -29 1264.0 -67.0Q1232 -105 1217.0 -154.0Q1202 -203 1202 -258Q1202 -314 1217.0 -364.5Q1232 -415 1263.5 -455.5Q1295 -496 1345.5 -519.0Q1396 -542 1467 -542Q1551 -542 1602.5 -510.5Q1654 -479 1674.5 -429.0Q1695 -379 1686 -321L1546 -310Q1548 -346 1538.5 -369.5Q1529 -393 1510.0 -404.5Q1491 -416 1464 -416Q1440 -416 1421.5 -407.0Q1403 -398 1390.5 -379.5Q1378 -361 1371.5 -333.0Q1365 -305 1365 -266Q1365 -216 1376.5 -180.0Q1388 -144 1411.5 -125.0Q1435 -106 1471 -106Q1508 -106 1527.0 -124.0Q1546 -142 1552.0 -169.5Q1558 -197 1554 -224L1703 -217Q1709 -173 1699.0 -131.5Q1689 -90 1660.5 -57.0Q1632 -24 1584.5 -5.0Q1537 14 1469 14Z"></path><rect x="1734" y="-200" width="200" height="200" rx="35" fill="url(#sp-wg)"></rect><path fill="#AAB3C8" transform="translate(2054 0) scale(0.6)" d="M286 14Q218 14 168.5 -7.0Q119 -28 87.0 -65.5Q55 -103 40.0 -152.0Q25 -201 25 -257Q25 -314 40.0 -364.5Q55 -415 86.0 -454.5Q117 -494 166.5 -516.5Q216 -539 284 -539Q364 -539 414.5 -508.5Q465 -478 486.0 -429.5Q507 -381 500 -325L374 -314Q375 -351 364.0 -375.5Q353 -400 332.0 -412.5Q311 -425 281 -425Q257 -425 236.5 -416.0Q216 -407 201.0 -387.5Q186 -368 178.0 -337.5Q170 -307 170 -264Q170 -209 184.0 -171.5Q198 -134 224.5 -114.5Q251 -95 288 -95Q328 -95 349.5 -113.5Q371 -132 379.0 -160.5Q387 -189 383 -219L516 -212Q521 -167 510.0 -126.5Q499 -86 471.0 -54.0Q443 -22 397.0 -4.0Q351 14 286 14ZM806 14Q731 14 672.5 -16.5Q614 -47 581.5 -108.0Q549 -169 549 -262Q549 -357 583.0 -418.0Q617 -479 675.5 -509.0Q734 -539 807 -539Q883 -539 941.0 -508.5Q999 -478 1031.5 -416.5Q1064 -355 1064 -262Q1064 -166 1030.0 -105.0Q996 -44 937.5 -15.0Q879 14 806 14ZM809 -94Q844 -94 868.0 -113.0Q892 -132 905.0 -168.0Q918 -204 918 -254Q918 -309 904.0 -346.5Q890 -384 864.5 -404.5Q839 -425 803 -425Q769 -425 744.5 -406.0Q720 -387 707.5 -350.5Q695 -314 695 -263Q695 -184 725.0 -139.0Q755 -94 809 -94ZM1117 0V-285L1116 -525H1240L1236 -303H1245Q1251 -383 1271.5 -435.0Q1292 -487 1329.5 -513.0Q1367 -539 1425 -539Q1511 -539 1554.0 -480.5Q1597 -422 1597 -304V0H1453V-288Q1453 -351 1434.5 -382.0Q1416 -413 1375 -413Q1340 -413 1314.5 -389.0Q1289 -365 1275.0 -313.0Q1261 -261 1261 -176V0ZM1884 14Q1832 14 1787.5 3.5Q1743 -7 1710.5 -30.0Q1678 -53 1661.0 -91.5Q1644 -130 1647 -184L1773 -196Q1774 -159 1788.0 -135.5Q1802 -112 1827.5 -101.5Q1853 -91 1889 -91Q1927 -91 1952.0 -103.5Q1977 -116 1977 -144Q1977 -161 1966.5 -171.0Q1956 -181 1932.0 -189.0Q1908 -197 1867 -207Q1819 -218 1779.0 -230.5Q1739 -243 1710.0 -260.5Q1681 -278 1665.5 -304.5Q1650 -331 1650 -370Q1650 -423 1678.5 -460.5Q1707 -498 1757.5 -518.5Q1808 -539 1874 -539Q1934 -539 1985.5 -520.0Q2037 -501 2067.0 -458.5Q2097 -416 2090 -346L1966 -334Q1969 -366 1957.0 -388.0Q1945 -410 1921.5 -421.5Q1898 -433 1866 -433Q1828 -433 1806.5 -418.5Q1785 -404 1785 -381Q1785 -362 1798.5 -350.0Q1812 -338 1838.0 -330.5Q1864 -323 1904 -314Q1938 -307 1974.5 -296.5Q2011 -286 2042.5 -268.5Q2074 -251 2093.5 -221.5Q2113 -192 2113 -146Q2113 -98 2086.5 -61.5Q2060 -25 2009.0 -5.5Q1958 14 1884 14ZM2325 14Q2238 14 2196.0 -47.5Q2154 -109 2154 -237V-525H2299V-239Q2299 -170 2317.5 -141.5Q2336 -113 2373 -113Q2399 -113 2419.5 -126.0Q2440 -139 2455.5 -165.0Q2471 -191 2479.0 -232.0Q2487 -273 2487 -330V-525H2631V-245V0H2507L2510 -210H2503Q2496 -132 2474.5 -82.5Q2453 -33 2416.0 -9.5Q2379 14 2325 14ZM2698 0V-695H2842V0ZM3111 11Q3024 11 2980.5 -34.0Q2937 -79 2937 -173V-411H2878V-505H2886Q2941 -511 2964.5 -540.5Q2988 -570 2993 -630L2994 -643H3080V-525H3205V-408H3080V-186Q3080 -148 3098.5 -131.0Q3117 -114 3145 -114Q3160 -114 3175.5 -118.5Q3191 -123 3205 -131V-3Q3176 5 3153.0 8.0Q3130 11 3111 11ZM3395 14Q3354 14 3318.5 -0.5Q3283 -15 3260.5 -46.0Q3238 -77 3238 -129Q3238 -177 3256.5 -207.5Q3275 -238 3307.0 -256.0Q3339 -274 3377.0 -284.0Q3415 -294 3454 -301Q3507 -311 3533.5 -316.5Q3560 -322 3569.0 -330.5Q3578 -339 3578 -354Q3578 -388 3554.0 -405.5Q3530 -423 3491 -423Q3468 -423 3444.0 -414.5Q3420 -406 3404.5 -384.0Q3389 -362 3389 -323L3260 -334Q3260 -394 3280.5 -433.5Q3301 -473 3336.0 -496.0Q3371 -519 3413.0 -529.0Q3455 -539 3496 -539Q3570 -539 3619.5 -511.5Q3669 -484 3694.0 -431.0Q3719 -378 3719 -301V-206Q3719 -172 3719.0 -137.5Q3719 -103 3719.5 -68.5Q3720 -34 3720 0H3593Q3594 -38 3595.0 -77.0Q3596 -116 3596 -158H3590Q3585 -111 3559.0 -72.0Q3533 -33 3491.0 -9.5Q3449 14 3395 14ZM3451 -93Q3471 -93 3493.5 -101.5Q3516 -110 3535.0 -127.5Q3554 -145 3566.0 -173.5Q3578 -202 3578 -243L3579 -266L3605 -271Q3597 -257 3576.5 -249.0Q3556 -241 3531.0 -236.5Q3506 -232 3480.0 -227.0Q3454 -222 3432.0 -214.0Q3410 -206 3396.5 -191.5Q3383 -177 3383 -152Q3383 -124 3402.0 -108.5Q3421 -93 3451 -93ZM3781 0V-285L3780 -525H3904L3900 -303H3909Q3915 -383 3935.5 -435.0Q3956 -487 3993.5 -513.0Q4031 -539 4089 -539Q4175 -539 4218.0 -480.5Q4261 -422 4261 -304V0H4117V-288Q4117 -351 4098.5 -382.0Q4080 -413 4039 -413Q4004 -413 3978.5 -389.0Q3953 -365 3939.0 -313.0Q3925 -261 3925 -176V0ZM4571 14Q4503 14 4453.5 -7.0Q4404 -28 4372.0 -65.5Q4340 -103 4325.0 -152.0Q4310 -201 4310 -257Q4310 -314 4325.0 -364.5Q4340 -415 4371.0 -454.5Q4402 -494 4451.5 -516.5Q4501 -539 4569 -539Q4649 -539 4699.5 -508.5Q4750 -478 4771.0 -429.5Q4792 -381 4785 -325L4659 -314Q4660 -351 4649.0 -375.5Q4638 -400 4617.0 -412.5Q4596 -425 4566 -425Q4542 -425 4521.5 -416.0Q4501 -407 4486.0 -387.5Q4471 -368 4463.0 -337.5Q4455 -307 4455 -264Q4455 -209 4469.0 -171.5Q4483 -134 4509.5 -114.5Q4536 -95 4573 -95Q4613 -95 4634.5 -113.5Q4656 -132 4664.0 -160.5Q4672 -189 4668 -219L4801 -212Q4806 -167 4795.0 -126.5Q4784 -86 4756.0 -54.0Q4728 -22 4682.0 -4.0Q4636 14 4571 14ZM5033 154Q5001 154 4965.0 148.5Q4929 143 4894.0 130.0Q4859 117 4830 98L4869 -43Q4903 -8 4946.5 6.5Q4990 21 5027 21Q5080 21 5114.5 -1.0Q5149 -23 5165.5 -63.0Q5182 -103 5182 -159L5184 -258H5176Q5172 -186 5150.5 -140.5Q5129 -95 5093.0 -73.5Q5057 -52 5011 -52Q4953 -52 4915.5 -81.5Q4878 -111 4859.5 -168.5Q4841 -226 4841 -310V-525H4984V-346Q4984 -259 5004.0 -218.5Q5024 -178 5067 -178Q5090 -178 5108.5 -189.5Q5127 -201 5139.0 -225.0Q5151 -249 5157.5 -284.5Q5164 -320 5164 -367V-525H5307V-154Q5307 -105 5297.5 -59.5Q5288 -14 5268.0 24.5Q5248 63 5216.0 92.5Q5184 122 5138.5 138.0Q5093 154 5033 154Z"></path></svg>
+        </a>
+        <div class="sp-legal" style="margin-top:18px">
+          <p>© 2026 Epic Consultancy B.V.</p>
+          <p>KvK 86603019</p>
+          <p>BTW NL864019932B01</p>
+          <p>Lavendelstraat 19, 4814 HX Breda, Nederland</p>
+        </div>
+      </div>
+      <div class="sp-foot-end">
+        <p class="sp-time">Lokale tijd in Breda: <span data-time></span></p>
+        <a class="sp-top" href="#top">Terug naar boven</a>
       </div>
     </div>
-  </section>
-</main>
-
-<footer class="footer">
-  <div class="wrap footer-inner">
-    <a class="brand" href="#top" aria-label="Epic Consultancy">
-      <svg class="wordmark" viewBox="0 0 5270 890" height="24" aria-hidden="true" focusable="false"><use href="#wordmark"></use></svg>
-    </a>
-    <div class="footer-facts">
-      <p>© 2026 Epic Consultancy B.V.</p>
-      <p>KvK 86603019<br>BTW NL864019932B01</p>
-      <p>Lavendelstraat 19<br>4814 HX Breda, Nederland</p>
-    </div>
-  </div>
-</footer>
+  </footer>
+</div>
+<script src="../site.js?v=b2896778"></script>
 </body>
 </html>

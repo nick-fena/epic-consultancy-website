@@ -300,6 +300,36 @@ layout, type, motion and copy all come from that artboard.
   progressive enhancement (site readable without JS), full
   `prefers-reduced-motion` support.
 
+## V4 Showpiece (2026-10-05)
+
+Nick picked the "Showpiece" (in Dutch: the "paradepaardje"), the version built
+with full creative freedom on design canvas
+https://claude.ai/artifact/8r1YJGoAhMBdnV24pysrMT (page "Showpiece"), as the
+live site, replacing V3 Prism Night.
+
+- **Design:** dark only. The light theme and its toggle are retired with V3.
+  The hero is a swarm of square blocks that forms the "epic." wordmark, with
+  "Shake things up" to scatter it. Other parts: the cursor aura and ring, the
+  before/after service cards, expanding work panels, "How it works" blocks
+  that settle, and the "Let's talk." letters that respond to the cursor.
+  Fonts: Bricolage Grotesque and Geist.
+- **Files:** `index.html` (EN), `nl/index.html` (NL), shared `site.css` and
+  `site.js`, referenced with a `?v=<hash>` query. The new names and the hash
+  stop a cached old stylesheet from pairing with new HTML; that pairing is
+  what turned the logo black right after the logo deploy.
+  `site.js` keeps the canvas component as it was designed, plus a small
+  runner that wires the `data-ref` / `data-on-*` attributes.
+- **NL:** a full Dutch twin, reusing the approved V3 Dutch copy where the
+  sections map; contact headline "Even sparren?". The Dutch hero headline is
+  set slightly smaller (5.9vw instead of 6.4vw) because "Betere producten."
+  runs wider and would otherwise touch the swarm.
+- **Kept from V3:** title, description, canonical, hreflang, Open Graph and
+  touch icon tags; KvK, BTW and address in the footer; voice rule v4; zero
+  dashes; full `prefers-reduced-motion` support.
+- **Next:** redesign of the work panels ("Teams Epic Consultancy has worked
+  with"). Three concepts are in progress; Nick likes the expanding blocks and
+  wants them more modern and more beautifully animated.
+
 ## Out of scope for V1 (future ideas)
 
 - Per-project descriptions / case studies
