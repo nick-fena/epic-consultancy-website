@@ -309,15 +309,16 @@ h1, h2, h3, p, ul, ol { margin: 0; }
 }
 
 /* -------------------------------------------------------------------------
-   Brand mark (network hex)
+   Brand: the "epic." wordmark (logo 5, picked by Nick 2026-10-05)
+   One outlined <symbol> in the hidden defs, reused in the nav and footer, so
+   the logo never depends on the webfont having loaded. The word takes the
+   text colour, the square full stop the brand gradient, "consultancy" the
+   muted tone; all three follow the theme.
    ------------------------------------------------------------------------- */
-.mark { display: block; flex-shrink: 0; }
-.mark-hex { fill: none; stroke: url(#mark-gradient); stroke-width: 6; stroke-linejoin: round; }
-.mark-spoke { stroke: var(--ink); stroke-opacity: 0.45; stroke-width: 3; }
-.mark-node-1 { fill: var(--mark-1); }
-.mark-node-2 { fill: var(--mark-2); }
-.mark-node-3 { fill: var(--mark-3); }
-.mark-core { fill: var(--ink); }
+.wordmark { display: block; width: auto; flex-shrink: 0; color: var(--ink); overflow: visible; }
+.wm-word { fill: currentColor; }
+.wm-dot { fill: url(#mark-gradient); }
+.wm-sub { fill: var(--muted); }
 
 .brand {
   display: inline-flex;
@@ -328,13 +329,6 @@ h1, h2, h3, p, ul, ol { margin: 0; }
   text-decoration: none;
 }
 
-.brand-name {
-  font-family: 'Bricolage Grotesque', system-ui, sans-serif;
-  font-weight: 700;
-  font-size: 19px;
-  letter-spacing: -0.02em;
-  white-space: nowrap;
-}
 
 /* -------------------------------------------------------------------------
    Nav
@@ -1253,7 +1247,6 @@ html.js .timeline:not(.is-in) .node { animation-play-state: paused; }
 }
 
 .footer .brand { margin-top: -10px; }
-.footer .brand-name { font-size: 17px; }
 
 .footer-facts {
   display: flex;
@@ -1347,9 +1340,7 @@ html.js .timeline:not(.is-in) .node { animation-play-state: paused; }
   .nav { gap: 6px; padding: 5px 5px 5px 12px; }
   .nav-tools { gap: 4px; }
   .nav-cta { display: none; }
-  .brand { gap: 8px; }
-  .brand .mark { width: 26px; height: 26px; }
-  .nav .brand-name { font-size: 16.5px; }
+  .nav .wordmark { height: 25px; }
 
   /* Mobile menu disclosure, gated on html.js: without JS the links stay
      visible on their own scrollable row (the rule in the 1180px block). */
@@ -1386,8 +1377,7 @@ html.js .timeline:not(.is-in) .node { animation-play-state: paused; }
 
 /* Small Androids (360px): a slightly smaller wordmark keeps the bar on one row. */
 @media (max-width: 380px) {
-  .brand { gap: 7px; }
-  .nav .brand-name { font-size: 15px; }
+  .nav .wordmark { height: 22px; }
 }
 
 /* -------------------------------------------------------------------------

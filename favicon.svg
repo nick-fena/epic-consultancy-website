@@ -1,11 +1,14 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
   <defs>
-    <linearGradient id="favicon-gradient" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#5eead4"/>
-      <stop offset="1" stop-color="#818cf8"/>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#5EEAD4"/>
+      <stop offset=".55" stop-color="#818CF8"/>
+      <stop offset="1" stop-color="#E879F9"/>
     </linearGradient>
   </defs>
-  <rect width="96" height="96" rx="16" fill="#0a0e1a"/>
-  <path d="M48 12 L79 30 L79 66 L48 84 L17 66 L17 30 Z" fill="none" stroke="url(#favicon-gradient)" stroke-width="8" stroke-linejoin="round"/>
-  <circle cx="48" cy="48" r="11" fill="#ffffff"/>
+  <rect width="64" height="64" rx="14" fill="#06080F"/>
+  <g transform="translate(6.66 48.13) scale(0.0611)">
+    <path fill="#F3F5FB" d="M287 14Q212 14 161.5 -7.5Q111 -29 80.0 -66.5Q49 -104 35.5 -152.0Q22 -200 22 -253Q22 -310 36.5 -362.0Q51 -414 81.5 -454.5Q112 -495 160.5 -518.5Q209 -542 277 -542Q345 -542 393.5 -518.5Q442 -495 471.0 -453.0Q500 -411 508.5 -356.0Q517 -301 506 -237L123 -231V-319L382 -324L361 -273Q367 -319 359.5 -350.5Q352 -382 332.0 -398.5Q312 -415 277 -415Q240 -415 218.0 -396.0Q196 -377 187.0 -342.5Q178 -308 178 -261Q178 -180 205.0 -143.0Q232 -106 288 -106Q312 -106 328.0 -112.0Q344 -118 354.0 -129.5Q364 -141 368.0 -157.5Q372 -174 371 -195L519 -187Q522 -154 512.5 -119.0Q503 -84 477.0 -54.0Q451 -24 404.5 -5.0Q358 14 287 14Z"/>
+    <rect x="607" y="-200" width="200" height="200" rx="35" fill="url(#g)"/>
+  </g>
 </svg>
