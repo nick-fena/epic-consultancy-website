@@ -326,9 +326,17 @@ live site, replacing V3 Prism Night.
 - **Kept from V3:** title, description, canonical, hreflang, Open Graph and
   touch icon tags; KvK, BTW and address in the footer; voice rule v4; zero
   dashes; full `prefers-reduced-motion` support.
-- **Next:** redesign of the work panels ("Teams Epic Consultancy has worked
-  with"). Three concepts are in progress; Nick likes the expanding blocks and
-  wants them more modern and more beautifully animated.
+- **Work panels, "Pixels" (picked by Nick 2026-10-05 from three concepts:
+  Elastic, Pixels, Chapters):** each client panel is a canvas mosaic of small
+  squares in that client's two colours. Opening a panel cascades the squares
+  out from where the cursor entered, and the logo resolves from coarse
+  squares to sharp. The motif is the same one as the hero swarm. Keyboard:
+  focus opens a panel, and the arrow keys move between panels. At 900px and
+  below the panels stack; each one unfolds when it reaches the middle of the
+  screen and stays open, and a tap toggles it. Reduced motion: a still mosaic
+  and a fade. The CSS sits between the `WORK: concept b` markers in
+  `site.css`, and the JS is a self-contained IIFE at the end of `site.js`.
+  Untested on real Safari and iPhone.
 
 ## Out of scope for V1 (future ideas)
 

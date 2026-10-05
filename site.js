@@ -416,3 +416,734 @@ window.__apply = () => { const v = comp.renderVals(); root.className = v.rootCla
 document.querySelectorAll('[data-ref]').forEach((el) => comp[el.dataset.ref](el));
 document.querySelectorAll('*').forEach((el) => { for (const a of el.getAttributeNames()) { if (a.startsWith('data-on-')) { el.addEventListener(a.slice(8), comp[el.getAttribute(a)]); } } });
 __apply(); comp.componentDidMount();
+
+/* === WORK: concept b === "Pixels". Each client panel is a living mosaic of small
+   squares in that client's colours, one canvas per panel. Opening a panel cascades
+   the squares outward from where the cursor entered (or from the focused dot), so
+   they assemble its gradient surface; the vertical name dissolves into squares and
+   the logo resolves from a coarse mosaic to crisp before the text rises in.
+   Self-contained and vanilla. Reads only #work; touches nothing else on the page. */
+(() => {
+  'use strict';
+  const wrap = document.querySelector('#work .wb-panels');
+  if (!wrap || !window.requestAnimationFrame || !window.Float32Array) return;
+  const els = Array.prototype.slice.call(wrap.querySelectorAll('.wb-panel'));
+  const N = els.length;
+  if (!N || els.some((el) => !el.querySelector('.wb-cv'))) return;
+  const probe = document.createElement('canvas');
+  if (!probe.getContext || !probe.getContext('2d')) return;
+
+  const root = document.querySelector('.sp');
+  const mq = (q) => { try { return window.matchMedia(q); } catch (err) { return null; } };
+  const mqCalm = mq('(prefers-reduced-motion: reduce)');
+  const mqStack = mq('(max-width: 900px)');
+  const isCalm = () => !!(mqCalm && mqCalm.matches) || !!(root && root.classList.contains('sp-still'));
+  const isStack = () => !!(mqStack && mqStack.matches);
+
+  const GROW = 3.4;          // flex-grow of the open panel, mirrors the CSS
+  const PITCH = 8;           // mosaic grid pitch, CSS px
+  const INSET = 6;           // squares keep clear of the panel edge
+  const V_OPEN = 1.15;       // speed of the assembling front, px per ms
+  const V_CLOSE = 2.4;
+  const D_OPEN = 460, D_CLOSE = 300, D_CALM = 420;
+  const NB = 12;             // colour steps between --p1 and --p2
+  const NAME_Q = 2;          // size of the squares the name dissolves into
+  const LOGO_PAD = 10;
+  const LOGO_STEPS = [16, 11, 8, 6, 4, 3, 2];
+  const LOGO_MS = [95, 80, 68, 60, 52, 46, 40];
+  const INK = '#F3F5FB';
+
+  let dpr = 1;
+  let stacked = isStack();
+  let small = false;
+  let inView = false;
+  let raf = 0;
+  let last = 0;
+  let introDone = false;
+  let fontsReady = false;
+  let lastW = -1;
+  let FX = new Float32Array(1), FY = FX, FZ = FX, FA = FX;
+
+  const clamp01 = (x) => (x < 0 ? 0 : x > 1 ? 1 : x);
+  const easeOut = (x) => { const y = 1 - x; return 1 - y * y * y; };
+  const easeBack = (x) => { const y = x - 1; return 1 + 2.3 * y * y * y + 1.3 * y * y; };
+  const smooth = (a, b, x) => { const t = clamp01((x - a) / (b - a)); return t * t * (3 - 2 * t); };
+  const gauss = (dx, dy, s) => Math.exp(-(dx * dx + dy * dy) / (2 * s * s));
+  const hex = (s, d) => {
+    s = String(s || '').trim().replace('#', '');
+    if (s.length === 3) s = s.replace(/./g, '$&$&');
+    const n = parseInt(s, 16);
+    return s.length === 6 && isFinite(n) ? [(n >> 16) & 255, (n >> 8) & 255, n & 255] : d;
+  };
+  const mixRGB = (a, b, t) => 'rgb(' + Math.round(a[0] + (b[0] - a[0]) * t) + ',' + Math.round(a[1] + (b[1] - a[1]) * t) + ',' + Math.round(a[2] + (b[2] - a[2]) * t) + ')';
+  const rgba = (c, a) => 'rgba(' + c[0] + ',' + c[1] + ',' + c[2] + ',' + a + ')';
+
+  const P = els.map((el, i) => {
+    const lcv = el.querySelector('.wb-lcv');
+    return {
+      el: el, i: i,
+      c1: hex(el.style.getPropertyValue('--p1'), [94, 234, 212]),
+      c2: hex(el.style.getPropertyValue('--p2'), [129, 140, 248]),
+      cv: el.querySelector('.wb-cv'), ctx: null,
+      body: el.querySelector('.wb-body'),
+      logoWrap: el.querySelector('.wb-logo'), img: el.querySelector('.wb-logo img'),
+      lcv: lcv, lctx: lcv && lcv.getContext ? lcv.getContext('2d') : null,
+      name: ((el.querySelector('.wb-vert') || {}).textContent || '').trim(),
+      seed: i * 2.1,
+      open: false, dir: 0, t0: 0, moving: false, k: 0,
+      ox: 0, oy: 0, glow: 0, glowG: null, front: 0,
+      torch: 0, torchOn: false, tx: 0, ty: 0,
+      txt: null, nDir: 0, nT0: 0, nMoving: false,
+      logo: null, logoState: 0, logoT0: 0,
+      auto: false, n: 0
+    };
+  });
+
+  /* ---------- Geometry ---------- */
+
+  function layout() {
+    dpr = Math.min(2, window.devicePixelRatio || 1);
+    stacked = isStack();
+    const cs = getComputedStyle(wrap);
+    const cw = wrap.clientWidth;
+    lastW = cw;
+    if (!stacked) {
+      const gap = parseFloat(cs.columnGap) || 12;
+      const H = Math.max(1, wrap.clientHeight - 2);
+      const free = Math.max(0, cw - gap * (N - 1) - 2 * N);
+      const closedW = free / (N - 1 + GROW);
+      const openW = closedW * GROW;
+      wrap.style.setProperty('--wb-cx', (closedW / 2).toFixed(2) + 'px');
+      wrap.style.setProperty('--wb-bw', Math.round(Math.min(400, openW - 64)) + 'px');
+      P.forEach((p) => {
+        p.el.style.removeProperty('--wb-oh');
+        p.W = Math.ceil(openW + 2); p.H = H; p.restW = closedW; p.restH = H; p.radius = 25;
+      });
+    } else {
+      wrap.style.removeProperty('--wb-cx');
+      wrap.style.removeProperty('--wb-bw');
+      const ch = (parseFloat(cs.getPropertyValue('--wb-ch')) || 88) - 2;
+      small = ch < 80;
+      P.forEach((p) => {
+        const W = Math.max(1, p.el.clientWidth);
+        const bodyH = p.body ? p.body.offsetTop + p.body.offsetHeight : 240;
+        const openH = Math.ceil(bodyH + (small ? 24 : 28));
+        p.el.style.setProperty('--wb-oh', (openH + 2) + 'px');
+        p.W = W; p.H = Math.max(ch, openH); p.restW = W; p.restH = ch; p.radius = small ? 19 : 21;
+      });
+    }
+    let maxN = 1;
+    P.forEach((p) => {
+      const num = p.el.querySelector('.wb-num');
+      p.numW = num ? num.offsetWidth : 0;
+      p.numX = num ? num.offsetLeft : -99;
+      p.numY = num ? num.offsetTop + num.offsetHeight / 2 : -99;
+    });
+    P.forEach((p) => { buildGrid(p); buildName(p); p.logo = null; if (p.n > maxN) maxN = p.n; });
+    FX = new Float32Array(maxN); FY = new Float32Array(maxN); FZ = new Float32Array(maxN); FA = new Float32Array(maxN);
+    P.forEach(snap);
+  }
+
+  // The mosaic: one square per grid cell, with a resting and an assembled alpha.
+  function buildGrid(p) {
+    const W = p.W, H = p.H;
+    p.cv.width = Math.max(1, Math.round(W * dpr));
+    p.cv.height = Math.max(1, Math.round(H * dpr));
+    p.cv.style.width = W + 'px';
+    p.cv.style.height = H + 'px';
+    p.ctx = p.cv.getContext('2d');
+    p.glowG = null;
+    // Offsets centre the grid inside the closed panel, so its margins are even at rest.
+    const ox = INSET + ((p.restW - 2 * INSET) % PITCH) / 2;
+    const oy = INSET + ((p.restH - 2 * INSET) % PITCH) / 2;
+    const cols = Math.max(0, Math.floor((W - INSET - ox) / PITCH + 1e-6));
+    const rows = Math.max(0, Math.floor((H - INSET - oy) / PITCH + 1e-6));
+    const n = cols * rows;
+    const cx = new Float32Array(n), cy = new Float32Array(n), A = new Float32Array(n), B = new Float32Array(n);
+    const aC = new Float32Array(n), aO = new Float32Array(n), sR = new Float32Array(n), sO = new Float32Array(n), jit = new Float32Array(n);
+    const bk = new Uint8Array(n), counts = new Array(NB).fill(0);
+    let i = 0;
+    for (let r = 0; r < rows; r++) {
+      for (let c = 0; c < cols; c++, i++) {
+        const x = ox + c * PITCH + PITCH / 2, y = oy + r * PITCH + PITCH / 2;
+        cx[i] = x; cy[i] = y;
+        const u = x / W, v = y / H, uc = x / p.restW, vc = y / p.restH;
+        const b = Math.round(clamp01(0.5 + (u - v) * 0.8) * (NB - 1));
+        bk[i] = b; counts[b]++;
+        A[i] = x * 0.021 + y * 0.012 + p.seed;
+        B[i] = y * 0.027 - x * 0.009 - p.seed * 0.6;
+        jit[i] = Math.random();
+        // A square halftone: size and alpha both follow a soft field. Small and quiet
+        // at rest; full tiles only where the assembled surface is brightest, fading to
+        // fine grain behind the text.
+        let fr, fo;
+        if (!stacked) {
+          fr = 0.08 + 0.92 * Math.pow(clamp01(1 - vc), 1.35);
+          const f2 = gauss(u - 0.86, v - 0.12, 0.3), f1 = gauss(u - 0.14, v - 0.42, 0.26);
+          fo = Math.max(f2, 0.82 * f1);
+          fo *= 1 - 0.7 * smooth(0.42, 0.95, v) * clamp01(1.45 - u);
+        } else {
+          fr = 0.08 + 0.92 * Math.pow(clamp01(uc), 1.35);
+          const f2 = gauss(u - 0.96, v - 0.16, 0.34), f1 = gauss(u - 0.72, v - 0.98, 0.3);
+          fo = Math.max(f2, 0.78 * f1);
+          fo *= 1 - 0.8 * clamp01(1.2 - u * 1.25);
+        }
+        sR[i] = 1.4 + 2.2 * fr; aC[i] = 0.18 + 0.36 * fr;
+        sO[i] = 1.5 + 5 * fo; aO[i] = 0.22 + 0.52 * fo;
+        // Breathing room in the mosaic around the square full stop and the counter.
+        const hx = stacked ? (small ? 27 : 33) : p.restW / 2, hy = stacked ? p.restH / 2 : 37;
+        if (Math.abs(x - hx) < 15 && Math.abs(y - hy) < 15) aC[i] = -0.2;
+        if (x > p.numX - 8 && x < p.numX + p.numW + 8 && Math.abs(y - p.numY) < 15) { aO[i] = -0.2; if (stacked) aC[i] = -0.2; }
+      }
+    }
+    const order = counts.map((k) => new Uint32Array(k));
+    const fill = new Array(NB).fill(0);
+    for (let j = 0; j < n; j++) { const b = bk[j]; order[b][fill[b]++] = j; }
+    p.colors = [];
+    for (let b = 0; b < NB; b++) p.colors.push(mixRGB(p.c1, p.c2, b / (NB - 1)));
+    p.n = n; p.cx = cx; p.cy = cy; p.A = A; p.B = B; p.aC = aC; p.aO = aO; p.sR = sR; p.sO = sO; p.jit = jit; p.order = order;
+    p.prog = new Float32Array(n); p.gate = new Float32Array(n);
+  }
+
+  // The vertical name, drawn on the canvas so it can break into squares in place.
+  function buildName(p) {
+    p.txt = null;
+    if (!fontsReady || !p.name) return;
+    const fs = stacked ? (small ? 21 : 24) : 22;
+    const font = '700 ' + fs + 'px "Bricolage Grotesque", system-ui, sans-serif';
+    const c = document.createElement('canvas');
+    let g = c.getContext('2d');
+    const setFont = () => { g.font = font; if ('letterSpacing' in g) g.letterSpacing = (-0.01 * fs).toFixed(2) + 'px'; };
+    setFont();
+    const m = g.measureText(p.name);
+    const asc = m.actualBoundingBoxAscent || fs * 0.72, des = m.actualBoundingBoxDescent || fs * 0.2;
+    const tw = m.width, pad = 4;
+    let bw, bh, bx, by;
+    if (!stacked) {
+      bw = Math.ceil(asc + des + pad * 2); bh = Math.ceil(tw + pad * 2);
+      bx = Math.round(p.restW / 2 - bw / 2); by = Math.round(p.H - 32 - tw - pad);
+    } else {
+      bw = Math.ceil(tw + pad * 2); bh = Math.ceil(asc + des + pad * 2);
+      bx = (small ? 42 : 50) - pad; by = Math.round(p.restH / 2 - bh / 2);
+    }
+    c.width = Math.ceil(bw * dpr); c.height = Math.ceil(bh * dpr);
+    g = c.getContext('2d');
+    g.setTransform(dpr, 0, 0, dpr, 0, 0);
+    setFont();
+    g.fillStyle = INK;
+    g.textBaseline = 'alphabetic';
+    if (!stacked) { g.translate(bw / 2, bh - pad); g.rotate(-Math.PI / 2); g.fillText(p.name, 0, (asc - des) / 2); }
+    else g.fillText(p.name, pad, pad + asc);
+    let data;
+    try { data = g.getImageData(0, 0, c.width, c.height).data; } catch (err) { return; }
+    const q = Math.max(1, Math.round(NAME_Q * dpr)), W = c.width, H = c.height, pts = [];
+    for (let y = 0; y < H; y += q) {
+      for (let x = 0; x < W; x += q) {
+        let sum = 0, cnt = 0;
+        for (let y2 = y; y2 < Math.min(H, y + q); y2++) for (let x2 = x; x2 < Math.min(W, x + q); x2++) { sum += data[(y2 * W + x2) * 4 + 3]; cnt++; }
+        const av = sum / (cnt * 255);
+        if (av > 0.28) pts.push(x, y, Math.min(1, av * 1.2));
+      }
+    }
+    const n = pts.length / 3;
+    const T = {
+      cv: c, dx: bx * dpr, dy: by * dpr, q: q, n: n,
+      x0: new Float32Array(n), y0: new Float32Array(n), al: new Float32Array(n),
+      cx: new Float32Array(n), cy: new Float32Array(n),
+      vx: new Float32Array(n), vy: new Float32Array(n),
+      gate: new Float32Array(n), prog: new Float32Array(n), minGate: 0
+    };
+    for (let j = 0; j < n; j++) {
+      T.x0[j] = bx * dpr + pts[j * 3]; T.y0[j] = by * dpr + pts[j * 3 + 1]; T.al[j] = pts[j * 3 + 2];
+      T.cx[j] = (T.x0[j] + q / 2) / dpr; T.cy[j] = (T.y0[j] + q / 2) / dpr;
+    }
+    p.txt = T;
+  }
+
+  // The logo as a set of mosaics, coarse to fine, from its alpha channel.
+  function buildLogo(p) {
+    const img = p.img;
+    if (!img || !p.lctx || !img.complete || !img.naturalWidth) return null;
+    const w = parseFloat(img.style.width) || img.width, h = parseFloat(img.style.height) || img.height;
+    const W = Math.max(1, Math.round(w * dpr)), H = Math.max(1, Math.round(h * dpr));
+    const c = document.createElement('canvas');
+    c.width = W; c.height = H;
+    const g = c.getContext('2d');
+    let d;
+    try { g.drawImage(img, 0, 0, W, H); d = g.getImageData(0, 0, W, H).data; } catch (err) { return null; }
+    const S = new Float64Array((W + 1) * (H + 1));
+    for (let y = 1; y <= H; y++) {
+      let row = 0;
+      for (let x = 1; x <= W; x++) { row += d[((y - 1) * W + (x - 1)) * 4 + 3]; S[y * (W + 1) + x] = S[(y - 1) * (W + 1) + x] + row; }
+    }
+    const area = (x0, y0, x1, y1) => S[y1 * (W + 1) + x1] - S[y0 * (W + 1) + x1] - S[y1 * (W + 1) + x0] + S[y0 * (W + 1) + x0];
+    const pad = Math.round(LOGO_PAD * dpr);
+    p.lcv.width = W + pad * 2; p.lcv.height = H + pad * 2;
+    p.lcv.style.width = (W + pad * 2) / dpr + 'px'; p.lcv.style.height = (H + pad * 2) / dpr + 'px';
+    const levels = LOGO_STEPS.map((step) => {
+      const cs = step * dpr, cols = Math.ceil(W / cs), rows = Math.ceil(H / cs);
+      const gx = (W - cols * cs) / 2, gy = (H - rows * cs) / 2, out = [];
+      for (let r = 0; r < rows; r++) {
+        for (let k = 0; k < cols; k++) {
+          const x0 = gx + k * cs, y0 = gy + r * cs;
+          const ix0 = Math.max(0, Math.round(x0)), ix1 = Math.min(W, Math.round(x0 + cs));
+          const iy0 = Math.max(0, Math.round(y0)), iy1 = Math.min(H, Math.round(y0 + cs));
+          if (ix1 <= ix0 || iy1 <= iy0) continue;
+          const cov = area(ix0, iy0, ix1, iy1) / (cs * cs * 255);
+          if (cov < 0.04) continue;
+          const s = cs * (step >= 4 ? 0.8 : 0.92);
+          out.push(Math.round(pad + x0 + (cs - s) / 2), Math.round(pad + y0 + (cs - s) / 2), Math.max(1, Math.round(s)), Math.min(1, Math.pow(cov, 0.85) * 1.15));
+        }
+      }
+      return Float32Array.from(out);
+    });
+    return { levels: levels, W: p.lcv.width, H: p.lcv.height };
+  }
+
+  // Jump a panel to the end of its transition (after a resize or a font swap).
+  function snap(p) {
+    const k = p.open ? 1 : 0;
+    p.moving = false; p.k = k; p.glow = k; p.dir = 0;
+    if (p.prog) p.prog.fill(k);
+    if (p.txt) p.txt.prog.fill(k);
+    p.nMoving = false; p.nDir = p.open ? 1 : 0;
+    if (p.logoWrap) p.logoWrap.classList.toggle('is-crisp', p.open);
+    p.logoState = p.open ? 2 : 0;
+    if (p.lctx) p.lctx.clearRect(0, 0, p.lcv.width, p.lcv.height);
+  }
+
+  /* ---------- Drawing ---------- */
+
+  function drawGlow(p, ctx, cw, ch, calm) {
+    if (!p.glowG) {
+      const W = p.W * dpr, H = p.H * dpr, R = Math.max(W, H);
+      const g2 = ctx.createRadialGradient(W * 0.86, H * 0.14, 0, W * 0.86, H * 0.14, R * 0.62);
+      g2.addColorStop(0, rgba(p.c2, 0.3)); g2.addColorStop(1, rgba(p.c2, 0));
+      const g1 = ctx.createRadialGradient(W * 0.16, H * 0.56, 0, W * 0.16, H * 0.56, R * 0.55);
+      g1.addColorStop(0, rgba(p.c1, 0.22)); g1.addColorStop(1, rgba(p.c1, 0));
+      p.glowG = [g1, g2];
+    }
+    ctx.globalAlpha = p.glow;
+    ctx.fillStyle = p.glowG[0]; ctx.fillRect(0, 0, cw, ch);
+    ctx.fillStyle = p.glowG[1]; ctx.fillRect(0, 0, cw, ch);
+    if (!calm && p.open && p.moving) {
+      // The soft colour arrives with the assembling front, never ahead of it.
+      const r = p.front * dpr, X = p.ox * dpr, Y = p.oy * dpr, soft = 150 * dpr;
+      const m = ctx.createRadialGradient(X, Y, Math.max(0, r - soft), X, Y, Math.max(1, r));
+      m.addColorStop(0, 'rgba(0,0,0,1)'); m.addColorStop(1, 'rgba(0,0,0,0)');
+      ctx.globalCompositeOperation = 'destination-in';
+      ctx.globalAlpha = 1; ctx.fillStyle = m; ctx.fillRect(0, 0, cw, ch);
+      ctx.globalCompositeOperation = 'source-over';
+    }
+    ctx.globalAlpha = 1;
+  }
+
+  function still(ctx, x, y, size, a) {
+    if (a < 0.01) return;
+    const s = size * dpr, Z = Math.max(1, Math.round(s));
+    ctx.globalAlpha = a > 1 ? 1 : a;
+    ctx.fillRect(Math.round(x * dpr - s / 2), Math.round(y * dpr - s / 2), Z, Z);
+  }
+
+  function drawPanel(p, now, t, dt, calm) {
+    const ctx = p.ctx;
+    if (!ctx || !p.n) return false;
+    const vw = p.el.clientWidth, vh = p.el.clientHeight;
+    let busy = false;
+
+    if (p.moving) {
+      const goal = p.dir > 0 ? 1 : 0;
+      if (calm) {
+        p.k = clamp01(p.k + p.dir * dt / D_CALM);
+        if (p.k === goal) { p.moving = false; p.prog.fill(goal); }
+      } else {
+        const el = now - p.t0, inc = p.dir * dt / (p.dir > 0 ? D_OPEN : D_CLOSE), pr = p.prog, g = p.gate;
+        let left = 0;
+        for (let i = 0; i < p.n; i++) {
+          let v = pr[i];
+          if (v !== goal) {
+            if (el >= g[i]) { v += inc; v = v < 0 ? 0 : v > 1 ? 1 : v; pr[i] = v; }
+            if (v !== goal) left++;
+          }
+        }
+        p.front = el * V_OPEN;
+        if (!left) { p.moving = false; p.k = goal; }
+      }
+      busy = true;
+    }
+    const gGoal = calm ? p.k : (p.open ? 1 : 0);
+    if (p.glow !== gGoal) {
+      const sp = dt / (p.open ? 520 : 420);
+      p.glow = p.glow < gGoal ? Math.min(gGoal, p.glow + sp) : Math.max(gGoal, p.glow - sp);
+      busy = true;
+    }
+    const tGoal = p.torchOn && p.open && !calm ? 1 : 0;
+    if (p.torch !== tGoal) {
+      p.torch += (tGoal - p.torch) * Math.min(1, dt / 180);
+      if (Math.abs(p.torch - tGoal) < 0.01) p.torch = tGoal;
+      busy = true;
+    }
+
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.globalCompositeOperation = 'source-over';
+    ctx.globalAlpha = 1;
+    const cw = Math.min(p.cv.width, Math.ceil(vw * dpr) + 2), ch = Math.min(p.cv.height, Math.ceil(vh * dpr) + 2);
+    ctx.clearRect(0, 0, cw, ch);
+    if (p.glow > 0.003) drawGlow(p, ctx, cw, ch, calm);
+
+    const half = PITCH / 2, R = p.radius, lim = R - 2;
+    const xMax = vw - INSET + 0.01, yMax = vh - INSET + 0.01;
+    const torch = p.torch > 0.01, TR = 120, tx = p.tx, ty = p.ty, tk = p.torch * 0.16;
+    const opening = !calm && p.moving && p.dir > 0;
+    const shim = calm ? 0 : 1;
+    const cx = p.cx, cy = p.cy, prog = p.prog, aC = p.aC, aO = p.aO, sR = p.sR, sO = p.sO, A = p.A, Bv = p.B, k = p.k;
+    let nf = 0;
+    for (let b = 0; b < NB; b++) {
+      const idx = p.order[b];
+      if (!idx.length) continue;
+      ctx.fillStyle = p.colors[b];
+      for (let j = 0; j < idx.length; j++) {
+        const i = idx[j];
+        const x = cx[i], y = cy[i];
+        if (x + half > xMax || y + half > yMax) continue;
+        if ((x < R || x > vw - R) && (y < R || y > vh - R)) {
+          const dx = x - (x < R ? R : vw - R), dy = y - (y < R ? R : vh - R);
+          if (Math.sqrt(dx * dx + dy * dy) + half * 1.1 > lim) continue;
+        }
+        if (calm) {
+          // Still mosaic: the two states simply cross-fade.
+          if (k < 1) still(ctx, x, y, sR[i], aC[i] * (1 - k));
+          if (k > 0) still(ctx, x, y, sO[i], aO[i] * k);
+          continue;
+        }
+        const pr = prog[i], e = easeOut(pr);
+        let a = aC[i] + (aO[i] - aC[i]) * e;
+        if (shim) a += Math.sin(A[i] + t * 0.55) * Math.sin(Bv[i] - t * 0.42) * (0.07 - 0.03 * e);
+        if (torch) {
+          const dx = x - tx, dy = y - ty, d2 = dx * dx + dy * dy;
+          if (d2 < TR * TR) { const f = 1 - Math.sqrt(d2) / TR; a += tk * f * f; }
+        }
+        if (a < 0.01) continue;
+        if (a > 1) a = 1;
+        const s = (sR[i] + (sO[i] - sR[i]) * easeBack(pr)) * dpr;
+        const X = Math.round(x * dpr - s / 2), Y = Math.round(y * dpr - s / 2), Z = Math.max(1, Math.round(s));
+        ctx.globalAlpha = a;
+        ctx.fillRect(X, Y, Z, Z);
+        if (opening && pr > 0 && pr < 1) { FX[nf] = X; FY[nf] = Y; FZ[nf] = Z; FA[nf] = Math.sin(Math.PI * pr); nf++; }
+      }
+    }
+    if (nf) {
+      // A faint light rides the assembling front.
+      ctx.globalCompositeOperation = 'lighter';
+      ctx.fillStyle = '#ffffff';
+      for (let q = 0; q < nf; q++) { ctx.globalAlpha = FA[q] * 0.2; ctx.fillRect(FX[q], FY[q], FZ[q], FZ[q]); }
+      ctx.globalCompositeOperation = 'source-over';
+    }
+    if (drawName(p, ctx, now, dt, calm)) busy = true;
+    ctx.globalAlpha = 1;
+    return busy;
+  }
+
+  function drawName(p, ctx, now, dt, calm) {
+    const T = p.txt;
+    if (!T) return false;
+    if (calm) {
+      const a = 1 - p.k;
+      if (a > 0.005) { ctx.globalAlpha = a; ctx.drawImage(T.cv, T.dx, T.dy); }
+      return false;
+    }
+    let busy = false;
+    const el = now - p.nT0;
+    if (p.nMoving) {
+      const goal = p.nDir > 0 ? 1 : 0, inc = p.nDir * dt / (p.nDir > 0 ? 560 : 440), pr = T.prog, g = T.gate;
+      let left = 0;
+      for (let j = 0; j < T.n; j++) {
+        let v = pr[j];
+        if (v !== goal) {
+          if (el >= g[j]) { v += inc; v = v < 0 ? 0 : v > 1 ? 1 : v; pr[j] = v; }
+          if (v !== goal) left++;
+        }
+      }
+      p.nMoving = left > 0;
+      busy = true;
+    }
+    // Whole until the front reaches it; whole again once every square is home.
+    const whole = p.nDir > 0 ? (p.nMoving && el < T.minGate) : !p.nMoving;
+    if (whole) { ctx.globalAlpha = 1; ctx.drawImage(T.cv, T.dx, T.dy); return busy; }
+    ctx.fillStyle = INK;
+    const q = T.q;
+    for (let j = 0; j < T.n; j++) {
+      const v = T.prog[j];
+      if (v >= 1) continue;
+      const a = T.al[j] * Math.pow(1 - v, 1.5);
+      if (a < 0.01) continue;
+      const e = easeOut(v), s = q * (1 - 0.45 * v);
+      ctx.globalAlpha = a;
+      if (v === 0) ctx.fillRect(T.x0[j], T.y0[j], q, q);
+      else ctx.fillRect(T.x0[j] + T.vx[j] * e * dpr + (q - s) / 2, T.y0[j] + T.vy[j] * e * dpr + (q - s) / 2, s, s);
+    }
+    return busy;
+  }
+
+  function drawLogo(p, now) {
+    if (p.logoState !== 1 && p.logoState !== 3) return false;
+    const L = p.logo, ctx = p.lctx;
+    if (!L || !ctx) { p.logoState = p.open ? 2 : 0; if (p.logoWrap) p.logoWrap.classList.toggle('is-crisp', p.open); return false; }
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.globalAlpha = 1;
+    ctx.clearRect(0, 0, L.W, L.H);
+    const el = Math.max(0, now - p.logoT0);
+    let k, a = 1;
+    if (p.logoState === 1) {
+      if (now < p.logoT0) return true;
+      let acc = 0;
+      k = 0;
+      while (k < LOGO_STEPS.length && el >= acc + LOGO_MS[k]) { acc += LOGO_MS[k]; k++; }
+      if (k >= LOGO_STEPS.length) {
+        // In focus: hand over to the real image and let the last mosaic fade under it.
+        if (!p.logoWrap.classList.contains('is-crisp')) p.logoWrap.classList.add('is-crisp');
+        const f = (el - acc) / 220;
+        if (f >= 1) { p.logoState = 2; return false; }
+        k = LOGO_STEPS.length - 1; a = 1 - f;
+      } else if (k === 0) a = clamp01(el / 80);
+    } else {
+      const step = 40;
+      k = LOGO_STEPS.length - 1 - Math.floor(el / step);
+      if (k < 0) { p.logoState = 0; return false; }
+      a = clamp01(1 - el / (step * LOGO_STEPS.length));
+    }
+    const arr = L.levels[k];
+    ctx.fillStyle = '#ffffff';
+    for (let j = 0; j < arr.length; j += 4) { ctx.globalAlpha = arr[j + 3] * a; ctx.fillRect(arr[j], arr[j + 1], arr[j + 2], arr[j + 2]); }
+    ctx.globalAlpha = 1;
+    return true;
+  }
+
+  function frame(now) {
+    raf = 0;
+    const dt = last ? Math.min(50, now - last) : 16;
+    last = now;
+    const calm = isCalm();
+    const t = calm ? 0 : now / 1000;
+    let busy = false;
+    try {
+      for (let i = 0; i < N; i++) {
+        if (drawPanel(P[i], now, t, dt, calm)) busy = true;
+        if (drawLogo(P[i], now)) busy = true;
+      }
+    } finally {
+      if ((inView && !calm) || busy) raf = requestAnimationFrame(frame);
+      else last = 0;
+    }
+  }
+  const kick = () => { if (!raf) raf = requestAnimationFrame(frame); };
+
+  /* ---------- State ---------- */
+
+  function begin(p, dir, ox, oy, now, calm) {
+    p.dir = dir; p.t0 = now; p.moving = true; p.ox = ox; p.oy = oy; p.front = 0;
+    if (!calm && p.n) {
+      const g = p.gate, cx = p.cx, cy = p.cy, jit = p.jit;
+      if (dir > 0) {
+        for (let i = 0; i < p.n; i++) g[i] = Math.hypot(cx[i] - ox, cy[i] - oy) / V_OPEN + jit[i] * 90;
+      } else {
+        const vw = p.el.clientWidth, vh = p.el.clientHeight;
+        const far = Math.max(Math.hypot(ox, oy), Math.hypot(vw - ox, oy), Math.hypot(ox, vh - oy), Math.hypot(vw - ox, vh - oy));
+        for (let i = 0; i < p.n; i++) g[i] = Math.max(0, far - Math.hypot(cx[i] - ox, cy[i] - oy)) / V_CLOSE + jit[i] * 50;
+      }
+    }
+    const T = p.txt;
+    p.nDir = dir;
+    if (T && !calm) {
+      p.nT0 = now; p.nMoving = true;
+      let dmin = Infinity, dmax = 0;
+      const ds = new Float32Array(T.n);
+      for (let j = 0; j < T.n; j++) {
+        const d = Math.hypot(T.cx[j] - ox, T.cy[j] - oy);
+        ds[j] = d; if (d < dmin) dmin = d; if (d > dmax) dmax = d;
+      }
+      if (dir > 0) {
+        const start = dmin / V_OPEN;
+        T.minGate = start;
+        for (let j = 0; j < T.n; j++) {
+          T.gate[j] = start + (ds[j] - dmin) / 1.5 + Math.random() * 90;
+          const d = ds[j] || 1, ang = Math.atan2(T.cy[j] - oy, T.cx[j] - ox) + (Math.random() - 0.5) * 1.1;
+          const m = 14 + Math.random() * 30;
+          T.vx[j] = Math.cos(ang) * m * Math.min(1, d / 40 + 0.4);
+          T.vy[j] = Math.sin(ang) * m - 6 - Math.random() * 12;
+        }
+      } else {
+        for (let j = 0; j < T.n; j++) T.gate[j] = 200 + (dmax - ds[j]) / 1.6 + Math.random() * 80;
+      }
+    }
+    if (p.logoWrap) {
+      if (dir > 0) {
+        if (!p.logo && !calm) p.logo = buildLogo(p);
+        p.logoWrap.classList.remove('is-crisp');
+        if (calm || !p.logo) { p.logoState = 2; p.logoWrap.classList.add('is-crisp'); }
+        else { p.logoState = 1; p.logoT0 = now + 130; }
+      } else {
+        const shown = p.logoState !== 0;
+        p.logoWrap.classList.remove('is-crisp');
+        p.logoState = !calm && p.logo && shown ? 3 : 0;
+        p.logoT0 = now;
+        if (!p.logoState && p.lctx) p.lctx.clearRect(0, 0, p.lcv.width, p.lcv.height);
+      }
+    }
+    kick();
+  }
+
+  function openPanel(p, ox, oy) {
+    if (p.open) return;
+    p.open = true;
+    p.el.classList.remove('wb-hold');
+    p.el.classList.add('is-open');
+    begin(p, 1, ox, oy, performance.now(), isCalm());
+  }
+  function closePanel(p, ox, oy) {
+    if (!p.open) return;
+    p.open = false;
+    p.el.classList.remove('is-open');
+    begin(p, -1, ox, oy, performance.now(), isCalm());
+  }
+
+  // Desktop: one panel open at a time. The panel being left collapses toward the one being opened.
+  function activate(p, ox, oy) {
+    introDone = true;
+    if (p.open) return;
+    P.forEach((q) => {
+      if (q === p) return;
+      q.el.classList.remove('wb-hold');
+      if (q.open) closePanel(q, q.i < p.i ? q.el.clientWidth : 0, oy);
+    });
+    openPanel(p, ox, oy);
+  }
+  function toggle(p, ox, oy) {
+    introDone = true;
+    if (p.open) closePanel(p, ox, oy); else openPanel(p, ox, oy);
+  }
+  const home = (p) => (stacked ? [(small ? 22 : 28) + 5, p.restH / 2] : [p.restW / 2, 37]);
+  const local = (p, e) => { const r = p.el.getBoundingClientRect(); return [e.clientX - r.left - 1, e.clientY - r.top - 1]; };
+
+  function intro() {
+    introDone = true;
+    const p = P.find((q) => q.el.classList.contains('wb-hold')) || P[0];
+    if (p.open || P.some((q) => q.open)) return;
+    const h = home(p);
+    openPanel(p, h[0], h[1]);
+  }
+
+  /* ---------- Events ---------- */
+
+  P.forEach((p) => {
+    const el = p.el;
+    el.addEventListener('pointerenter', (e) => {
+      if (stacked || e.pointerType === 'touch') return;
+      const o = local(p, e);
+      activate(p, o[0], o[1]);
+    });
+    el.addEventListener('pointermove', (e) => {
+      if (e.pointerType === 'touch') return;
+      const o = local(p, e);
+      p.tx = o[0]; p.ty = o[1]; p.torchOn = true;
+    });
+    el.addEventListener('pointerleave', () => { p.torchOn = false; });
+    el.addEventListener('click', (e) => {
+      const o = local(p, e);
+      if (stacked) { p.auto = true; toggle(p, o[0], o[1]); }
+      else activate(p, o[0], o[1]);
+    });
+    el.addEventListener('focus', () => {
+      let kb = true;
+      try { kb = el.matches(':focus-visible'); } catch (err) { kb = true; }
+      if (!kb) return;
+      const h = home(p);
+      if (stacked) { p.auto = true; openPanel(p, h[0], h[1]); }
+      else activate(p, h[0], h[1]);
+    });
+    el.addEventListener('keydown', (e) => {
+      const k = e.key;
+      if (k === 'ArrowRight' || k === 'ArrowDown' || k === 'ArrowLeft' || k === 'ArrowUp') {
+        const j = p.i + (k === 'ArrowRight' || k === 'ArrowDown' ? 1 : -1);
+        if (j >= 0 && j < N) { e.preventDefault(); P[j].el.focus(); }
+      } else if (stacked && (k === 'Enter' || k === ' ')) {
+        e.preventDefault();
+        const h = home(p);
+        toggle(p, h[0], h[1]);
+      }
+    });
+  });
+
+  function onResize() {
+    const s = isStack();
+    const d = Math.min(2, window.devicePixelRatio || 1);
+    if (s === stacked && wrap.clientWidth === lastW && d === dpr) return;
+    if (s !== stacked) {
+      P.forEach((p) => p.el.classList.remove('wb-hold'));
+      if (!s) {
+        // Back to a row: exactly one panel stays open.
+        const keep = P.find((p) => p.open) || P[0];
+        P.forEach((p) => { p.open = p === keep; p.el.classList.toggle('is-open', p.open); });
+      }
+      introDone = true;
+    }
+    layout();
+    kick();
+  }
+  let rq = 0;
+  const schedule = () => { if (!rq) rq = requestAnimationFrame(() => { rq = 0; onResize(); }); };
+  if (window.ResizeObserver) new ResizeObserver(schedule).observe(wrap);
+  window.addEventListener('resize', schedule);
+
+  /* ---------- Start ---------- */
+
+  wrap.classList.add('wb-live');
+  P.forEach((p) => {
+    if (p.el.classList.contains('is-open')) {
+      p.el.classList.remove('is-open');
+      if (!stacked) p.el.classList.add('wb-hold');
+    }
+  });
+  layout();
+
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver((ents) => {
+      const en = ents[ents.length - 1];
+      inView = en.isIntersecting;
+      if (inView) kick();
+      if (!introDone && !stacked && en.intersectionRatio >= 0.35) intro();
+    }, { threshold: [0, 0.35, 0.6] }).observe(wrap);
+    // Phone and tablet: a panel unfolds by itself the first time it reaches the middle of the screen.
+    const mid = new IntersectionObserver((ents) => {
+      if (!stacked) return;
+      const hit = ents.filter((en) => en.isIntersecting).map((en) => P[els.indexOf(en.target)]).filter((p) => p && !p.auto);
+      if (!hit.length) return;
+      hit.sort((a, b) => a.i - b.i);
+      const p = hit[0];
+      p.auto = true;
+      introDone = true;
+      const h = home(p);
+      openPanel(p, h[0], h[1]);
+    }, { rootMargin: '-40% 0px -40% 0px' });
+    els.forEach((el) => mid.observe(el));
+  } else {
+    inView = true;
+    if (!stacked) intro();
+  }
+
+  const fontsDone = () => {
+    if (fontsReady) return;
+    fontsReady = true;
+    layout();
+    wrap.classList.add('wb-txt');
+    kick();
+  };
+  try {
+    const f = document.fonts;
+    Promise.race([
+      f.ready.then(() => f.load('700 22px "Bricolage Grotesque"')),
+      new Promise((res) => setTimeout(res, 2500))
+    ]).then(fontsDone, fontsDone);
+  } catch (err) { fontsDone(); }
+  kick();
+})();

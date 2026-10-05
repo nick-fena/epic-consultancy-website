@@ -204,37 +204,135 @@ body { margin: 0; background: #06080F; }
 .sp-after { color: var(--ink); }
 .sp-after .sp-bl { color: var(--teal); }
 
-/* ---------- Work: expanding panels ---------- */
-.sp-panels { display: flex; gap: 12px; height: 540px; }
-.sp-panel {
+/* === WORK: concept b === */
+/* Pixels. Each client panel is a living mosaic of small squares in that client's own
+   two colours, drawn on one canvas per panel by the work script before </body>.
+   Opening a panel cascades the squares out from the point of entry into its gradient
+   surface; the vertical name dissolves into squares and the logo resolves from a
+   coarse mosaic to crisp. Without the script, the panels still open on hover/focus. */
+.wb-panels { --wb-ch: 88px; display: flex; gap: 12px; height: 540px; }
+@media (min-width: 1800px) { .wb-panels { height: 600px; } }
+.wb-panel {
   position: relative; isolation: isolate; overflow: hidden;
   flex: 1 1 0; min-width: 0; border-radius: 26px;
   background: var(--panel); border: 1px solid var(--line);
-  transition: flex-grow 0.8s var(--ease), border-color 0.4s ease;
+  transition: flex-grow 0.8s var(--ease), height 0.8s var(--ease), border-color 0.5s ease, box-shadow 0.35s ease;
+  -webkit-tap-highlight-color: transparent;
 }
-.sp-panel.sp-open, .sp-panels .sp-panel:hover, .sp-panels .sp-panel:focus-within { flex-grow: 3.4; border-color: rgba(255, 255, 255, 0.16); }
-.sp-panels:hover .sp-panel.sp-open:not(:hover) { flex-grow: 1; border-color: var(--line); }
-.sp-pbg {
-  position: absolute; inset: -25%; z-index: -1; pointer-events: none;
-  background: radial-gradient(40% 50% at 30% 70%, var(--p1), transparent 70%), radial-gradient(45% 55% at 75% 25%, var(--p2), transparent 70%);
-  filter: blur(30px); opacity: 0.3;
-  animation: sp-pan 16s ease-in-out infinite alternate;
-  transition: opacity 0.7s ease;
+.wb-panel.is-open, .wb-panel.wb-hold { flex-grow: 3.4; }
+.wb-panel.is-open { border-color: rgba(255, 255, 255, 0.15); }
+/* Keyboard focus: a hairline in the brand's own gradient inside, a clear teal ring outside. */
+.wb-panel:focus-visible { outline: none; box-shadow: 0 0 0 3px var(--bg), 0 0 0 5px rgba(94, 234, 212, 0.9), 0 0 36px -2px rgba(94, 234, 212, 0.35); }
+.wb-panel::after {
+  content: ""; position: absolute; inset: 0; z-index: 4; border-radius: inherit; padding: 1.5px; pointer-events: none;
+  background: linear-gradient(135deg, #5EEAD4, #818CF8 55%, #E879F9);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+  opacity: 0; transition: opacity 0.3s ease;
 }
-.sp-open .sp-pbg, .sp-panel:hover .sp-pbg, .sp-panel:focus-within .sp-pbg { opacity: 0.75; }
-.sp-panels:hover .sp-open:not(:hover) .sp-pbg { opacity: 0.3; }
-.sp-dot { position: absolute; left: 50%; top: 32px; width: 10px; height: 10px; margin-left: -5px; border-radius: 3px; background: var(--p1); box-shadow: 0 0 16px var(--p1); transition: opacity 0.4s ease; }
-.sp-vert { position: absolute; left: 50%; bottom: 32px; transform: translateX(-50%) rotate(180deg); writing-mode: vertical-rl; font-weight: 700; font-size: 22px; letter-spacing: -0.01em; white-space: nowrap; transition: opacity 0.4s ease; }
-.sp-body { position: absolute; left: 32px; bottom: 32px; width: 400px; max-width: calc(100% - 64px); opacity: 0; transform: translateY(18px); transition: opacity 0.4s ease, transform 0.6s var(--ease); }
-.sp-body img { display: block; margin-bottom: 26px; filter: brightness(0) invert(1); }
-.sp-body .sp-h3 { margin: 14px 0 4px; font-size: 32px; }
-.sp-sub { margin: 0 0 10px; font-size: 14px; color: var(--dim); }
-.sp-body p.sp-desc { margin: 10px 0 0; font-size: 16px; line-height: 1.55; color: #C6CDE0; }
-.sp-open .sp-body, .sp-panel:hover .sp-body, .sp-panel:focus-within .sp-body { opacity: 1; transform: none; transition-delay: 0.18s; }
-.sp-open .sp-vert, .sp-panel:hover .sp-vert, .sp-panel:focus-within .sp-vert,
-.sp-open .sp-dot, .sp-panel:hover .sp-dot, .sp-panel:focus-within .sp-dot { opacity: 0; }
-.sp-panels:hover .sp-open:not(:hover) .sp-body { opacity: 0; transform: translateY(18px); transition-delay: 0s; }
-.sp-panels:hover .sp-open:not(:hover) .sp-vert, .sp-panels:hover .sp-open:not(:hover) .sp-dot { opacity: 1; }
+.wb-panel:focus-visible::after { opacity: 1; }
+
+.wb-cv { position: absolute; left: 0; top: 0; z-index: 0; display: block; pointer-events: none; }
+.wb-scrim {
+  position: absolute; inset: 0; z-index: 1; pointer-events: none; opacity: 0;
+  background: linear-gradient(to top, rgba(6, 8, 15, 0.9) 0%, rgba(6, 8, 15, 0.66) 36%, rgba(6, 8, 15, 0) 72%);
+  transition: opacity 0.45s ease;
+}
+.wb-panel.is-open .wb-scrim { opacity: 1; transition: opacity 0.9s ease 0.1s; }
+
+.wb-dot {
+  position: absolute; z-index: 2; left: var(--wb-cx, 50%); top: 32px;
+  width: 10px; height: 10px; margin-left: -5px; border-radius: 3px;
+  background: linear-gradient(135deg, var(--p1), var(--p2)); box-shadow: 0 0 16px -2px var(--p1);
+  transition: opacity 0.45s ease 0.4s, transform 0.6s var(--ease) 0.4s;
+}
+.wb-panel.is-open .wb-dot { opacity: 0; transform: scale(0.3); transition: opacity 0.2s ease, transform 0.3s ease; }
+.wb-num {
+  position: absolute; z-index: 2; left: 32px; top: 27px;
+  font-size: 13px; font-weight: 600; line-height: 20px; letter-spacing: 0.06em; font-variant-numeric: tabular-nums;
+  color: var(--ink); white-space: nowrap; opacity: 0; transform: translateY(8px);
+  transition: opacity 0.2s ease, transform 0.3s ease;
+}
+.wb-of { color: var(--dim); font-weight: 500; }
+.wb-panel.is-open .wb-num { opacity: 1; transform: none; transition: opacity 0.6s ease 0.3s, transform 0.9s var(--ease) 0.3s; }
+.wb-vert {
+  position: absolute; z-index: 2; left: var(--wb-cx, 50%); bottom: 32px;
+  transform: translateX(-50%) rotate(180deg); writing-mode: vertical-rl;
+  font-family: 'Bricolage Grotesque', system-ui, sans-serif; font-weight: 700; font-size: 22px; line-height: 1;
+  letter-spacing: -0.01em; white-space: nowrap; color: var(--ink);
+  transition: opacity 0.4s ease;
+}
+.wb-panel.is-open .wb-vert, .wb-txt .wb-vert { opacity: 0; }
+
+.wb-body { position: absolute; z-index: 2; left: 32px; bottom: 32px; width: var(--wb-bw, 400px); max-width: calc(100% - 64px); }
+.wb-live .wb-body { max-width: none; }
+.wb-body > * { opacity: 0; transform: translateY(14px); filter: blur(5px); transition: opacity 0.2s ease, transform 0.3s ease, filter 0.2s ease; }
+.wb-panel.is-open .wb-body > * { opacity: 1; transform: none; filter: none; transition: opacity 0.6s ease var(--wd, 0s), transform 0.9s var(--ease) var(--wd, 0s), filter 0.6s ease var(--wd, 0s); }
+.wb-body > .sp-tag { --wd: 0.36s; }
+.wb-body > .sp-h3 { --wd: 0.42s; margin: 14px 0 4px; font-size: 32px; }
+.wb-body > .wb-sub { --wd: 0.48s; }
+.wb-body > .wb-desc { --wd: 0.52s; }
+.wb-sub { margin: 0 0 10px; font-size: 14px; color: var(--dim); }
+.wb-desc { margin: 10px 0 0; font-size: 16px; line-height: 1.55; color: #C6CDE0; }
+.wb-logo { position: relative; display: block; width: max-content; margin-bottom: 26px; }
+.wb-logo img { display: block; filter: brightness(0) invert(1); }
+.wb-lcv { position: absolute; left: -10px; top: -10px; display: block; pointer-events: none; }
+.wb-live .wb-body > .wb-logo { opacity: 1; transform: none; filter: none; }
+.wb-live .wb-logo img { opacity: 0; transition: opacity 0.16s ease; }
+.wb-live .wb-logo.is-crisp img { opacity: 1; transition: opacity 0.22s ease; }
+
+/* Without the script: a calm gradient and the original hover/focus behaviour. */
+.wb-panels:not(.wb-live) .wb-cv, .wb-panels:not(.wb-live) .wb-lcv { display: none; }
+.wb-panels:not(.wb-live) .wb-panel { background: radial-gradient(60% 60% at 80% 20%, color-mix(in srgb, var(--p2) 30%, transparent), transparent 70%), radial-gradient(60% 60% at 20% 70%, color-mix(in srgb, var(--p1) 26%, transparent), transparent 70%), var(--panel); }
+.wb-panels:not(.wb-live):hover .wb-panel.is-open:not(:hover):not(:focus-within) { flex-grow: 1; }
+.wb-panels:not(.wb-live) .wb-panel:hover, .wb-panels:not(.wb-live) .wb-panel:focus-within { flex-grow: 3.4; }
+.wb-panels:not(.wb-live) .wb-panel:is(:hover, :focus-within) .wb-body > * { opacity: 1; transform: none; filter: none; }
+.wb-panels:not(.wb-live) .wb-panel:is(:hover, :focus-within) :is(.wb-vert, .wb-dot) { opacity: 0; }
+.wb-panels:not(.wb-live):hover .wb-panel.is-open:not(:hover):not(:focus-within) .wb-body > * { opacity: 0; }
+.wb-panels:not(.wb-live):hover .wb-panel.is-open:not(:hover):not(:focus-within) :is(.wb-vert, .wb-dot) { opacity: 1; }
+
+/* Tablet and phone: the panels stack and unfold in height, on tap or as they reach the middle of the screen. */
+@media (max-width: 900px) {
+  .wb-panels { flex-direction: column; height: auto; gap: 10px; }
+  .wb-panel { flex: none; height: var(--wb-ch); border-radius: 22px; cursor: pointer; }
+  .wb-panel.is-open { height: var(--wb-oh, auto); }
+  .wb-scrim { background: linear-gradient(100deg, rgba(6, 8, 15, 0.86) 0%, rgba(6, 8, 15, 0.62) 46%, rgba(6, 8, 15, 0.1) 82%); }
+  .wb-dot { left: 28px; top: calc(var(--wb-ch) / 2 - 6px); }
+  .wb-vert { left: 50px; top: calc(var(--wb-ch) / 2 - 2px); bottom: auto; transform: translateY(-50%); writing-mode: horizontal-tb; font-size: 24px; }
+  .wb-num { left: auto; right: 26px; top: calc(var(--wb-ch) / 2 - 11px); opacity: 1; transform: none; }
+  .wb-panel .wb-num, .wb-panel.is-open .wb-num { transition: none; }
+  .wb-body { left: 28px; right: 28px; top: 28px; bottom: auto; width: auto; max-width: 540px; }
+  .wb-live .wb-body { max-width: 540px; }
+  .wb-panels:not(.wb-live) .wb-panel { height: auto; }
+  .wb-panels:not(.wb-live) .wb-body { position: relative; left: auto; right: auto; top: auto; padding: 28px; }
+  .wb-panels:not(.wb-live) .wb-body > * { opacity: 1; transform: none; filter: none; }
+  .wb-panels:not(.wb-live) :is(.wb-vert, .wb-dot, .wb-num) { display: none; }
+}
+@media (max-width: 560px) {
+  .wb-panels { --wb-ch: 76px; }
+  .wb-panel { border-radius: 20px; }
+  .wb-dot { left: 22px; }
+  .wb-vert { left: 42px; font-size: 21px; }
+  .wb-num { right: 20px; }
+  .wb-body { left: 22px; right: 22px; top: 24px; }
+  .wb-body > .sp-h3 { font-size: 28px; }
+}
+
+/* The page's scroll reveal, measured in scroll distance rather than as a share of the
+   box, so a row unfolding in height never pulls the panels back into their blur. */
+@supports (animation-timeline: view()) {
+  .sp-scrolly .wb-panels.sp-rv { animation-range: entry 0% entry 340px; }
+}
+
+/* Reduced motion (and the page's own motion-off tweak): a still mosaic and a plain opacity fade. */
+@media (prefers-reduced-motion: reduce) {
+  .sp .wb-body > *, .sp .wb-num, .sp .wb-scrim, .sp .wb-dot, .sp .wb-logo img { transform: none !important; filter: none !important; transition: opacity 0.45s ease !important; }
+  .sp .wb-vert { transition: opacity 0.45s ease !important; }
+  .sp .wb-panel:not(.is-open) .wb-body > *, .sp .wb-panel:not(.is-open) .wb-logo img { transition: opacity 0.16s ease !important; }
+}
+.sp-still .wb-body > *, .sp-still .wb-num, .sp-still .wb-scrim, .sp-still .wb-dot, .sp-still .wb-logo img { transform: none !important; filter: none !important; transition: opacity 0.45s ease !important; }
+.sp-still .wb-panel:not(.is-open) .wb-body > *, .sp-still .wb-panel:not(.is-open) .wb-logo img { transition: opacity 0.16s ease !important; }
+/* === /WORK === */
 
 /* ---------- How it works: blocks that settle ---------- */
 .sp-steps { position: relative; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 28px; }
@@ -339,11 +437,6 @@ body { margin: 0; background: #06080F; }
   .sp-shake { right: 20px; bottom: 32px; }
   .sp-proof-row { flex-direction: column; align-items: flex-start; gap: 18px; }
   .sp-marquee { width: 100%; }
-  .sp-panels { flex-direction: column; height: auto; }
-  .sp-panel { flex: none; }
-  .sp-pbg { opacity: 0.6; }
-  .sp-body { position: relative; left: auto; bottom: auto; width: auto; max-width: none; padding: 28px; opacity: 1; transform: none; }
-  .sp-vert, .sp-dot { display: none; }
   .sp-steps { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 48px; }
   .sp-trackline { display: none; }
   .sp-reasons { grid-template-columns: 1fr; }
